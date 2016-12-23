@@ -1,0 +1,16 @@
+Package: haploR
+Type: Package
+Title: Functions for the Analysis of Haploreg Output
+Version: 1.0.0
+Date: 2016-12-23
+Author: Ilya Y. Zhbannikov
+Maintainer: Ilya Y. Zhbannikov <ilya.zhbannikov@duke.edu>
+Description: This set of utilities that mine Haploreg web page and analyses its output.
+RoxygenNote: 5.0.1
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+Imports:
+	httr
+Depends:
+    R (>= 3.3),httr
+Encoding: UTF-8
