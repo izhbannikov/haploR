@@ -4,13 +4,13 @@
 \alias{queryHaploreg}
 \title{This function queries Haploreg web-based tool and returns results.}
 \usage{
-queryHaploreg(query, ldThresh = 0.8, ldPop = "EUR",
-  epi = "ChromHMM (Core 15-state model)", cons = "siphy", output = "text",
+queryHaploreg(query, ldThresh = 0.8, ldPop = "EUR", epi = "vanilla",
+  cons = "siphy", genetypes = "gencode",
   url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
   verbose = FALSE)
 }
 \arguments{
-\item{query}{Variant (SNP) code, only one is supported now.}
+\item{query}{Query (a vector of rsIDs).}
 
 \item{ldThresh}{LD threshold, r2 (select NA to only show query variants). 
 Default: 0.8.}
@@ -19,12 +19,23 @@ Default: 0.8.}
 Can be: "AFR", "AMR", "ASN". Default: "EUR".}
 
 \item{epi}{Source for epigenomes. 
-Default: "ChromHMM (Core 15-state model)".}
+Possible values: \code{vanilla} for ChromHMM (Core 15-state model);
+\code{imputed} for ChromHMM (25-state model using 12 imputed marks);
+\code{methyl} for H3K4me1/H3K4me3 peaks;
+\code{acetyl} for H3K27ac/H3K9ac peaks.
+Default: \code{vanilla}.}
 
 \item{cons}{Mammalian conservation algorithm. 
-Default: "SiPhy-omega".}
+Possible values: \code{gerp} for GERP,
+\code{siphy} for SiPhy-omega,
+\code{both} for both.
+Default: \code{siphy}.}
 
-\item{output}{Output mode. Text by default.}
+\item{genetypes}{Show position relative to.
+Possible values: \code{gencode} for Gencode genes;
+\code{refseq} for RefSeq genes;
+\code{both} for both.
+Default: \code{gencode}.}
 
 \item{url}{Haplotype url address. 
 Default: "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php"}
@@ -38,7 +49,7 @@ A data frame with results.
 This function queries Haploreg web-based tool and returns results.
 }
 \examples{
-data <- queryHaploreg("rs10048158")
+data <- queryHaploreg(c("rs10048158","rs4791078"))
 head(data)
 }
 
