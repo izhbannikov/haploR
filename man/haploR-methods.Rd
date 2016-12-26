@@ -4,13 +4,15 @@
 \alias{queryHaploreg}
 \title{This function queries Haploreg web-based tool and returns results.}
 \usage{
-queryHaploreg(query, ldThresh = 0.8, ldPop = "EUR", epi = "vanilla",
-  cons = "siphy", genetypes = "gencode",
+queryHaploreg(query, file = NULL, ldThresh = 0.8, ldPop = "EUR",
+  epi = "vanilla", cons = "siphy", genetypes = "gencode",
   url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
   verbose = FALSE)
 }
 \arguments{
 \item{query}{Query (a vector of rsIDs).}
+
+\item{file}{A text file (one refSNP ID per line).}
 
 \item{ldThresh}{LD threshold, r2 (select NA to only show query variants). 
 Default: 0.8.}

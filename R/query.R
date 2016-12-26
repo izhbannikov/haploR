@@ -1,6 +1,7 @@
 #' This function queries Haploreg web-based tool and returns results.
 #' 
 #' @param query Query (a vector of rsIDs).
+#' @param file A text file (one refSNP ID per line).
 #' @param ldThresh LD threshold, r2 (select NA to only show query variants). 
 #' Default: 0.8.
 #' @param ldPop 1000G Phase 1 population for LD calculation. 
@@ -30,7 +31,7 @@
 #' head(data)
 #' @rdname haploR-methods
 #' @export
-queryHaploreg <- function(query, 
+queryHaploreg <- function(query, file=NULL,
                           ldThresh=0.8, 
                           ldPop="EUR", 
                           epi="vanilla", 
@@ -44,17 +45,33 @@ queryHaploreg <- function(query,
     oligo <- 1000 # can be 1, 6, 1000
     output <- "text"
     
-    body <- list(query = paste(query, collapse = ','), 
-                 ldThresh=as.character(ldThresh), 
-                 ldPop=ldPop, epi=epi, 
-                 cons=cons, 
-                 genetypes=genetypes,
-                 trunc=as.character(trunc),
-                 oligo=as.character(oligo),
-                 output=output)
-  
+    if(!is.null(file)) {
+      query <- upload_file(file)
+      body <- list(upload_file = query, 
+                   ldThresh=as.character(ldThresh), 
+                   ldPop=ldPop, epi=epi, 
+                   cons=cons, 
+                   genetypes=genetypes,
+                   trunc=as.character(trunc),
+                   oligo=as.character(oligo),
+                   output=output)
+      
+    } else {
+      query <- paste(query, collapse = ',') 
+      body <- list(query = query, 
+                   ldThresh=as.character(ldThresh), 
+                   ldPop=ldPop, epi=epi, 
+                   cons=cons, 
+                   genetypes=genetypes,
+                   trunc=as.character(trunc),
+                   oligo=as.character(oligo),
+                   output=output)
+      
+    }
+    
+    
     # Form encoded: multipart encoded
-    r <- POST(url, body = body, encode="multipart")
+    r <- POST(url=url, body = body, encode="multipart")
   
     dat <- content(r, "text")
     sp <- strsplit(dat, '\n')
