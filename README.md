@@ -18,3 +18,11 @@ library(haploR)
 data <- queryHaploreg("rs10048158")
 head(data)
 ```
+
+### For a particular study
+```
+library(haploR)
+studies <- getStudyList()
+studies[[2]]
+queryHaploreg(study=studies[[2]])
+```

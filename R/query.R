@@ -2,6 +2,8 @@
 #' 
 #' @param query Query (a vector of rsIDs).
 #' @param file A text file (one refSNP ID per line).
+#' @param study A particular study. See function \code{getStudyList(...)}.
+#' Default: \code{NULL}.
 #' @param ldThresh LD threshold, r2 (select NA to only show query variants). 
 #' Default: 0.8.
 #' @param ldPop 1000G Phase 1 population for LD calculation. 
@@ -31,7 +33,8 @@
 #' head(data)
 #' @rdname haploR-methods
 #' @export
-queryHaploreg <- function(query, file=NULL,
+queryHaploreg <- function(query=NULL, file=NULL,
+                          study=NULL,
                           ldThresh=0.8, 
                           ldPop="EUR", 
                           epi="vanilla", 
@@ -45,9 +48,22 @@ queryHaploreg <- function(query, file=NULL,
     oligo <- 1000 # can be 1, 6, 1000
     output <- "text"
     
+    if(!is.null(study)) {
+      if(class(study) == "list") {
+          gwas_idx <- study$id
+      } else {
+         stop("Parameter study is not a list with 
+              study id and study name.")
+      }
+    } else {
+        gwas_idx <- "0"
+    }
+    
+    
     if(!is.null(file)) {
       query <- upload_file(file)
-      body <- list(upload_file = query, 
+      body <- list(upload_file=query, 
+                   gwas_idx=gwas_idx,
                    ldThresh=as.character(ldThresh), 
                    ldPop=ldPop, epi=epi, 
                    cons=cons, 
@@ -58,7 +74,8 @@ queryHaploreg <- function(query, file=NULL,
       
     } else {
       query <- paste(query, collapse = ',') 
-      body <- list(query = query, 
+      body <- list(query=query, 
+                   gwas_idx=gwas_idx,
                    ldThresh=as.character(ldThresh), 
                    ldPop=ldPop, epi=epi, 
                    cons=cons, 
