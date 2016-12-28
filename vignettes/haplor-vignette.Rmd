@@ -41,7 +41,8 @@ devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)
 
 ## Examples
 
-### One or several genetic variants
+### Querying Haploreg
+#### One or several genetic variants
 
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
@@ -52,7 +53,7 @@ head(results)
 Here \texttt{query} is a vector with names of genetic variants. 
 \texttt{results} are the table similar to the output of Haploreg.
 
-### Uploading file with variants
+#### Uploading file with variants
 
 If you have a file with your SNPs you would like 
 to analyze (one SNP per line), you can 
@@ -64,7 +65,7 @@ results <- queryHaploreg(file=system.file("data/snps.txt", package = "haploR"))
 head(results)
 ```
 
-### Using existing studies
+#### Using existing studies
 
 Sometimes you would like to explore results from 
 already performed study. In this case you should 
@@ -84,6 +85,14 @@ studies[[2]]
 # this study:
 results <- queryHaploreg(study=studies[[2]])
 head(results)
+```
+
+### Querying Regulome
+
+```{r, echo=TRUE, message=FALSE}
+library(haploR)
+data <- queryRegulome(c("rs4791078","rs10048158"))
+head(data)
 ```
 
 

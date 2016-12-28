@@ -32,7 +32,7 @@
 #' @examples
 #' data <- queryHaploreg(c("rs10048158","rs4791078"))
 #' head(data)
-#' @rdname haploR-methods
+#' @rdname haploR-queryHaploreg
 #' @export
 queryHaploreg <- function(query=NULL, file=NULL,
                           study=NULL,

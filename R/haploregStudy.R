@@ -8,7 +8,7 @@
 #' @examples
 #' studies <- getStudyList()
 #' studies
-#' @rdname haploR-methods
+#' @rdname haploR-getStudyList
 #' @export
 getStudyList <- function(url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php") {
   

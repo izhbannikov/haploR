@@ -2,5 +2,6 @@
 
 export(getStudyList)
 export(queryHaploreg)
+export(queryRegulome)
 import(XML)
 import(httr)
