@@ -27,7 +27,8 @@
 #' @param url Haplotype url address. 
 #' Default: "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php"
 #' @param verbose Verbosing output. Default: FALSE.
-#' @return A data frame with results.
+#' @return A data frame (table) with results similar to 
+#' Haploreg uses.
 #' @examples
 #' data <- queryHaploreg(c("rs10048158","rs4791078"))
 #' head(data)

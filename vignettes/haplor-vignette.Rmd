@@ -1,0 +1,93 @@
+---
+title: 'Using haploR, an R package for mining Haploreg'
+author: "Ilya Y. Zhbannikov"
+date: "`r BiocStyle::doc_date()`"
+output: BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{Tutorial for haploR package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+## Overview
+
+Haploreg (\url{http://archive.broadinstitute.org/mammals/haploreg/haploreg.php}) 
+is a web-based tools that extracts biological information such as eQTL, 
+LD, motifs, etc. from large genomic projects such as ENCODE, 
+the 1000 Genomes Projec, Roadmap Epigenomics Project and others.
+
+The R-package \texttt{haploR} was developed to query 
+Haploreg from \texttt{R} in order to facilitate 
+high-throughput genomic data analysis. 
+We also provide several examples that show 
+how to extract information from the Haploreg.
+
+Note: you must have a stable Internet connection 
+to use this package.
+
+Contact: \url{ilya.zhbannikov@duke.edu} for questions of 
+usage the \texttt{haploR} or any other issues.
+
+
+
+## Installation of \emph{haploR} package
+
+In order to install the \emph{haploR} package, the user must first install R (\url{http://www.r-project.org}). After that, \emph{haploR} can be installed with:
+
+```{r, echo=TRUE, eval=FALSE}
+devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)
+```
+
+## Examples
+
+### One or several genetic variants
+
+```{r, echo=TRUE, message=FALSE}
+library(haploR)
+results <- queryHaploreg(query=c("rs10048158","rs4791078"))
+head(results)
+```
+
+Here \texttt{query} is a vector with names of genetic variants. 
+\texttt{results} are the table similar to the output of Haploreg.
+
+### Uploading file with variants
+
+If you have a file with your SNPs you would like 
+to analyze (one SNP per line), you can 
+supply it on an input as follows:
+
+```{r, echo=TRUE, message=FALSE}
+library(haploR)
+results <- queryHaploreg(file=system.file("data/snps.txt", package = "haploR"))
+head(results)
+```
+
+### Using existing studies
+
+Sometimes you would like to explore results from 
+already performed study. In this case you should 
+first the explore existing studies from 
+Haploreg web site and then use one of 
+them as an input parameter. See example below:
+
+```{r, echo=TRUE, message=FALSE}
+library(haploR)
+# Getting a list of existing studies:
+studies <- getStudyList()
+# Let us look at the first element:
+studies[[1]]
+# Let us look at the second element:
+studies[[2]]
+# Query Hploreg to explore results from 
+# this study:
+results <- queryHaploreg(study=studies[[2]])
+head(results)
+```
+
+
+## Session information
+```{r, echo=TRUE}
+sessionInfo()
+```

@@ -55,7 +55,8 @@ Default: "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php"}
 Default: http://archive.broadinstitute.org/mammals/haploreg/haploreg.php}
 }
 \value{
-A data frame with results.
+A data frame (table) with results similar to 
+Haploreg uses.
 
 A list of studies. Each study is itself a list
 of two: \code{name}, \code{id}.
