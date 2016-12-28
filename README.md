@@ -1,4 +1,4 @@
-# haploR: utilities for mining Haploreg and other similar web-based tools
+# haploR: utilities for querying Haploreg and other similar web-based tools
 
 ## Installation
 
