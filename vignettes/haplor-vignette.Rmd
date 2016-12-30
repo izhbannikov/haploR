@@ -61,7 +61,7 @@ supply it on an input as follows:
 
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
-results <- queryHaploreg(file=system.file("data/snps.txt", package = "haploR"))
+results <- queryHaploreg(file=system.file("extdata/snps.txt", package = "haploR"))
 head(results)
 ```
 

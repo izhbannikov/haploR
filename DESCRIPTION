@@ -10,7 +10,8 @@ RoxygenNote: 5.0.1
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 Imports:
-	httr
+	httr,XML
 Depends:
-    R (>= 3.3),httr
+    R (>= 3.3)
 Encoding: UTF-8
+License: GPL

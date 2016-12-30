@@ -12,13 +12,13 @@
 #' @export
 getStudyList <- function(url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php") {
   
-  doc.html <- htmlTreeParse(url, useInternal = TRUE)
+  doc.html <- htmlTreeParse(url, useInternalNodes = TRUE)
   
   # Extract all the paragraphs (HTML tag is p, starting at
   # the root of the document). Unlist flattens the list to
   # create a character vector.
   names <- unlist(xpathApply(doc.html, '//option', xmlValue))
-  ids <- unlist(xpathApply(doc.html, '//option', xmlAttrs))
+  ids <- unlist(xpathApply(doc.html, '//option', xmlGetAttr, 'value'))
   studies <- lapply(1:length(names), 
                     function(n) {study <- list(name=names[n], id=ids[[n]])})
   

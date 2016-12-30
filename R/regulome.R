@@ -35,7 +35,7 @@ queryRegulome <- function(query=NULL,
   dat <- readBin(bin, character())
   
   # Download results
-  doc.html <- htmlTreeParse(dat, useInternal = TRUE)
+  doc.html <- htmlTreeParse(dat, useInternalNodes = TRUE)
   sid <- unlist(xpathApply(doc.html, "//input[@name='sid']", 
                            xmlGetAttr, 'value'))
   url="http://www.regulomedb.org/download/"
