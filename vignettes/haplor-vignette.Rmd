@@ -1,5 +1,5 @@
 ---
-title: 'Using haploR, an R package for mining Haploreg'
+title: 'Using haploR, an R package for querying Haploreg and RegulomeDB'
 author: "Ilya Y. Zhbannikov"
 date: "`r BiocStyle::doc_date()`"
 output: BiocStyle::html_document
@@ -12,28 +12,30 @@ vignette: >
 
 ## Overview
 
-Haploreg (\url{http://archive.broadinstitute.org/mammals/haploreg/haploreg.php}) 
-is a web-based tools that extracts biological information such as eQTL, 
+Haploreg <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> and 
+RegulomeDB <http://www.regulomedb.org>
+are web-based tools that extracts biological information such as eQTL, 
 LD, motifs, etc. from large genomic projects such as ENCODE, 
-the 1000 Genomes Projec, Roadmap Epigenomics Project and others.
+the 1000 Genomes Project, Roadmap Epigenomics Project and others. 
+This is sometimes called "post-GWAS" analysis.
 
 The R-package \texttt{haploR} was developed to query 
-Haploreg from \texttt{R} in order to facilitate 
-high-throughput genomic data analysis. 
-We also provide several examples that show 
-how to extract information from the Haploreg.
+those tools (Haploreg and RegulomeDB) directly from 
+\texttt{R} in order to facilitate high-throughput 
+genomic data analysis. Below we provide several examples 
+that show how to work with this package.
 
 Note: you must have a stable Internet connection 
 to use this package.
 
-Contact: \url{ilya.zhbannikov@duke.edu} for questions of 
+Contact: <ilya.zhbannikov@duke.edu> for questions of 
 usage the \texttt{haploR} or any other issues.
 
 
 
 ## Installation of \emph{haploR} package
 
-In order to install the \emph{haploR} package, the user must first install R (\url{http://www.r-project.org}). After that, \emph{haploR} can be installed with:
+In order to install the \emph{haploR} package, the user must first install R <http://www.r-project.org>. After that, \emph{haploR} (its developer version) can be installed with:
 
 ```{r, echo=TRUE, eval=FALSE}
 devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)
@@ -87,7 +89,7 @@ results <- queryHaploreg(study=studies[[2]])
 head(results)
 ```
 
-### Querying Regulome
+### Querying RegulomeDB
 
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)

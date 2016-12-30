@@ -4,7 +4,7 @@
 
 ### Development version
 
-The last version of ```haploR``` that is compatible with the current version of R (3.3), 
+The last version of `haploR` that is compatible with the current version of R (3.3), 
 which can be downloaded using devtools:
 
 ```
@@ -29,7 +29,7 @@ studies[[2]]
 queryHaploreg(study=studies[[2]])
 ```
 
-###Querying Regulome
+###Querying RegulomeDB
 
 ```
 library(haploR)
