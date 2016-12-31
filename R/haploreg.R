@@ -25,7 +25,7 @@
 #' \code{both} for both.
 #' Default: \code{gencode}.
 #' @param url Haplotype url address. 
-#' Default: "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php"
+#' Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A data frame (table) with results similar to 
 #' Haploreg uses.

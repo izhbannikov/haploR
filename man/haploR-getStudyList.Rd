@@ -10,7 +10,7 @@ in order to see a list of GWAS.}
 }
 \arguments{
 \item{url}{A url to Haploreg.
-Default: http://archive.broadinstitute.org/mammals/haploreg/haploreg.php}
+Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
 }
 \value{
 A list of studies. Each study is itself a list

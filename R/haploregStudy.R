@@ -2,7 +2,7 @@
 #' in order to see a list of GWAS.
 #' 
 #' @param url A url to Haploreg.
-#' Default: http://archive.broadinstitute.org/mammals/haploreg/haploreg.php
+#' Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
 #' @return A list of studies. Each study is itself a list
 #' of two: \code{name}, \code{id}.
 #' @examples

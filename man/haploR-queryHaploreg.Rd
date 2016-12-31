@@ -43,7 +43,7 @@ Possible values: \code{gencode} for Gencode genes;
 Default: \code{gencode}.}
 
 \item{url}{Haplotype url address. 
-Default: "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php"}
+Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
 
 \item{verbose}{Verbosing output. Default: FALSE.}
 }

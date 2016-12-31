@@ -15,7 +15,7 @@ queryRegulome(query = NULL, format = "full",
 Only \code{full} is currently supported.}
 
 \item{url}{Regulome url address. 
-Default: "http://www.regulomedb.org/results"}
+Default: <http://www.regulomedb.org/results>}
 
 \item{verbose}{Verbosing output. Default: FALSE.}
 }

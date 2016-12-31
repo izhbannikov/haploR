@@ -5,7 +5,7 @@
 #' @param format An output format. 
 #' Only \code{full} is currently supported.
 #' @param url Regulome url address. 
-#' Default: "http://www.regulomedb.org/results"
+#' Default: <http://www.regulomedb.org/results>
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A data frame (table) or an object with results similar to 
 #' Regulome uses.

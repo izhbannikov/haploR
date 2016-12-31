@@ -1,8 +1,8 @@
 ---
 title: 'Using haploR, an R package for querying Haploreg and RegulomeDB'
 author: "Ilya Y. Zhbannikov"
-date: "`r BiocStyle::doc_date()`"
-output: BiocStyle::html_document
+date: "`r date()`"
+output: html_document
 vignette: >
   %\VignetteIndexEntry{Tutorial for haploR package}
   %\VignetteEngine{knitr::rmarkdown}
@@ -35,7 +35,7 @@ usage the \texttt{haploR} or any other issues.
 
 ## Installation of \emph{haploR} package
 
-In order to install the \emph{haploR} package, the user must first install R <http://www.r-project.org>. After that, \emph{haploR} (its developer version) can be installed with:
+In order to install the \emph{haploR} package, the user must first install R <https://www.r-project.org>. After that, \emph{haploR} (its developer version) can be installed with:
 
 ```{r, echo=TRUE, eval=FALSE}
 devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)

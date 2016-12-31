@@ -1,17 +1,17 @@
 Package: haploR
 Type: Package
-Title: haploR: a set of utilities for querying Haploreg and RegulomeDB from R environment
+Title: Query Haploreg and RegulomeDB
 Version: 1.4.1
 Date: 2016-12-30
-Author: Ilya Y. Zhbannikov, Konstantin G. Arbeev, Anatoliy I. Yashin
+Author: I. Y. Zhbannikov, K. G. Arbeev, A. I. Yashin
 Maintainer: Ilya Y. Zhbannikov <ilya.zhbannikov@duke.edu>
 Description: A set of utilities for querying 
-Haploreg <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> 
-and RegulomeDB <http://www.regulomedb.org> web-based tools. The package connects to 
-Haploreg or RegulomeDB, searches and downloads results, without 
-opening web pages, directly from R environment. 
-Results are stored in a data frame that can be directly used in various 
-kinds of downstream analyses.
+             Haploreg <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> 
+             and RegulomeDB <http://www.regulomedb.org> web-based tools. The package connects to 
+             Haploreg or RegulomeDB, searches and downloads results, without 
+             opening web pages, directly from R environment. 
+             Results are stored in a data frame that can be directly used in various 
+             kinds of downstream analyses.
 RoxygenNote: 5.0.1
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
