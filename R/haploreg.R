@@ -1,4 +1,4 @@
-#' This function queries Haploreg web-based tool and returns results.
+#' This function queries HaploReg web-based tool and returns results.
 #' 
 #' @param query Query (a vector of rsIDs).
 #' @param file A text file (one refSNP ID per line).
@@ -28,7 +28,7 @@
 #' Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A data frame (table) with results similar to 
-#' Haploreg uses.
+#' HaploReg uses.
 #' @examples
 #' data <- queryHaploreg(c("rs10048158","rs4791078"))
 #' head(data)

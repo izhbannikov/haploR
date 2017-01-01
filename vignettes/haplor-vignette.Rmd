@@ -1,5 +1,5 @@
 ---
-title: 'Using haploR, an R package for querying Haploreg and RegulomeDB'
+title: 'Using haploR, an R package for querying HaploReg and RegulomeDB'
 author: "Ilya Y. Zhbannikov"
 date: "`r date()`"
 output: html_document
@@ -12,7 +12,7 @@ vignette: >
 
 ## Overview
 
-Haploreg <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> and 
+HaploReg <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> and 
 RegulomeDB <http://www.regulomedb.org>
 are web-based tools that extracts biological information such as eQTL, 
 LD, motifs, etc. from large genomic projects such as ENCODE, 
@@ -20,7 +20,7 @@ the 1000 Genomes Project, Roadmap Epigenomics Project and others.
 This is sometimes called "post-GWAS" analysis.
 
 The R-package \texttt{haploR} was developed to query 
-those tools (Haploreg and RegulomeDB) directly from 
+those tools (HaploReg and RegulomeDB) directly from 
 \texttt{R} in order to facilitate high-throughput 
 genomic data analysis. Below we provide several examples 
 that show how to work with this package.
@@ -43,7 +43,7 @@ devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)
 
 ## Examples
 
-### Querying Haploreg
+### Querying HaploReg
 #### One or several genetic variants
 
 ```{r, echo=TRUE, message=FALSE}
@@ -53,7 +53,7 @@ head(results)
 ```
 
 Here \texttt{query} is a vector with names of genetic variants. 
-\texttt{results} are the table similar to the output of Haploreg.
+\texttt{results} are the table similar to the output of HaploReg.
 
 #### Uploading file with variants
 
@@ -72,7 +72,7 @@ head(results)
 Sometimes you would like to explore results from 
 already performed study. In this case you should 
 first the explore existing studies from 
-Haploreg web site and then use one of 
+HaploReg web site and then use one of 
 them as an input parameter. See example below:
 
 ```{r, echo=TRUE, message=FALSE}

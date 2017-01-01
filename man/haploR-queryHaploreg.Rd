@@ -2,7 +2,7 @@
 % Please edit documentation in R/haploreg.R
 \name{queryHaploreg}
 \alias{queryHaploreg}
-\title{This function queries Haploreg web-based tool and returns results.}
+\title{This function queries HaploReg web-based tool and returns results.}
 \usage{
 queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
   ldPop = "EUR", epi = "vanilla", cons = "siphy", genetypes = "gencode",
@@ -49,10 +49,10 @@ Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
 }
 \value{
 A data frame (table) with results similar to 
-Haploreg uses.
+HaploReg uses.
 }
 \description{
-This function queries Haploreg web-based tool and returns results.
+This function queries HaploReg web-based tool and returns results.
 }
 \examples{
 data <- queryHaploreg(c("rs10048158","rs4791078"))

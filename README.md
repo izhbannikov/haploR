@@ -1,4 +1,4 @@
-# haploR: utilities for querying Haploreg and other similar web-based tools
+# haploR: utilities for querying HaploReg and other similar web-based tools
 
 ## Installation
 
@@ -8,12 +8,12 @@ The last version of `haploR` that is compatible with the current version of R (3
 which can be downloaded using devtools:
 
 ```
-devtools::install_github("izhbannikov/haploR")
+devtools::install_github("izhbannikov/haploR", buildVignette=TRUE)
 ```
 
 ## Usage
 
-### Querying Haploreg
+### Querying HaploReg
 
 ```
 library(haploR)

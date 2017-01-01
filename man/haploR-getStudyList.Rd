@@ -2,14 +2,14 @@
 % Please edit documentation in R/haploregStudy.R
 \name{getStudyList}
 \alias{getStudyList}
-\title{This function queries Haploreg web-based tool 
+\title{This function queries HaploReg web-based tool 
 in order to see a list of GWAS.}
 \usage{
 
   getStudyList(url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php")
 }
 \arguments{
-\item{url}{A url to Haploreg.
+\item{url}{A url to HaploReg.
 Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
 }
 \value{
@@ -17,7 +17,7 @@ A list of studies. Each study is itself a list
 of two: \code{name}, \code{id}.
 }
 \description{
-This function queries Haploreg web-based tool 
+This function queries HaploReg web-based tool 
 in order to see a list of GWAS.
 }
 \examples{
