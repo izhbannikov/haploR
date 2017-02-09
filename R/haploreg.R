@@ -24,7 +24,7 @@
 #' \code{refseq} for RefSeq genes;
 #' \code{both} for both.
 #' Default: \code{gencode}.
-#' @param url Haplotype url address. 
+#' @param url HaploReg url address. 
 #' Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A data frame (table) with results similar to 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/regulome.R
 \name{queryRegulome}
 \alias{queryRegulome}
-\title{This function queries Regulome \url{www.regulomedb.org} web-based tool 
+\title{This function queries RegulomeDB \url{www.regulomedb.org} web-based tool 
 and returns results in a data frame.}
 \usage{
 queryRegulome(query = NULL, format = "full",
@@ -28,7 +28,7 @@ that were not found in 1000 Genomes
 Phase 1 data
 }
 \description{
-This function queries Regulome \url{www.regulomedb.org} web-based tool 
+This function queries RegulomeDB \url{www.regulomedb.org} web-based tool 
 and returns results in a data frame.
 }
 \examples{

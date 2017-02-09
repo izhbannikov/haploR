@@ -42,7 +42,7 @@ Possible values: \code{gencode} for Gencode genes;
 \code{both} for both.
 Default: \code{gencode}.}
 
-\item{url}{Haplotype url address. 
+\item{url}{HaploReg url address. 
 Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
 
 \item{verbose}{Verbosing output. Default: FALSE.}

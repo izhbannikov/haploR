@@ -1,4 +1,4 @@
-#' This function queries Regulome \url{www.regulomedb.org} web-based tool 
+#' This function queries RegulomeDB \url{www.regulomedb.org} web-based tool 
 #' and returns results in a data frame.
 #' 
 #' @param query Query (a vector of rsIDs).
@@ -36,8 +36,8 @@ queryRegulome <- function(query=NULL,
         qr <- paste(query, collapse = ',') 
         dataHaploReg <- queryHaploreg(qr)
         bad.snp.id <- dataHaploReg[which(dataHaploReg$GENCODE_id == "" &
-                                          dataHaploReg$chr == "" & 
-                                          dataHaploReg$dbSNP_functional_annotation == ""), "rsID"]
+                                         dataHaploReg$chr == "" & 
+                                         dataHaploReg$dbSNP_functional_annotation == ""), "rsID"]
         
         query <- query[which(!(query %in% bad.snp.id))]
         # End of filtering bad snps #
