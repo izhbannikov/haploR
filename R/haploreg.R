@@ -86,19 +86,22 @@ queryHaploreg <- function(query=NULL, file=NULL,
                    output=output)
       
     }
+    res.table <- data.frame()
+    tryCatch({
+        # Form encoded: multipart encoded
+        r <- POST(url=url, body = body, encode="multipart",  timeout(10))
+  
+        dat <- content(r, "text")
+        sp <- strsplit(dat, '\n')
+        res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])))
+        colnames(res.table) <- strsplit(sp[[1]][1], '\t')[[1]]
+  
+        for(i in 2:length(sp[[1]])) {
+            res.table[i-1,] <- strsplit(sp[[1]][i], '\t')[[1]]
+        }
+    }, error=function(e) {
+        print(e)
+    })
     
-    
-    # Form encoded: multipart encoded
-    r <- POST(url=url, body = body, encode="multipart")
-  
-    dat <- content(r, "text")
-    sp <- strsplit(dat, '\n')
-    res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])))
-    colnames(res.table) <- strsplit(sp[[1]][1], '\t')[[1]]
-  
-    for(i in 2:length(sp[[1]])) {
-        res.table[i-1,] <- strsplit(sp[[1]][i], '\t')[[1]]
-    }
-  
     return(res.table)
 }
