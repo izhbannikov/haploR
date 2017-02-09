@@ -2,7 +2,7 @@ Package: haploR
 Type: Package
 Title: Query HaploReg and RegulomeDB
 Version: 1.4.2
-Date: 2017-02-08
+Date: 2017-02-09
 Author: I. Y. Zhbannikov, K. G. Arbeev, A. I. Yashin
 Maintainer: Ilya Y. Zhbannikov <ilya.zhbannikov@duke.edu>
 Description: A set of utilities for querying 
