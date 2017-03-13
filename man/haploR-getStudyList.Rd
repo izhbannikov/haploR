@@ -24,4 +24,3 @@ in order to see a list of GWAS.
 studies <- getStudyList()
 studies
 }
-

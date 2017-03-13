@@ -26,6 +26,8 @@
 #' Default: \code{gencode}.
 #' @param url HaploReg url address. 
 #' Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
+#' @param timeout A \code{timeout} parameter for \code{curl}.
+#' Default: 10
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A data frame (table) with results similar to 
 #' HaploReg uses.
@@ -42,6 +44,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
                           cons="siphy", 
                           genetypes="gencode",
                           url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
+                          timeout=10,
                           verbose=FALSE) {
     
   
@@ -89,7 +92,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
     res.table <- data.frame()
     tryCatch({
         # Form encoded: multipart encoded
-        r <- POST(url=url, body = body, encode="multipart",  timeout(10))
+        r <- POST(url=url, body = body, encode="multipart",  timeout(timeout))
   
         dat <- content(r, "text")
         sp <- strsplit(dat, '\n')

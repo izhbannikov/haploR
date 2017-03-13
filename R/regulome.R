@@ -6,6 +6,8 @@
 #' Only \code{full} is currently supported.
 #' @param url Regulome url address. 
 #' Default: <http://www.regulomedb.org/results>
+#' @param timeout A \code{timeout} parameter for \code{curl}.
+#' Default: 10
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A list of two:
 #' (1) a data frame (table) and
@@ -22,6 +24,7 @@
 queryRegulome <- function(query=NULL, 
                           format = "full",
                           url="http://www.regulomedb.org/results",
+                          timeout=10,
                           verbose=FALSE) {
   
     if(format != "full") {
@@ -49,7 +52,7 @@ queryRegulome <- function(query=NULL,
         body <- list(data = qr)
         # Form encoded
         # Multipart encoded
-        r <- POST(url, body = body, encode = encode)
+        r <- POST(url, body = body, encode = encode, timeout(timeout))
         bin <- content(r, "raw")
         dat <- readBin(bin, character())
   
@@ -61,7 +64,7 @@ queryRegulome <- function(query=NULL,
         body <- list(format=format, sid = sid)
         # Form encoded
         # Multipart encoded
-        r <- POST(url, body = body, encode = encode,  timeout(10))
+        r <- POST(url, body = body, encode = encode,  timeout(timeout))
         bin <- content(r, "raw")
         dat <- readBin(bin, character())
   

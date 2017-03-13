@@ -7,7 +7,7 @@
 queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
   ldPop = "EUR", epi = "vanilla", cons = "siphy", genetypes = "gencode",
   url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
-  verbose = FALSE)
+  timeout = 10, verbose = FALSE)
 }
 \arguments{
 \item{query}{Query (a vector of rsIDs).}
@@ -45,6 +45,9 @@ Default: \code{gencode}.}
 \item{url}{HaploReg url address. 
 Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
 
+\item{timeout}{A \code{timeout} parameter for \code{curl}.
+Default: 10}
+
 \item{verbose}{Verbosing output. Default: FALSE.}
 }
 \value{
@@ -58,4 +61,3 @@ This function queries HaploReg web-based tool and returns results.
 data <- queryHaploreg(c("rs10048158","rs4791078"))
 head(data)
 }
-

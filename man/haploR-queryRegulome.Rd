@@ -6,7 +6,8 @@
 and returns results in a data frame.}
 \usage{
 queryRegulome(query = NULL, format = "full",
-  url = "http://www.regulomedb.org/results", verbose = FALSE)
+  url = "http://www.regulomedb.org/results", timeout = 10,
+  verbose = FALSE)
 }
 \arguments{
 \item{query}{Query (a vector of rsIDs).}
@@ -16,6 +17,9 @@ Only \code{full} is currently supported.}
 
 \item{url}{Regulome url address. 
 Default: <http://www.regulomedb.org/results>}
+
+\item{timeout}{A \code{timeout} parameter for \code{curl}.
+Default: 10}
 
 \item{verbose}{Verbosing output. Default: FALSE.}
 }
@@ -36,4 +40,3 @@ data <- queryRegulome(c("rs4791078","rs10048158"))
 head(data[["res.table"]])
 head(data[["bad.snp.id"]])
 }
-
