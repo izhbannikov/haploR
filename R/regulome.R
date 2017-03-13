@@ -8,6 +8,8 @@
 #' Default: <http://www.regulomedb.org/results>
 #' @param timeout A \code{timeout} parameter for \code{curl}.
 #' Default: 10
+#' @param check_bad_snps Checks if all SNPs are annotated.
+#' Default: \code{TRUE}
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A list of two:
 #' (1) a data frame (table) and
@@ -25,6 +27,7 @@ queryRegulome <- function(query=NULL,
                           format = "full",
                           url="http://www.regulomedb.org/results",
                           timeout=10,
+                          check_bad_snps=TRUE,
                           verbose=FALSE) {
   
     if(format != "full") {
@@ -37,12 +40,14 @@ queryRegulome <- function(query=NULL,
     tryCatch({
         # First find the bad snp ids #
         qr <- paste(query, collapse = ',') 
-        dataHaploReg <- queryHaploreg(qr,timeout=timeout)
-        bad.snp.id <- dataHaploReg[which(dataHaploReg$GENCODE_id == "" &
+        if(check_bad_snps) {
+            dataHaploReg <- queryHaploreg(qr,timeout=timeout)
+            bad.snp.id <- dataHaploReg[which(dataHaploReg$GENCODE_id == "" &
                                          dataHaploReg$chr == "" & 
                                          dataHaploReg$dbSNP_functional_annotation == ""), "rsID"]
         
-        query <- query[which(!(query %in% bad.snp.id))]
+            query <- query[which(!(query %in% bad.snp.id))]
+        }
         # End of filtering bad snps #
         
         # Searching #

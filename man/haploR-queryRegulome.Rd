@@ -7,7 +7,7 @@ and returns results in a data frame.}
 \usage{
 queryRegulome(query = NULL, format = "full",
   url = "http://www.regulomedb.org/results", timeout = 10,
-  verbose = FALSE)
+  check_bad_snps = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{query}{Query (a vector of rsIDs).}
@@ -20,6 +20,9 @@ Default: <http://www.regulomedb.org/results>}
 
 \item{timeout}{A \code{timeout} parameter for \code{curl}.
 Default: 10}
+
+\item{check_bad_snps}{Checks if all SNPs are annotated.
+Default: \code{TRUE}}
 
 \item{verbose}{Verbosing output. Default: FALSE.}
 }
