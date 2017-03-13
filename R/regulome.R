@@ -37,7 +37,7 @@ queryRegulome <- function(query=NULL,
     tryCatch({
         # First find the bad snp ids #
         qr <- paste(query, collapse = ',') 
-        dataHaploReg <- queryHaploreg(qr)
+        dataHaploReg <- queryHaploreg(qr,timeout=timeout)
         bad.snp.id <- dataHaploReg[which(dataHaploReg$GENCODE_id == "" &
                                          dataHaploReg$chr == "" & 
                                          dataHaploReg$dbSNP_functional_annotation == ""), "rsID"]
