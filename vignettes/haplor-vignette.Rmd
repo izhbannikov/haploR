@@ -31,6 +31,14 @@ to use this package.
 Contact: <ilya.zhbannikov@duke.edu> for questions of 
 usage the \texttt{haploR} or any other issues.
 
+### Motivation and general strategy
+
+This package was inspired by the fact that many web-based annotation databases do not have Application Programing Interface (API) and, therefore, do not allow users to query them remotedly. In our research we used Haploreg and Regulome annotation databases and had a hard time with  downloading results from Haploreg web site since it does not allow to do this. Regulome was a little bit friendly, but still not offering API therefore we could not include it to our automated data processing pipeline. 
+
+We developed a custom analysis pipeline whcih prepares data, performs genetic association analysis and presents results in user-friendly form. Results include a list of genetic variants (SNPs), their corresponding p-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go thought the SNPs with genome-wide significant p-values (1e-8) and submit each SNP to Haploreg and Regulome manually, one-by-one, but of course it would take time and will not be fully automatic (which ruins one of the pipeline's paradigms). This is especially difficult if the web site does not have a download results option.
+
+Therefore, we developed \code{haploR}, a user-friendly R package to connet to Haploreg and Regulome remotedly. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline.
+
 
 
 ## Installation of \emph{haploR} package
@@ -41,6 +49,10 @@ In order to install the \emph{haploR} package, the user must first install R <ht
 devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)
 ```
 
+
+
+
+
 ## Examples
 
 ### Querying HaploReg
@@ -49,11 +61,27 @@ devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
 results <- queryHaploreg(query=c("rs10048158","rs4791078"))
-head(results)
 ```
 
 Here \texttt{query} is a vector with names of genetic variants. 
 \texttt{results} are the table similar to the output of HaploReg.
+
+We then can create a subset from the results, for example, to choose only SNPs with r2 > 0.9:
+
+```{r, echo=TRUE, message=FALSE}
+subset.high.LD <- results[results$r2 > 0.9, c("rsID", "r2", "chr", "pos_hg38", "is_query_snp", "ref", "alt")]
+```
+
+We can then save the \code{subset.high.LD} into an Excel workbook:
+
+```{r, echo=TRUE, message=FALSE}
+library(openxlsx)
+write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
+```
+
+These steps are summarized in a picture below.
+
+
 
 #### Uploading file with variants
 
@@ -64,7 +92,6 @@ supply it on an input as follows:
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
 results <- queryHaploreg(file=system.file("extdata/snps.txt", package = "haploR"))
-head(results)
 ```
 
 #### Using existing studies
@@ -86,7 +113,6 @@ studies[[2]]
 # Query Hploreg to explore results from 
 # this study:
 results <- queryHaploreg(study=studies[[2]])
-head(results)
 ```
 
 ### Querying RegulomeDB

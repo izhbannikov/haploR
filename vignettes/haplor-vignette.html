@@ -118,7 +118,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Using haploR, an R package for querying HaploReg and RegulomeDB</h1>
 <h4 class="author"><em>Ilya Y. Zhbannikov</em></h4>
-<h4 class="date"><em>Sun Jan 1 14:42:49 2017</em></h4>
+<h4 class="date"><em>Tue Apr 11 16:59:53 2017</em></h4>
 
 </div>
 
@@ -129,6 +129,12 @@ $(document).ready(function () {
 <p>The R-package  was developed to query those tools (HaploReg and RegulomeDB) directly from  in order to facilitate high-throughput genomic data analysis. Below we provide several examples that show how to work with this package.</p>
 <p>Note: you must have a stable Internet connection to use this package.</p>
 <p>Contact: <a href="mailto:ilya.zhbannikov@duke.edu">ilya.zhbannikov@duke.edu</a> for questions of usage the  or any other issues.</p>
+<div id="motivation-and-general-strategy" class="section level3">
+<h3>Motivation and general strategy</h3>
+<p>This package was inspired by the fact that many web-based annotation databases do not have Application Programing Interface (API) and, therefore, do not allow users to query them remotedly. In our research we used Haploreg and Regulome annotation databases and had a hard time with downloading results from Haploreg web site since it does not allow to do this. Regulome was a little bit friendly, but still not offering API therefore we could not include it to our automated data processing pipeline.</p>
+<p>We developed a custom analysis pipeline whcih prepares data, performs genetic association analysis and presents results in user-friendly form. Results include a list of genetic variants (SNPs), their corresponding p-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go thought the SNPs with genome-wide significant p-values (1e-8) and submit each SNP to Haploreg and Regulome manually, one-by-one, but of course it would take time and will not be fully automatic (which ruins one of the pipeline’s paradigms). This is especially difficult if the web site does not have a download results option.</p>
+<p>Therefore, we developed , a user-friendly R package to connet to Haploreg and Regulome remotedly. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline.</p>
+</div>
 </div>
 <div id="installation-of-package" class="section level2">
 <h2>Installation of  package</h2>
@@ -142,156 +148,20 @@ $(document).ready(function () {
 <div id="one-or-several-genetic-variants" class="section level4">
 <h4>One or several genetic variants</h4>
 <pre class="r"><code>library(haploR)
-results &lt;- queryHaploreg(query=c(&quot;rs10048158&quot;,&quot;rs4791078&quot;))
-head(results)</code></pre>
-<pre><code>##   chr pos_hg38   r2   D' is_query_snp      rsID ref alt  AFR  AMR  ASN
-## 1  17 66213160 0.82 0.93            0 rs4790914   C   G 0.84 0.66 0.91
-## 2  17 66213422 0.82 0.93            0 rs4791079   T   G 0.85 0.67 0.91
-## 3  17 66213896 0.82 0.93            0 rs4791078   A   C 0.84 0.67 0.91
-## 4  17 66214285 0.83 0.93            0 rs1971682   G   C 0.86 0.67 0.91
-## 5  17 66216124 0.83 0.93            0 rs4366742   T   C 0.93 0.68 0.91
-## 6  17 66219453 0.83 0.93            0 rs2215415   G   A 0.91 0.67 0.91
-##    EUR GERP_cons SiPhy_cons Chromatin_States Chromatin_States_Imputed
-## 1 0.57         0          0                                          
-## 2 0.57         0          0                                          
-## 3 0.57         0          0                                          
-## 4 0.57         0          0                                          
-## 5 0.57         0          0      E118,6_EnhG                         
-## 6 0.57         0          0                                          
-##                                                                       Chromatin_Marks
-## 1                                                                                    
-## 2                                                                                    
-## 3                                                    E002,H3K4me3_Pro;E004,H3K9ac_Pro
-## 4                 E002,H3K4me3_Pro;E056,H3K4me1_Enh;E066,H3K4me1_Enh;E118,H3K4me1_Enh
-## 5 E002,H3K4me1_Enh;E066,H3K4me1_Enh;E118,H3K4me1_Enh;E006,H3K9ac_Pro;E066,H3K27ac_Enh
-## 6                                                    E038,H3K9ac_Pro;E066,H3K4me1_Enh
-##   DNAse                      Proteins
-## 1                                   .
-## 2                                   .
-## 3                                   .
-## 4                HepG2,POL2,UT-A,None
-## 5                                   .
-## 6       HepG2,POL2,Stanford,forskolin
-##                                                                                           eQTL
-## 1                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,3.25964766049438e-10
-## 2 GTEx2015_v6,Heart_Left_Ventricle,PRKCA,2.87827072933431e-10;Koopman2014,Heart,PRKCA,9.83E-07
-## 3                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,2.87827072933431e-10
-## 4                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,5.94596439339797e-11
-## 5                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,6.83955923561212e-11
-## 6                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,6.80544182605399e-11
-##   gwas grasp
-## 1    .     .
-## 2    .     .
-## 3    .     .
-## 4    .     .
-## 5    .     .
-## 6    .     .
-##                                                                                                                          Motifs
-## 1 AP-4_3;Ascl2;E2A_5;Foxa_disc3;HEN1_2;LBP-1_2;NRSF_disc4;NRSF_disc8;NRSF_known3;Rad21_disc10;Rad21_disc5;SMC3_disc3;ZEB1_disc1
-## 2                                                                                     Pou5f1_disc1;RFX5_known1;Sox_4;TATA_disc7
-## 3                                                                                                             RFX5_known5;Zbtb3
-## 4                                                                   AP-1_disc1;HEN1_1;Maf_disc2;NR4A_known1;RAR;RXRA_known3;T3R
-## 5                                                                                                                        Pdx1_2
-## 6                                                                                              AP-1_disc1;HEY1_disc1;TATA_disc2
-##          GENCODE_id GENCODE_name GENCODE_direction GENCODE_distance
-## 1 ENSG00000091583.6         APOH                 0                0
-## 2 ENSG00000091583.6         APOH                 0                0
-## 3 ENSG00000091583.6         APOH                 0                0
-## 4 ENSG00000091583.6         APOH                 0                0
-## 5 ENSG00000091583.6         APOH                 0                0
-## 6 ENSG00000091583.6         APOH                 0                0
-##   RefSeq_id RefSeq_name RefSeq_direction RefSeq_distance
-## 1 NM_000042        APOH                0               0
-## 2 NM_000042        APOH                0               0
-## 3 NM_000042        APOH                0               0
-## 4 NM_000042        APOH                0               0
-## 5 NM_000042        APOH                0               0
-## 6 NM_000042        APOH                0               0
-##   dbSNP_functional_annotation query_snp_rsid
-## 1                         INT     rs10048158
-## 2                         INT     rs10048158
-## 3                         INT     rs10048158
-## 4                         INT     rs10048158
-## 5                         INT     rs10048158
-## 6                         INT     rs10048158</code></pre>
+results &lt;- queryHaploreg(query=c(&quot;rs10048158&quot;,&quot;rs4791078&quot;))</code></pre>
 <p>Here  is a vector with names of genetic variants.  are the table similar to the output of HaploReg.</p>
+<p>We then can create a subset from the results, for example, to choose only SNPs with r2 &gt; 0.9:</p>
+<pre class="r"><code>subset.high.LD &lt;- results[results$r2 &gt; 0.9, c(&quot;rsID&quot;, &quot;r2&quot;, &quot;chr&quot;, &quot;pos_hg38&quot;, &quot;is_query_snp&quot;, &quot;ref&quot;, &quot;alt&quot;)]</code></pre>
+<p>We can then save the  into an Excel workbook:</p>
+<pre class="r"><code>library(openxlsx)
+write.xlsx(x=subset.high.LD, file=&quot;subset.high.LD.xlsx&quot;)</code></pre>
+<p>These steps are summarized in a picture below.</p>
 </div>
 <div id="uploading-file-with-variants" class="section level4">
 <h4>Uploading file with variants</h4>
 <p>If you have a file with your SNPs you would like to analyze (one SNP per line), you can supply it on an input as follows:</p>
 <pre class="r"><code>library(haploR)
-results &lt;- queryHaploreg(file=system.file(&quot;extdata/snps.txt&quot;, package = &quot;haploR&quot;))
-head(results)</code></pre>
-<pre><code>##   chr pos_hg38   r2   D' is_query_snp      rsID ref alt  AFR  AMR  ASN
-## 1  17 66213160 0.82 0.93            0 rs4790914   C   G 0.84 0.66 0.91
-## 2  17 66213422 0.82 0.93            0 rs4791079   T   G 0.85 0.67 0.91
-## 3  17 66213896 0.82 0.93            0 rs4791078   A   C 0.84 0.67 0.91
-## 4  17 66214285 0.83 0.93            0 rs1971682   G   C 0.86 0.67 0.91
-## 5  17 66216124 0.83 0.93            0 rs4366742   T   C 0.93 0.68 0.91
-## 6  17 66219453 0.83 0.93            0 rs2215415   G   A 0.91 0.67 0.91
-##    EUR GERP_cons SiPhy_cons Chromatin_States Chromatin_States_Imputed
-## 1 0.57         0          0                                          
-## 2 0.57         0          0                                          
-## 3 0.57         0          0                                          
-## 4 0.57         0          0                                          
-## 5 0.57         0          0      E118,6_EnhG                         
-## 6 0.57         0          0                                          
-##                                                                       Chromatin_Marks
-## 1                                                                                    
-## 2                                                                                    
-## 3                                                    E002,H3K4me3_Pro;E004,H3K9ac_Pro
-## 4                 E002,H3K4me3_Pro;E056,H3K4me1_Enh;E066,H3K4me1_Enh;E118,H3K4me1_Enh
-## 5 E002,H3K4me1_Enh;E066,H3K4me1_Enh;E118,H3K4me1_Enh;E006,H3K9ac_Pro;E066,H3K27ac_Enh
-## 6                                                    E038,H3K9ac_Pro;E066,H3K4me1_Enh
-##   DNAse                      Proteins
-## 1                                   .
-## 2                                   .
-## 3                                   .
-## 4                HepG2,POL2,UT-A,None
-## 5                                   .
-## 6       HepG2,POL2,Stanford,forskolin
-##                                                                                           eQTL
-## 1                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,3.25964766049438e-10
-## 2 GTEx2015_v6,Heart_Left_Ventricle,PRKCA,2.87827072933431e-10;Koopman2014,Heart,PRKCA,9.83E-07
-## 3                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,2.87827072933431e-10
-## 4                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,5.94596439339797e-11
-## 5                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,6.83955923561212e-11
-## 6                                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,6.80544182605399e-11
-##   gwas grasp
-## 1    .     .
-## 2    .     .
-## 3    .     .
-## 4    .     .
-## 5    .     .
-## 6    .     .
-##                                                                                                                          Motifs
-## 1 AP-4_3;Ascl2;E2A_5;Foxa_disc3;HEN1_2;LBP-1_2;NRSF_disc4;NRSF_disc8;NRSF_known3;Rad21_disc10;Rad21_disc5;SMC3_disc3;ZEB1_disc1
-## 2                                                                                     Pou5f1_disc1;RFX5_known1;Sox_4;TATA_disc7
-## 3                                                                                                             RFX5_known5;Zbtb3
-## 4                                                                   AP-1_disc1;HEN1_1;Maf_disc2;NR4A_known1;RAR;RXRA_known3;T3R
-## 5                                                                                                                        Pdx1_2
-## 6                                                                                              AP-1_disc1;HEY1_disc1;TATA_disc2
-##          GENCODE_id GENCODE_name GENCODE_direction GENCODE_distance
-## 1 ENSG00000091583.6         APOH                 0                0
-## 2 ENSG00000091583.6         APOH                 0                0
-## 3 ENSG00000091583.6         APOH                 0                0
-## 4 ENSG00000091583.6         APOH                 0                0
-## 5 ENSG00000091583.6         APOH                 0                0
-## 6 ENSG00000091583.6         APOH                 0                0
-##   RefSeq_id RefSeq_name RefSeq_direction RefSeq_distance
-## 1 NM_000042        APOH                0               0
-## 2 NM_000042        APOH                0               0
-## 3 NM_000042        APOH                0               0
-## 4 NM_000042        APOH                0               0
-## 5 NM_000042        APOH                0               0
-## 6 NM_000042        APOH                0               0
-##   dbSNP_functional_annotation query_snp_rsid
-## 1                         INT     rs10048158
-## 2                         INT     rs10048158
-## 3                         INT     rs10048158
-## 4                         INT     rs10048158
-## 5                         INT     rs10048158
-## 6                         INT     rs10048158</code></pre>
+results &lt;- queryHaploreg(file=system.file(&quot;extdata/snps.txt&quot;, package = &quot;haploR&quot;))</code></pre>
 </div>
 <div id="using-existing-studies" class="section level4">
 <h4>Using existing studies</h4>
@@ -315,71 +185,7 @@ studies[[2]]</code></pre>
 ## [1] &quot;1756&quot;</code></pre>
 <pre class="r"><code># Query Hploreg to explore results from 
 # this study:
-results &lt;- queryHaploreg(study=studies[[2]])
-head(results)</code></pre>
-<pre><code>##   chr pos_hg38   r2   D' is_query_snp       rsID ref alt  AFR  AMR    ASN
-## 1  11 34524785 0.97    1            0   rs836138   C   A 0.34 0.16   0.42
-## 2  11 34524788 0.87 0.97            0 rs11032744   C   T 0.04  0.1 0.0035
-## 3  11 34526877    1    1            0   rs836137   A   G 0.37 0.16   0.42
-## 4  11 34527359    1    1            0   rs836135   G   A 0.36 0.16   0.42
-## 5  11 34527815    1    1            0   rs704727   T   A 0.16 0.15   0.42
-## 6  11 34530979 0.96 0.99            0   rs836133   C   T 0.16 0.15   0.42
-##    EUR GERP_cons SiPhy_cons           Chromatin_States
-## 1 0.11         1          1 E091,7_Enh;E118,11_BivFlnk
-## 2  0.1         1          0 E091,7_Enh;E118,11_BivFlnk
-## 3 0.11         0          0      E066,7_Enh;E118,7_Enh
-## 4 0.11         0          0      E066,7_Enh;E118,7_Enh
-## 5 0.11         0          0      E066,7_Enh;E118,7_Enh
-## 6 0.11         0          0                           
-##   Chromatin_States_Imputed
-## 1                         
-## 2                         
-## 3                         
-## 4                         
-## 5                         
-## 6                         
-##                                                                                                                                                                                                                              Chromatin_Marks
-## 1 E007,H3K9ac_Pro;E083,H3K9ac_Pro;E117,H3K9ac_Pro;E011,H3K4me1_Enh;E012,H3K4me1_Enh;E022,H3K4me1_Enh;E056,H3K4me1_Enh;E083,H3K4me1_Enh;E091,H3K4me1_Enh;E099,H3K4me1_Enh;E118,H3K4me1_Enh;E055,H3K27ac_Enh;E099,H3K27ac_Enh;E118,H3K4me3_Pro
-## 2 E007,H3K9ac_Pro;E083,H3K9ac_Pro;E117,H3K9ac_Pro;E011,H3K4me1_Enh;E012,H3K4me1_Enh;E022,H3K4me1_Enh;E056,H3K4me1_Enh;E083,H3K4me1_Enh;E091,H3K4me1_Enh;E099,H3K4me1_Enh;E118,H3K4me1_Enh;E055,H3K27ac_Enh;E099,H3K27ac_Enh;E118,H3K4me3_Pro
-## 3                                 E006,H3K9ac_Pro;E028,H3K4me1_Enh;E056,H3K4me1_Enh;E066,H3K4me1_Enh;E079,H3K4me1_Enh;E091,H3K4me1_Enh;E099,H3K4me1_Enh;E115,H3K4me1_Enh;E118,H3K4me1_Enh;E037,H3K4me3_Pro;E094,H3K4me3_Pro;E061,H3K27ac_Enh
-## 4                                                                                                                                                                         E006,H3K9ac_Pro;E066,H3K4me1_Enh;E099,H3K4me1_Enh;E118,H3K4me1_Enh
-## 5                                                                                                                                                                                                          E066,H3K4me1_Enh;E118,H3K4me1_Enh
-## 6                                                                                                                                                                                                                           E118,H3K4me1_Enh
-##   DNAse Proteins eQTL gwas grasp
-## 1  E118        .    .    .     .
-## 2  E118        .    .    .     .
-## 3  E091        .    .    .     .
-## 4              .    .    .     .
-## 5              .    .    .     .
-## 6              .    .    .     .
-##                                                Motifs        GENCODE_id
-## 1   HDAC2_disc3;Irf_disc5;NRSF_disc10;Sin3Ak-20_disc7 ENSG00000255271.1
-## 2                              Nanog_disc2;SP1_known3 ENSG00000255271.1
-## 3                                                   . ENSG00000255271.1
-## 4         Evi-1_4;Nrf1_known2;Pou1f1_2;Pou2f2_known11 ENSG00000255271.1
-## 5 Evi-1_5;HNF1_2;Osf2_2;PEBP;Pax-5_disc1;Pax-5_known3 ENSG00000255271.1
-## 6                  AP-1_known1;ATF4;TCF11::MafG;Zbtb3 ENSG00000255271.1
-##   GENCODE_name GENCODE_direction GENCODE_distance RefSeq_id RefSeq_name
-## 1  RP4-594L9.2                 3             8228 NM_001422        ELF5
-## 2  RP4-594L9.2                 3             8225 NM_001422        ELF5
-## 3  RP4-594L9.2                 3             6136 NM_001422        ELF5
-## 4  RP4-594L9.2                 3             5654 NM_001422        ELF5
-## 5  RP4-594L9.2                 3             5198 NM_001422        ELF5
-## 6  RP4-594L9.2                 3             2034 NM_001422        ELF5
-##   RefSeq_direction RefSeq_distance dbSNP_functional_annotation
-## 1                5           11001                           .
-## 2                5           11004                           .
-## 3                5           13093                           .
-## 4                5           13575                           .
-## 5                5           14031                           .
-## 6                5           17195                           .
-##   query_snp_rsid
-## 1       rs836132
-## 2       rs836132
-## 3       rs836132
-## 4       rs836132
-## 5       rs836132
-## 6       rs836132</code></pre>
+results &lt;- queryHaploreg(study=studies[[2]])</code></pre>
 </div>
 </div>
 <div id="querying-regulomedb" class="section level3">
@@ -387,7 +193,8 @@ head(results)</code></pre>
 <pre class="r"><code>library(haploR)
 data &lt;- queryRegulome(c(&quot;rs4791078&quot;,&quot;rs10048158&quot;))
 head(data)</code></pre>
-<pre><code>##   #chromosome coordinate       rsid
+<pre><code>## $res.table
+##   #chromosome coordinate       rsid
 ## 1       chr17   64236317 rs10048158
 ## 2       chr17   64210013  rs4791078
 ##                                                                                                                                                                                                                                                                                                                                                                                             hits
@@ -395,15 +202,22 @@ head(data)</code></pre>
 ## 2                                                                                                                                                                                                                                                                                                                                                                                        No data
 ##   score
 ## 1     5
-## 2     7</code></pre>
+## 2     7
+## 
+## $bad.snp.id
+## character(0)</code></pre>
 </div>
 </div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.3.2 (2016-10-31)
+<pre><code>## R Under development (unstable) (2017-03-04 r72303)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: macOS Sierra 10.12.2
+## Running under: macOS Sierra 10.12.4
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] C
@@ -412,14 +226,14 @@ head(data)</code></pre>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] haploR_1.4.1
+## [1] openxlsx_4.0.17 haploR_1.4.3   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.8     XML_3.98-1.5    digest_0.6.10   rprojroot_1.1  
-##  [5] mime_0.5        R6_2.2.0        backports_1.0.4 magrittr_1.5   
+##  [1] Rcpp_0.12.9     XML_3.98-1.5    digest_0.6.12   rprojroot_1.2  
+##  [5] mime_0.5        R6_2.2.0        backports_1.0.5 magrittr_1.5   
 ##  [9] evaluate_0.10   httr_1.2.1      stringi_1.1.2   curl_2.3       
-## [13] rmarkdown_1.2   tools_3.3.2     stringr_1.1.0   yaml_2.1.14    
-## [17] htmltools_0.3.5 knitr_1.15.1</code></pre>
+## [13] rmarkdown_1.3   tools_3.4.0     stringr_1.2.0   yaml_2.1.14    
+## [17] compiler_3.4.0  htmltools_0.3.5 knitr_1.15.1</code></pre>
 </div>
 
 
