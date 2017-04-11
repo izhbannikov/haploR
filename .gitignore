@@ -1,2 +1,4 @@
 .DS_Store
 R/.DS_Store
+vignettes/.Rhistory
+vignettes/*.xlsx
