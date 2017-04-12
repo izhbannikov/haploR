@@ -14,7 +14,7 @@ queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
 
 \item{file}{A text file (one refSNP ID per line).}
 
-\item{study}{A particular study. See function \code{getStudyList(...)}.
+\item{study}{A particular study. See function \code{getHaploRegStudyList(...)}.
 Default: \code{NULL}.}
 
 \item{ldThresh}{LD threshold, r2 (select NA to only show query variants). 

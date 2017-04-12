@@ -24,9 +24,9 @@ head(data)
 #### For a particular study
 ```
 library(haploR)
-studies <- getStudyList()
-studies[[2]]
-queryHaploreg(study=studies[[2]])
+studies <- getHaploRegStudyList()
+studies[[1]]
+queryHaploreg(study=studies[[1]])
 ```
 
 ###Querying RegulomeDB

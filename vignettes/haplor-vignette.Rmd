@@ -105,14 +105,14 @@ them as an input parameter. See example below:
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
 # Getting a list of existing studies:
-studies <- getStudyList()
+studies <- getHaploRegStudyList()
 # Let us look at the first element:
 studies[[1]]
 # Let us look at the second element:
 studies[[2]]
 # Query Hploreg to explore results from 
 # this study:
-results <- queryHaploreg(study=studies[[2]])
+results <- queryHaploreg(study=studies[[1]])
 ```
 
 ### Querying RegulomeDB

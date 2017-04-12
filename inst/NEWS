@@ -1,4 +1,5 @@
-New for version 1.4.3
+New for version 1.4.4
 ======================
 * Version released
-* timeout parameter added
+* Function name getStudyList changed to getHaploRegStudyList
+* Minor bug fixes 

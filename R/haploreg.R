@@ -2,7 +2,7 @@
 #' 
 #' @param query Query (a vector of rsIDs).
 #' @param file A text file (one refSNP ID per line).
-#' @param study A particular study. See function \code{getStudyList(...)}.
+#' @param study A particular study. See function \code{getHaploRegStudyList(...)}.
 #' Default: \code{NULL}.
 #' @param ldThresh LD threshold, r2 (select NA to only show query variants). 
 #' Default: 0.8.
