@@ -2,10 +2,10 @@ Package: haploR
 Type: Package
 Title: Query HaploReg and RegulomeDB
 Version: 1.4.4
-Date: 2017-04-13
+Date: 2017-04-14
 Authors@R: c(person("Ilya", "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
              person("Konstantin", "Arbeev", role = c("ctb"), comment = "Konstantin supervised the technical/software development."),
-             person("Anatoliy", "Yashin", role = c("ctb"), comment = "Anatoliy supervised the technical/software development and a Principal Invesigator of the project"))
+             person("Anatoliy", "Yashin", role = c("ctb"), comment = "Anatoliy supervised the technical/software development and is a Principal Invesigator of this project"))
 Maintainer: Ilya Y. Zhbannikov <ilya.zhbannikov@duke.edu>
 Description: A set of utilities for querying 
              HaploReg <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> 
@@ -20,6 +20,6 @@ VignetteBuilder: knitr
 Imports:
 	httr,XML
 Depends:
-    R (>= 3.3)
+    R (>= 3.3.2)
 Encoding: UTF-8
-License: GPL
+License: GPL-3
