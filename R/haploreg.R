@@ -28,6 +28,8 @@
 #' Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
 #' @param timeout A \code{timeout} parameter for \code{curl}.
 #' Default: 10
+#' @param encoding sets the \code{encoding} for correct retrieval web-page content.
+#' Default: \code{UTF-8}
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A data frame (table) with results similar to 
 #' HaploReg uses.
@@ -45,6 +47,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
                           genetypes="gencode",
                           url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
                           timeout=10,
+                          encoding="UTF-8",
                           verbose=FALSE) {
     
   
@@ -94,7 +97,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
         # Form encoded: multipart encoded
         r <- POST(url=url, body = body, encode="multipart",  timeout(timeout))
   
-        dat <- content(r, "text")
+        dat <- content(r, "text", encoding=encoding)
         sp <- strsplit(dat, '\n')
         res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])))
         colnames(res.table) <- strsplit(sp[[1]][1], '\t')[[1]]
