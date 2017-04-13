@@ -3,7 +3,9 @@ Type: Package
 Title: Query HaploReg and RegulomeDB
 Version: 1.4.4
 Date: 2017-04-13
-Author: I. Y. Zhbannikov, K. G. Arbeev, A. I. Yashin
+Authors@R: c(person("Ilya", "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
+             person("Konstantin", "Arbeev", role = c("ctb"), comment = "Konstantin supervised the technical/software development."),
+             person("Anatoliy", "Yashin", role = c("ctb"), comment = "Anatoliy supervised the technical/software development and a Principal Invesigator of the project"))
 Maintainer: Ilya Y. Zhbannikov <ilya.zhbannikov@duke.edu>
 Description: A set of utilities for querying 
              HaploReg <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> 
