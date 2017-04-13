@@ -109,5 +109,14 @@ queryHaploreg <- function(query=NULL, file=NULL,
         print(e)
     })
     
-    return(res.table)
+    #Convert numeric-like columns to actual numeric #
+    for(i in 1:dim(res.table)[2]) {
+        col.num.conv <- suppressWarnings(as.numeric(res.table[,i]))
+        na.rate <- length(which(is.na(col.num.conv)))/length(col.num.conv)
+        if(na.rate <= 0.5) {
+            res.table[,i] <- col.num.conv
+        }
+    }
+    
+    return(as_tibble(res.table))
 }

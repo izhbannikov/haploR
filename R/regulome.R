@@ -80,10 +80,18 @@ queryRegulome <- function(query=NULL,
                            function(n) { unlist(strsplit(sp[n], '\t')) } )
         res.table <- do.call(rbind.data.frame, res.rows)
         colnames(res.table) <- res.header
-        
     }, error=function(e) {
         print(e)
     })
     
-    return(list(res.table=res.table, bad.snp.id=bad.snp.id))
+    for(i in 1:dim(res.table)[2]) {
+        res.table[,i] <- as.character(res.table[,i])
+        col.num.conv <- suppressWarnings(as.numeric(res.table[,i]))
+        na.rate <- length(which(is.na(col.num.conv)))/length(col.num.conv)
+        if(na.rate <= 0.5) {
+            res.table[,i] <- col.num.conv
+        }
+    }
+    
+    return(list(res.table=as_tibble(res.table), bad.snp.id=bad.snp.id))
 }

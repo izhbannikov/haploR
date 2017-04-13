@@ -12,19 +12,22 @@
 #' @export
 getHaploRegStudyList <- function(url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php") {
   
-  doc.html <- htmlTreeParse(url, useInternalNodes = TRUE)
+    doc.html <- htmlTreeParse(url, useInternalNodes = TRUE)
   
-  # Extract all the paragraphs (HTML tag is p, starting at
-  # the root of the document). Unlist flattens the list to
-  # create a character vector.
-  names <- unlist(xpathApply(doc.html, '//option', xmlValue))
-  ids <- unlist(xpathApply(doc.html, '//option', xmlGetAttr, 'value'))
-  studies <- lapply(1:length(names), 
-                    function(n) {study <- list(name=names[n], id=ids[[n]])})
+    # Extract all the paragraphs (HTML tag is p, starting at
+    # the root of the document). Unlist flattens the list to
+    # create a character vector.
+    snames <- unlist(xpathApply(doc.html, '//select[@name=\'gwas_idx\']/option', xmlValue))
+    ids <- unlist(xpathApply(doc.html, '//select[@name=\'gwas_idx\']/option', xmlGetAttr, 'value'))
+    
+    studies <- lapply(1:length(snames), 
+                    function(n) {study <- list(name=snames[n], id=ids[[n]])})
   
-  if(studies[[1]]$name == "") {
-      studies[[1]] <- NULL
-  }
+    names(studies) <- snames
   
-  return(studies)
+    if(studies[[1]]$name == "") {
+        studies[[1]] <- NULL
+    }
+  
+    return(studies)
 }

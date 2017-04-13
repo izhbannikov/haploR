@@ -61,6 +61,7 @@ devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
 results <- queryHaploreg(query=c("rs10048158","rs4791078"))
+results
 ```
 
 Here \texttt{query} is a vector with names of genetic variants. 
@@ -70,6 +71,7 @@ We then can create a subset from the results, for example, to choose only SNPs w
 
 ```{r, echo=TRUE, message=FALSE}
 subset.high.LD <- results[results$r2 > 0.9, c("rsID", "r2", "chr", "pos_hg38", "is_query_snp", "ref", "alt")]
+subset.high.LD
 ```
 
 We can then save the \code{subset.high.LD} into an Excel workbook:
@@ -113,6 +115,7 @@ studies[[2]]
 # Query Hploreg to explore results from 
 # this study:
 results <- queryHaploreg(study=studies[[1]])
+results
 ```
 
 ### Querying RegulomeDB
@@ -120,7 +123,7 @@ results <- queryHaploreg(study=studies[[1]])
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
 data <- queryRegulome(c("rs4791078","rs10048158"))
-head(data)
+data$res.table
 ```
 
 
