@@ -118,7 +118,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Using haploR, an R package for querying HaploReg and RegulomeDB</h1>
 <h4 class="author"><em>Ilya Y. Zhbannikov</em></h4>
-<h4 class="date"><em>Thu Apr 13 00:10:12 2017</em></h4>
+<h4 class="date"><em>Sat Apr 15 19:13:55 2017</em></h4>
 
 </div>
 
@@ -148,8 +148,8 @@ $(document).ready(function () {
 <div id="one-or-several-genetic-variants" class="section level4">
 <h4>One or several genetic variants</h4>
 <pre class="r"><code>library(haploR)
-results &lt;- queryHaploreg(query=c(&quot;rs10048158&quot;,&quot;rs4791078&quot;))
-results</code></pre>
+x &lt;- queryHaploreg(query=c(&quot;rs10048158&quot;,&quot;rs4791078&quot;))
+x</code></pre>
 <pre><code>## # A tibble: 33 x 33
 ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
 ##    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
@@ -173,7 +173,7 @@ results</code></pre>
 ## #   dbSNP_functional_annotation &lt;chr&gt;, query_snp_rsid &lt;chr&gt;</code></pre>
 <p>Here  is a vector with names of genetic variants.  are the table similar to the output of HaploReg.</p>
 <p>We then can create a subset from the results, for example, to choose only SNPs with r2 &gt; 0.9:</p>
-<pre class="r"><code>subset.high.LD &lt;- results[results$r2 &gt; 0.9, c(&quot;rsID&quot;, &quot;r2&quot;, &quot;chr&quot;, &quot;pos_hg38&quot;, &quot;is_query_snp&quot;, &quot;ref&quot;, &quot;alt&quot;)]
+<pre class="r"><code>subset.high.LD &lt;- x[x$r2 &gt; 0.9, c(&quot;rsID&quot;, &quot;r2&quot;, &quot;chr&quot;, &quot;pos_hg38&quot;, &quot;is_query_snp&quot;, &quot;ref&quot;, &quot;alt&quot;)]
 subset.high.LD</code></pre>
 <pre><code>## # A tibble: 13 x 7
 ##          rsID    r2   chr pos_hg38 is_query_snp   ref   alt
@@ -192,15 +192,38 @@ subset.high.LD</code></pre>
 ## 12  rs8178827  0.96    17 66227121            0     C     T
 ## 13 rs71160546  0.94    17 66230111            0    GA     G</code></pre>
 <p>We can then save the  into an Excel workbook:</p>
-<pre class="r"><code>library(openxlsx)
+<pre class="r"><code>require(openxlsx)
 write.xlsx(x=subset.high.LD, file=&quot;subset.high.LD.xlsx&quot;)</code></pre>
 <p>These steps are summarized in a picture below.</p>
 </div>
 <div id="uploading-file-with-variants" class="section level4">
 <h4>Uploading file with variants</h4>
-<p>If you have a file with your SNPs you would like to analyze (one SNP per line), you can supply it on an input as follows:</p>
+<p>If you have a file with your SNPs you would like to analyze, you can supply it on an input as follows:</p>
 <pre class="r"><code>library(haploR)
-results &lt;- queryHaploreg(file=system.file(&quot;extdata/snps.txt&quot;, package = &quot;haploR&quot;))</code></pre>
+x &lt;- queryHaploreg(file=system.file(&quot;extdata/snps.txt&quot;, package = &quot;haploR&quot;))
+x</code></pre>
+<pre><code>## # A tibble: 33 x 33
+##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
+##    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1     17 66213160  0.82  0.93            0  rs4790914     C     G  0.84
+## 2     17 66213422  0.82  0.93            0  rs4791079     T     G  0.85
+## 3     17 66213896  0.82  0.93            0  rs4791078     A     C  0.84
+## 4     17 66214285  0.83  0.93            0  rs1971682     G     C  0.86
+## 5     17 66216124  0.83  0.93            0  rs4366742     T     C  0.93
+## 6     17 66219453  0.83  0.93            0  rs2215415     G     A  0.91
+## 7     17 66220526  0.83  0.93            0  rs3744317     G     A  0.93
+## 8     17 66227121  0.83  0.94            0  rs8178827     C     T  0.90
+## 9     17 66230111  0.83  0.93            0 rs71160546    GA     G  0.87
+## 10    17 66231972  0.82  0.99            0 rs11079645     G     T  0.88
+## # ... with 23 more rows, and 24 more variables: AMR &lt;dbl&gt;, ASN &lt;dbl&gt;,
+## #   EUR &lt;dbl&gt;, GERP_cons &lt;dbl&gt;, SiPhy_cons &lt;dbl&gt;, Chromatin_States &lt;chr&gt;,
+## #   Chromatin_States_Imputed &lt;chr&gt;, Chromatin_Marks &lt;chr&gt;, DNAse &lt;chr&gt;,
+## #   Proteins &lt;chr&gt;, eQTL &lt;chr&gt;, gwas &lt;chr&gt;, grasp &lt;chr&gt;, Motifs &lt;chr&gt;,
+## #   GENCODE_id &lt;chr&gt;, GENCODE_name &lt;chr&gt;, GENCODE_direction &lt;dbl&gt;,
+## #   GENCODE_distance &lt;dbl&gt;, RefSeq_id &lt;chr&gt;, RefSeq_name &lt;chr&gt;,
+## #   RefSeq_direction &lt;dbl&gt;, RefSeq_distance &lt;dbl&gt;,
+## #   dbSNP_functional_annotation &lt;chr&gt;, query_snp_rsid &lt;chr&gt;</code></pre>
+<p>File “snps.txt” is a text file which contains one rs-ID per line.</p>
 </div>
 <div id="using-existing-studies" class="section level4">
 <h4>Using existing studies</h4>
@@ -224,24 +247,68 @@ studies[[2]]</code></pre>
 ## [1] &quot;2362&quot;</code></pre>
 <pre class="r"><code># Query Hploreg to explore results from 
 # this study:
-results &lt;- queryHaploreg(study=studies[[1]])</code></pre>
+x &lt;- queryHaploreg(study=studies[[1]])
+x</code></pre>
+<pre><code>## # A tibble: 117 x 33
+##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
+##    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1     11 34524785  0.97  1.00            0   rs836138     C     A  0.34
+## 2     11 34524788  0.87  0.97            0 rs11032744     C     T  0.04
+## 3     11 34526877  1.00  1.00            0   rs836137     A     G  0.37
+## 4     11 34527359  1.00  1.00            0   rs836135     G     A  0.36
+## 5     11 34527815  1.00  1.00            0   rs704727     T     A  0.16
+## 6     11 34530979  0.96  0.99            0   rs836133     C     T  0.16
+## 7     11 34531545  0.90  1.00            0 rs77003093     C     T  0.01
+## 8     11 34533644  1.00  1.00            1   rs836132     G     A  0.16
+## 9     11 34534390  1.00  1.00            0   rs836131     C     T  0.16
+## 10    11 34535548  1.00  1.00            0   rs836130     G     T  0.36
+## # ... with 107 more rows, and 24 more variables: AMR &lt;dbl&gt;, ASN &lt;dbl&gt;,
+## #   EUR &lt;dbl&gt;, GERP_cons &lt;dbl&gt;, SiPhy_cons &lt;dbl&gt;, Chromatin_States &lt;chr&gt;,
+## #   Chromatin_States_Imputed &lt;chr&gt;, Chromatin_Marks &lt;chr&gt;, DNAse &lt;chr&gt;,
+## #   Proteins &lt;chr&gt;, eQTL &lt;chr&gt;, gwas &lt;chr&gt;, grasp &lt;chr&gt;, Motifs &lt;chr&gt;,
+## #   GENCODE_id &lt;chr&gt;, GENCODE_name &lt;chr&gt;, GENCODE_direction &lt;dbl&gt;,
+## #   GENCODE_distance &lt;dbl&gt;, RefSeq_id &lt;chr&gt;, RefSeq_name &lt;chr&gt;,
+## #   RefSeq_direction &lt;dbl&gt;, RefSeq_distance &lt;dbl&gt;,
+## #   dbSNP_functional_annotation &lt;chr&gt;, query_snp_rsid &lt;chr&gt;</code></pre>
 </div>
 </div>
 <div id="querying-regulomedb" class="section level3">
 <h3>Querying RegulomeDB</h3>
+<p>To query RegulomeDB use this function:</p>
+<pre><code>queryRegulome(query = NULL, 
+              format = &quot;full&quot;,
+              url = &quot;http://www.regulomedb.org/results&quot;, 
+              timeout = 10,
+              check_bad_snps = TRUE, 
+              verbose = FALSE)</code></pre>
+<p>This function queries RegulomeDB www.regulomedb.org web-based tool and returns results in a data frame.</p>
+<div id="arguments" class="section level4">
+<h4>Arguments</h4>
+<ul>
+<li>query: Query (a vector of rsIDs).</li>
+<li>format: An output format. Only ‘full’ is currently supported. See <a href="http://www.regulomedb.org/results" class="uri">http://www.regulomedb.org/results</a>.</li>
+<li>url: Regulome url address. Default: <a href="http://www.regulomedb.org/results" class="uri">http://www.regulomedb.org/results</a></li>
+<li>timeout: A ‘timeout’ parameter for ‘curl’. Default: 10.</li>
+<li>check_bad_snps: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: ‘TRUE’</li>
+<li>verbose: Verbosing output. Default: FALSE.</li>
+</ul>
+</div>
+<div id="output" class="section level4">
+<h4>Output</h4>
+<p>A list of two: (1) a data frame (table) wrapped to a  object and (2) a list of bad SNP IDs. Bad SNP ID are those IDs that were not found in 1000 Genomes Phase 1 data</p>
+</div>
+<div id="example" class="section level4">
+<h4>Example</h4>
 <pre class="r"><code>library(haploR)
-data &lt;- queryRegulome(c(&quot;rs4791078&quot;,&quot;rs10048158&quot;))
-head(data)</code></pre>
-<pre><code>## $res.table
-## # A tibble: 2 x 5
-##   `#chromosome` coordinate  rsid  hits score
-##           &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1             1          2     1     1     1
-## 2             1          1     2     2     2
-## 
-## $bad.snp.id
-## # A tibble: 0 x 1
-## # ... with 1 variables: rsID &lt;chr&gt;</code></pre>
+x &lt;- queryRegulome(c(&quot;rs4791078&quot;,&quot;rs10048158&quot;))
+x$res.table</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   `#chromosome` coordinate       rsid
+##           &lt;chr&gt;      &lt;dbl&gt;      &lt;chr&gt;
+## 1         chr17   64236317 rs10048158
+## 2         chr17   64210013  rs4791078
+## # ... with 2 more variables: hits &lt;chr&gt;, score &lt;dbl&gt;</code></pre>
+</div>
 </div>
 </div>
 <div id="session-information" class="section level2">
@@ -268,8 +335,9 @@ head(data)</code></pre>
 ##  [1] Rcpp_0.12.10    XML_3.98-1.6    digest_0.6.12   rprojroot_1.2  
 ##  [5] mime_0.5        R6_2.2.0        backports_1.0.5 magrittr_1.5   
 ##  [9] evaluate_0.10   httr_1.2.1      stringi_1.1.5   curl_2.4       
-## [13] rmarkdown_1.4   tools_3.4.0     stringr_1.2.0   yaml_2.1.14    
-## [17] compiler_3.4.0  htmltools_0.3.5 knitr_1.15.1    tibble_1.3.0</code></pre>
+## [13] RUnit_0.4.31    rmarkdown_1.4   tools_3.4.0     stringr_1.2.0  
+## [17] yaml_2.1.14     compiler_3.4.0  htmltools_0.3.5 knitr_1.15.1   
+## [21] tibble_1.3.0</code></pre>
 </div>
 
 

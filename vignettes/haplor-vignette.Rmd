@@ -88,7 +88,7 @@ These steps are summarized in a picture below.
 #### Uploading file with variants
 
 If you have a file with your SNPs you would like 
-to analyze (one SNP per line), you can 
+to analyze, you can 
 supply it on an input as follows:
 
 ```{r, echo=TRUE, message=FALSE}
@@ -96,6 +96,8 @@ library(haploR)
 x <- queryHaploreg(file=system.file("extdata/snps.txt", package = "haploR"))
 x
 ```
+
+File "snps.txt" is a text file which contains one rs-ID per line.
 
 #### Using existing studies
 
@@ -120,6 +122,33 @@ x
 ```
 
 ### Querying RegulomeDB
+
+To query RegulomeDB use this function:
+```
+queryRegulome(query = NULL, 
+              format = "full",
+              url = "http://www.regulomedb.org/results", 
+              timeout = 10,
+              check_bad_snps = TRUE, 
+              verbose = FALSE)
+```
+
+This function queries RegulomeDB www.regulomedb.org web-based tool and returns results in a data frame.
+
+#### Arguments
+
+* query: Query (a vector of rsIDs).
+* format: An output format.  Only 'full' is currently supported. See http://www.regulomedb.org/results.
+* url: Regulome url address.  Default: http://www.regulomedb.org/results
+* timeout: A 'timeout' parameter for 'curl'. Default: 10.
+* check_bad_snps: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: 'TRUE'
+* verbose: Verbosing output. Default: FALSE.
+
+#### Output
+
+A list of two: (1) a data frame (table) wrapped to a \code{tibble} object and (2) a list of bad SNP IDs.  Bad SNP ID are those IDs that were not found in 1000 Genomes Phase 1 data
+
+#### Example
 
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
