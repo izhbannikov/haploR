@@ -77,7 +77,7 @@ subset.high.LD
 We can then save the \code{subset.high.LD} into an Excel workbook:
 
 ```{r, echo=TRUE, message=FALSE}
-library(openxlsx)
+require(openxlsx)
 write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
 ```
 

@@ -10,7 +10,8 @@
 #' studies
 #' @rdname haploR-getHaploRegStudyList
 #' @export
-getHaploRegStudyList <- function(url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php") {
+getHaploRegStudyList <- function(
+    url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php") {
   
     doc.html <- htmlTreeParse(url, useInternalNodes = TRUE)
   

@@ -3,6 +3,7 @@
 export(getHaploRegStudyList)
 export(queryHaploreg)
 export(queryRegulome)
+importFrom(RUnit,checkEqualsNumeric)
 importFrom(XML,htmlTreeParse)
 importFrom(XML,xmlGetAttr)
 importFrom(XML,xmlValue)

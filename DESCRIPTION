@@ -3,7 +3,7 @@ Type: Package
 Title: Query HaploReg and RegulomeDB
 Version: 1.4.4
 Date: 2017-04-14
-Authors@R: c(person("Ilya", "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
+Authors@R: c(person("Ilya", "Zhbannikov", "Y.", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
              person("Konstantin", "Arbeev", role = c("ctb"), comment = "Konstantin supervised the technical/software development."),
              person("Anatoliy", "Yashin", role = c("ctb"), comment = "Anatoliy supervised the technical/software development and is a Principal Invesigator of this project"))
 Maintainer: Ilya Y. Zhbannikov <ilya.zhbannikov@duke.edu>
@@ -15,10 +15,10 @@ Description: A set of utilities for querying
              Results are stored in a data frame that can be directly used in various 
              kinds of downstream analyses.
 RoxygenNote: 6.0.1
-Suggests: knitr, rmarkdown
+Suggests: knitr, rmarkdown,openxlsx
 VignetteBuilder: knitr
 Imports:
-	httr,XML
+	httr,XML,tibble,RUnit
 Depends:
     R (>= 3.3.2)
 Encoding: UTF-8
