@@ -118,7 +118,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Using haploR, an R package for querying HaploReg and RegulomeDB</h1>
 <h4 class="author"><em>Ilya Y. Zhbannikov</em></h4>
-<h4 class="date"><em>Sat Apr 15 19:55:09 2017</em></h4>
+<h4 class="date"><em>Sat Apr 15 20:38:33 2017</em></h4>
 
 </div>
 
@@ -126,20 +126,34 @@ $(document).ready(function () {
 <div id="overview" class="section level2">
 <h2>Overview</h2>
 <p>HaploReg <a href="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php" class="uri">http://archive.broadinstitute.org/mammals/haploreg/haploreg.php</a> and RegulomeDB <a href="http://www.regulomedb.org" class="uri">http://www.regulomedb.org</a> are web-based tools that extracts biological information such as eQTL, LD, motifs, etc. from large genomic projects such as ENCODE, the 1000 Genomes Project, Roadmap Epigenomics Project and others. This is sometimes called “post-GWAS” analysis.</p>
-<p>The R-package  was developed to query those tools (HaploReg and RegulomeDB) directly from  in order to facilitate high-throughput genomic data analysis. Below we provide several examples that show how to work with this package.</p>
+<p>The R-package <em>haploR</em> was developed to query those tools (HaploReg and RegulomeDB) directly from <em>R</em> in order to facilitate high-throughput genomic data analysis. Below we provide several examples that show how to work with this package.</p>
 <p>Note: you must have a stable Internet connection to use this package.</p>
-<p>Contact: <a href="mailto:ilya.zhbannikov@duke.edu">ilya.zhbannikov@duke.edu</a> for questions of usage the  or any other issues.</p>
+<p>Contact: <a href="mailto:ilya.zhbannikov@duke.edu">ilya.zhbannikov@duke.edu</a> for questions of usage the <em>haploR</em> or any other issues.</p>
 <div id="motivation-and-general-strategy" class="section level3">
 <h3>Motivation and general strategy</h3>
 <p>This package was inspired by the fact that many web-based annotation databases do not have Application Programing Interface (API) and, therefore, do not allow users to query them remotedly. In our research we used Haploreg and Regulome annotation databases and had a hard time with downloading results from Haploreg web site since it does not allow to do this. Regulome was a little bit friendly, but still not offering API therefore we could not include it to our automated data processing pipeline.</p>
-<p>We developed a custom analysis pipeline whcih prepares data, performs genetic association analysis and presents results in user-friendly form. Results include a list of genetic variants (SNPs), their corresponding p-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go thought the SNPs with genome-wide significant p-values (1e-8) and submit each SNP to Haploreg and Regulome manually, one-by-one, but of course it would take time and will not be fully automatic (which ruins one of the pipeline’s paradigms). This is especially difficult if the web site does not have a download results option.</p>
-<p>Therefore, we developed , a user-friendly R package to connet to Haploreg and Regulome remotedly. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline.</p>
+<p>We developed a custom analysis pipeline whcih prepares data, performs genetic association analysis and presents results in user-friendly form. Results include a list of genetic variants (SNPs), their corresponding p-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go thought the SNPs with genome-wide significant <em>p</em>-values (1e-8) and submit each SNP to Haploreg and Regulome manually, one-by-one, but of course it would take time and will not be fully automatic (which ruins one of the pipeline’s paradigms). This is especially difficult if the web site does not have a download results option.</p>
+<p>Therefore, we developed <em>haploR</em>, a user-friendly R package to connet to Haploreg and Regulome remotedly. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline.</p>
 </div>
 </div>
-<div id="installation-of-package" class="section level2">
-<h2>Installation of  package</h2>
-<p>In order to install the  package, the user must first install R <a href="https://www.r-project.org" class="uri">https://www.r-project.org</a>. After that,  (its developer version) can be installed with:</p>
+<div id="installation-of-haplor-package" class="section level2">
+<h2>Installation of <em>haploR</em> package</h2>
+<p>In order to install the <em>haploR</em> package, the user must first install R <a href="https://www.r-project.org" class="uri">https://www.r-project.org</a>. After that, <em>haploR</em> can be installed either:</p>
+<ul>
+<li>From CRAN (stable version):</li>
+</ul>
+<pre class="r"><code>install.packages(&quot;haploR&quot;, dependencies = TRUE)</code></pre>
+<ul>
+<li>Or from the package web page (developing version):</li>
+</ul>
 <pre class="r"><code>devtools::install_github(&quot;izhbannikov/haplor&quot;, buildVignette=TRUE)</code></pre>
+<p>The package depends on the following packages:</p>
+<ul>
+<li><em>httr</em>, version 1.2.1 or later.</li>
+<li><em>XML</em>, version version 3.98-1.6 or later.</li>
+<li><em>tibble</em>, version 1.3.0 or later.</li>
+<li><em>RUnit</em>, version 0.4.31 or later.</li>
+</ul>
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
@@ -171,7 +185,7 @@ x</code></pre>
 ## #   GENCODE_distance &lt;dbl&gt;, RefSeq_id &lt;chr&gt;, RefSeq_name &lt;chr&gt;,
 ## #   RefSeq_direction &lt;dbl&gt;, RefSeq_distance &lt;dbl&gt;,
 ## #   dbSNP_functional_annotation &lt;chr&gt;, query_snp_rsid &lt;chr&gt;</code></pre>
-<p>Here  is a vector with names of genetic variants.  are the table similar to the output of HaploReg.</p>
+<p>Here <em>query</em> is a vector with names of genetic variants. <em>results</em> are the table similar to the output of HaploReg.</p>
 <p>We then can create a subset from the results, for example, to choose only SNPs with r2 &gt; 0.9:</p>
 <pre class="r"><code>subset.high.LD &lt;- x[x$r2 &gt; 0.9, c(&quot;rsID&quot;, &quot;r2&quot;, &quot;chr&quot;, &quot;pos_hg38&quot;, &quot;is_query_snp&quot;, &quot;ref&quot;, &quot;alt&quot;)]
 subset.high.LD</code></pre>
@@ -191,7 +205,7 @@ subset.high.LD</code></pre>
 ## 11  rs3744317  0.99    17 66220526            0     G     A
 ## 12  rs8178827  0.96    17 66227121            0     C     T
 ## 13 rs71160546  0.94    17 66230111            0    GA     G</code></pre>
-<p>We can then save the  into an Excel workbook:</p>
+<p>We can then save the <em>subset.high.LD</em> into an Excel workbook:</p>
 <pre class="r"><code>require(openxlsx)
 write.xlsx(x=subset.high.LD, file=&quot;subset.high.LD.xlsx&quot;)</code></pre>
 <p>These steps are summarized in a picture below.</p>
@@ -281,21 +295,21 @@ x</code></pre>
               timeout = 10,
               check_bad_snps = TRUE, 
               verbose = FALSE)</code></pre>
-<p>This function queries RegulomeDB www.regulomedb.org web-based tool and returns results in a data frame.</p>
+<p>This function queries RegulomeDB &lt;www.regulomedb.org&gt; web-based tool and returns results in a data frame.</p>
 <div id="arguments" class="section level4">
 <h4>Arguments</h4>
 <ul>
-<li>query: Query (a vector of rsIDs).</li>
-<li>format: An output format. Only ‘full’ is currently supported. See <a href="http://www.regulomedb.org/results" class="uri">http://www.regulomedb.org/results</a>.</li>
-<li>url: Regulome url address. Default: <a href="http://www.regulomedb.org/results" class="uri">http://www.regulomedb.org/results</a></li>
-<li>timeout: A ‘timeout’ parameter for ‘curl’. Default: 10.</li>
-<li>check_bad_snps: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: ‘TRUE’</li>
-<li>verbose: Verbosing output. Default: FALSE.</li>
+<li><em>query</em>: Query (a vector of rsIDs).</li>
+<li><em>format</em>: An output format. Only ‘full’ is currently supported. See <a href="http://www.regulomedb.org/results" class="uri">http://www.regulomedb.org/results</a>.</li>
+<li><em>url</em>: Regulome url address. Default: <a href="http://www.regulomedb.org/results" class="uri">http://www.regulomedb.org/results</a></li>
+<li><em>timeout</em>: A ‘timeout’ parameter for ‘curl’. Default: 10.</li>
+<li><em>check_bad_snps</em>: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: ‘TRUE’</li>
+<li><em>verbose</em>: Verbosing output. Default: FALSE.</li>
 </ul>
 </div>
 <div id="output" class="section level4">
 <h4>Output</h4>
-<p>A list of two: (1) a data frame (table) wrapped to a  object and (2) a list of bad SNP IDs. Bad SNP ID are those IDs that were not found in 1000 Genomes Phase 1 data</p>
+<p>A list of two: (1) a data frame (table) wrapped to a <em>tibble</em> object and (2) a list of bad SNP IDs. Bad SNP ID are those IDs that were not found in 1000 Genomes Phase 1 data</p>
 </div>
 <div id="example" class="section level4">
 <h4>Example</h4>
