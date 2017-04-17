@@ -3,8 +3,8 @@ title: "Using haploR, an R package for querying HaploReg and RegulomeDB"
 author: "Ilya Y. Zhbannikov"
 date: '`r date()`'
 output:
-  html_document: default
-  #pdf_document: default
+  #html_document: default
+  pdf_document: default
   #md_document : 
   #    variant: markdown_github
   
@@ -44,7 +44,7 @@ Therefore, we developed _haploR_, a user-friendly R package that connets to Hapl
 
 Example of workflow is shown in a picture below.
 
-![Workflow](/Users/ilya/Projects/haploR/vignettes/Workflow.png)
+![Workflow](/vignettes/Workflow.png)
 
 
 ## Installation of _haploR_ package
@@ -163,8 +163,12 @@ write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
 ```
 
 
+This was an example of gathering post-gwas information directly from the online tool. _haploR_ has an additional advantage because it downloads the full information for query retrieved by HaploReg. For example, if you go online and submit these two SNPs to HaploReg (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>), you will see that some cells of columns "Motifs changed" and "Selected eQTL hits" are hidded (only number of hits are given). _haploR_ retrives this information in a form of a data frame which can be saved into Excel file. 
 
-
+```{r, echo=TRUE, message=FALSE}
+x[, c("Motifs", "rsID")]
+x[, c("eQTL", "rsID")]
+```
 
 #### Uploading file with variants
 

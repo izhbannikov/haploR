@@ -19,7 +19,7 @@ Therefore, we developed *haploR*, a user-friendly R package that connets to Hapl
 
 Example of workflow is shown in a picture below.
 
-![Workflow](C:\Projects\haploR\Workflow.png)
+![Workflow](vignettes/Workflow.png)
 
 Installation of *haploR* package
 --------------------------------
@@ -120,7 +120,7 @@ x <- queryHaploreg(query=c("rs10048158","rs4791078"))
 x
 ```
 
-    ## # A tibble: 33 × 33
+    ## # A tibble: 33 x 33
     ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
     ##    <dbl>    <dbl> <dbl> <dbl>        <dbl>      <chr> <chr> <chr> <dbl>
     ## 1     17 66213160  0.82  0.93            0  rs4790914     C     G  0.84
@@ -151,7 +151,7 @@ subset.high.LD <- x[x$r2 > 0.9, c("rsID", "r2", "chr", "pos_hg38", "is_query_snp
 subset.high.LD
 ```
 
-    ## # A tibble: 13 × 7
+    ## # A tibble: 13 x 7
     ##          rsID    r2   chr pos_hg38 is_query_snp   ref   alt
     ##         <chr> <dbl> <dbl>    <dbl>        <dbl> <chr> <chr>
     ## 1  rs10048158  1.00    17 66240200            1     T     C
@@ -172,13 +172,48 @@ We can then save the *subset.high.LD* into an Excel workbook:
 
 ``` r
 require(openxlsx)
-```
-
-    ## Warning: package 'openxlsx' was built under R version 3.3.3
-
-``` r
 write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
 ```
+
+This was an example of gathering post-gwas information directly from the online tool. *haploR* has an additional advantage because it downloads the full information for query retrieved by HaploReg. For example, if you go online and submit these two SNPs to HaploReg (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>), you will see that some cells of columns "Motifs changed" and "Selected eQTL hits" are hidded (only number of hits are given). *haploR* retrives this information in a form of a data frame which can be saved into Excel file.
+
+``` r
+x[, c("Motifs", "rsID")]
+```
+
+    ## # A tibble: 33 x 2
+    ##                                                                         Motifs
+    ##                                                                          <chr>
+    ## 1  AP-4_3;Ascl2;E2A_5;Foxa_disc3;HEN1_2;LBP-1_2;NRSF_disc4;NRSF_disc8;NRSF_kno
+    ## 2                                    Pou5f1_disc1;RFX5_known1;Sox_4;TATA_disc7
+    ## 3                                                            RFX5_known5;Zbtb3
+    ## 4                  AP-1_disc1;HEN1_1;Maf_disc2;NR4A_known1;RAR;RXRA_known3;T3R
+    ## 5                                                                       Pdx1_2
+    ## 6                                             AP-1_disc1;HEY1_disc1;TATA_disc2
+    ## 7                                                                            .
+    ## 8                                                ATF3_disc1;LXR_2;SREBP_known4
+    ## 9                                                 Evi-1_3;Irf_disc3;STAT_disc3
+    ## 10                                                             GR_disc4;SZF1-1
+    ## # ... with 23 more rows, and 1 more variables: rsID <chr>
+
+``` r
+x[, c("eQTL", "rsID")]
+```
+
+    ## # A tibble: 33 x 2
+    ##                                                                           eQTL
+    ##                                                                          <chr>
+    ## 1                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,3.25964766049438e-10
+    ## 2  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,2.87827072933431e-10;Koopman2014,Hea
+    ## 3                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,2.87827072933431e-10
+    ## 4                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,5.94596439339797e-11
+    ## 5                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,6.83955923561212e-11
+    ## 6                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,6.80544182605399e-11
+    ## 7  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,6.80544182605399e-11;Koopman2014,Hea
+    ## 8                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,2.44658806733437e-10
+    ## 9                  GTEx2015_v6,Heart_Left_Ventricle,PRKCA,2.09660151875432e-10
+    ## 10                 GTEx2015_v6,Heart_Left_Ventricle,PRKCA,6.18988623085424e-12
+    ## # ... with 23 more rows, and 1 more variables: rsID <chr>
 
 #### Uploading file with variants
 
@@ -190,7 +225,7 @@ x <- queryHaploreg(file=system.file("extdata/snps.txt", package = "haploR"))
 x
 ```
 
-    ## # A tibble: 33 × 33
+    ## # A tibble: 33 x 33
     ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
     ##    <dbl>    <dbl> <dbl> <dbl>        <dbl>      <chr> <chr> <chr> <dbl>
     ## 1     17 66213160  0.82  0.93            0  rs4790914     C     G  0.84
@@ -230,7 +265,7 @@ studies[[1]]
 ```
 
     ## $name
-    ## [1] "Î²2-Glycoprotein I (Î²2-GPI) plasma levels (Athanasiadis G, 2013, 9 SNPs)"
+    ## [1] "<ce><b2>2-Glycoprotein I (<ce><b2>2-GPI) plasma levels (Athanasiadis G, 2013, 9 SNPs)"
     ## 
     ## $id
     ## [1] "1756"
@@ -253,7 +288,7 @@ x <- queryHaploreg(study=studies[[1]])
 x
 ```
 
-    ## # A tibble: 117 × 33
+    ## # A tibble: 117 x 33
     ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
     ##    <dbl>    <dbl> <dbl> <dbl>        <dbl>      <chr> <chr> <chr> <dbl>
     ## 1     11 34524785  0.97  1.00            0   rs836138     C     A  0.34
@@ -315,9 +350,9 @@ x <- queryRegulome(c("rs4791078","rs10048158"))
 x$res.table
 ```
 
-    ## # A tibble: 2 × 5
+    ## # A tibble: 2 x 5
     ##   `#chromosome` coordinate       rsid
-    ## *         <chr>      <dbl>      <chr>
+    ##           <chr>      <dbl>      <chr>
     ## 1         chr17   64236317 rs10048158
     ## 2         chr17   64210013  rs4791078
     ## # ... with 2 more variables: hits <chr>, score <dbl>
@@ -326,7 +361,7 @@ x$res.table
 x$bad.snp.id
 ```
 
-    ## # A tibble: 0 × 1
+    ## # A tibble: 0 x 1
     ## # ... with 1 variables: rsID <chr>
 
 Session information
@@ -336,16 +371,16 @@ Session information
 sessionInfo()
 ```
 
-    ## R version 3.3.2 (2016-10-31)
-    ## Platform: x86_64-w64-mingw32/x64 (64-bit)
-    ## Running under: Windows 10 x64 (build 14393)
+    ## R Under development (unstable) (2017-03-04 r72303)
+    ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+    ## Running under: macOS Sierra 10.12.4
+    ## 
+    ## Matrix products: default
+    ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
     ## 
     ## locale:
-    ## [1] LC_COLLATE=English_United States.1252 
-    ## [2] LC_CTYPE=English_United States.1252   
-    ## [3] LC_MONETARY=English_United States.1252
-    ## [4] LC_NUMERIC=C                          
-    ## [5] LC_TIME=English_United States.1252    
+    ## [1] C
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
@@ -357,5 +392,6 @@ sessionInfo()
     ##  [1] Rcpp_0.12.10    XML_3.98-1.6    digest_0.6.12   rprojroot_1.2  
     ##  [5] mime_0.5        R6_2.2.0        backports_1.0.5 magrittr_1.5   
     ##  [9] evaluate_0.10   httr_1.2.1      stringi_1.1.5   curl_2.4       
-    ## [13] RUnit_0.4.31    rmarkdown_1.4   tools_3.3.2     stringr_1.2.0  
-    ## [17] yaml_2.1.14     htmltools_0.3.5 knitr_1.15.1    tibble_1.3.0
+    ## [13] RUnit_0.4.31    rmarkdown_1.4   tools_3.4.0     stringr_1.2.0  
+    ## [17] yaml_2.1.14     compiler_3.4.0  htmltools_0.3.5 knitr_1.15.1   
+    ## [21] tibble_1.3.0
