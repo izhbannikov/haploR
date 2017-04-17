@@ -118,7 +118,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Using haploR, an R package for querying HaploReg and RegulomeDB</h1>
 <h4 class="author"><em>Ilya Y. Zhbannikov</em></h4>
-<h4 class="date"><em>Mon Apr 17 13:23:31 2017</em></h4>
+<h4 class="date"><em>Mon Apr 17 13:32:40 2017</em></h4>
 
 </div>
 
@@ -231,7 +231,7 @@ $(document).ready(function () {
 <pre class="r"><code>library(haploR)
 x &lt;- queryHaploreg(query=c(&quot;rs10048158&quot;,&quot;rs4791078&quot;))
 x</code></pre>
-<pre><code>## # A tibble: 33 × 33
+<pre><code>## # A tibble: 33 x 33
 ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
 ##    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
 ## 1     17 66213160  0.82  0.93            0  rs4790914     C     G  0.84
@@ -256,7 +256,7 @@ x</code></pre>
 <p>We then can create a subset from the results, for example, to choose only SNPs with r2 &gt; 0.9:</p>
 <pre class="r"><code>subset.high.LD &lt;- x[x$r2 &gt; 0.9, c(&quot;rsID&quot;, &quot;r2&quot;, &quot;chr&quot;, &quot;pos_hg38&quot;, &quot;is_query_snp&quot;, &quot;ref&quot;, &quot;alt&quot;)]
 subset.high.LD</code></pre>
-<pre><code>## # A tibble: 13 × 7
+<pre><code>## # A tibble: 13 x 7
 ##          rsID    r2   chr pos_hg38 is_query_snp   ref   alt
 ##         &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
 ## 1  rs10048158  1.00    17 66240200            1     T     C
@@ -273,9 +273,8 @@ subset.high.LD</code></pre>
 ## 12  rs8178827  0.96    17 66227121            0     C     T
 ## 13 rs71160546  0.94    17 66230111            0    GA     G</code></pre>
 <p>We can then save the <em>subset.high.LD</em> into an Excel workbook:</p>
-<pre class="r"><code>require(openxlsx)</code></pre>
-<pre><code>## Warning: package 'openxlsx' was built under R version 3.3.3</code></pre>
-<pre class="r"><code>write.xlsx(x=subset.high.LD, file=&quot;subset.high.LD.xlsx&quot;)</code></pre>
+<pre class="r"><code>require(openxlsx)
+write.xlsx(x=subset.high.LD, file=&quot;subset.high.LD.xlsx&quot;)</code></pre>
 </div>
 <div id="uploading-file-with-variants" class="section level4">
 <h4>Uploading file with variants</h4>
@@ -283,7 +282,7 @@ subset.high.LD</code></pre>
 <pre class="r"><code>library(haploR)
 x &lt;- queryHaploreg(file=system.file(&quot;extdata/snps.txt&quot;, package = &quot;haploR&quot;))
 x</code></pre>
-<pre><code>## # A tibble: 33 × 33
+<pre><code>## # A tibble: 33 x 33
 ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
 ##    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
 ## 1     17 66213160  0.82  0.93            0  rs4790914     C     G  0.84
@@ -317,7 +316,7 @@ studies &lt;- getHaploRegStudyList()
 # Let us look at the first element:
 studies[[1]]</code></pre>
 <pre><code>## $name
-## [1] &quot;Î²2-Glycoprotein I (Î²2-GPI) plasma levels (Athanasiadis G, 2013, 9 SNPs)&quot;
+## [1] &quot;&lt;ce&gt;&lt;b2&gt;2-Glycoprotein I (&lt;ce&gt;&lt;b2&gt;2-GPI) plasma levels (Athanasiadis G, 2013, 9 SNPs)&quot;
 ## 
 ## $id
 ## [1] &quot;1756&quot;</code></pre>
@@ -332,7 +331,7 @@ studies[[2]]</code></pre>
 # this study:
 x &lt;- queryHaploreg(study=studies[[1]])
 x</code></pre>
-<pre><code>## # A tibble: 117 × 33
+<pre><code>## # A tibble: 117 x 33
 ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
 ##    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
 ## 1     11 34524785  0.97  1.00            0   rs836138     C     A  0.34
@@ -392,14 +391,14 @@ x</code></pre>
 <pre class="r"><code>library(haploR)
 x &lt;- queryRegulome(c(&quot;rs4791078&quot;,&quot;rs10048158&quot;))
 x$res.table</code></pre>
-<pre><code>## # A tibble: 2 × 5
+<pre><code>## # A tibble: 2 x 5
 ##   `#chromosome` coordinate       rsid
-## *         &lt;chr&gt;      &lt;dbl&gt;      &lt;chr&gt;
+##           &lt;chr&gt;      &lt;dbl&gt;      &lt;chr&gt;
 ## 1         chr17   64236317 rs10048158
 ## 2         chr17   64210013  rs4791078
 ## # ... with 2 more variables: hits &lt;chr&gt;, score &lt;dbl&gt;</code></pre>
 <pre class="r"><code>x$bad.snp.id</code></pre>
-<pre><code>## # A tibble: 0 × 1
+<pre><code>## # A tibble: 0 x 1
 ## # ... with 1 variables: rsID &lt;chr&gt;</code></pre>
 </div>
 </div>
@@ -407,16 +406,16 @@ x$res.table</code></pre>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.3.2 (2016-10-31)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 14393)
+<pre><code>## R Under development (unstable) (2017-03-04 r72303)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: macOS Sierra 10.12.4
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-## [1] LC_COLLATE=English_United States.1252 
-## [2] LC_CTYPE=English_United States.1252   
-## [3] LC_MONETARY=English_United States.1252
-## [4] LC_NUMERIC=C                          
-## [5] LC_TIME=English_United States.1252    
+## [1] C
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
@@ -428,8 +427,9 @@ x$res.table</code></pre>
 ##  [1] Rcpp_0.12.10    XML_3.98-1.6    digest_0.6.12   rprojroot_1.2  
 ##  [5] mime_0.5        R6_2.2.0        backports_1.0.5 magrittr_1.5   
 ##  [9] evaluate_0.10   httr_1.2.1      stringi_1.1.5   curl_2.4       
-## [13] RUnit_0.4.31    rmarkdown_1.4   tools_3.3.2     stringr_1.2.0  
-## [17] yaml_2.1.14     htmltools_0.3.5 knitr_1.15.1    tibble_1.3.0</code></pre>
+## [13] RUnit_0.4.31    rmarkdown_1.4   tools_3.4.0     stringr_1.2.0  
+## [17] yaml_2.1.14     compiler_3.4.0  htmltools_0.3.5 knitr_1.15.1   
+## [21] tibble_1.3.0</code></pre>
 </div>
 
 

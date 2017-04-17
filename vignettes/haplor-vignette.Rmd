@@ -44,7 +44,7 @@ Therefore, we developed _haploR_, a user-friendly R package that connets to Hapl
 
 Example of workflow is shown in a picture below.
 
-![Workflow](C:\Projects\haploR\Workflow.png)
+![Workflow](/Users/ilya/Projects/haploR/vignettes/Workflow.png)
 
 
 ## Installation of _haploR_ package
