@@ -11,11 +11,15 @@ Contact: <ilya.zhbannikov@duke.edu> for questions of usage the *haploR* or any o
 
 ### Motivation and general strategy
 
-This package was inspired by the fact that many web-based annotation databases do not have Application Programing Interface (API) and, therefore, do not allow users to query them remotedly. In our research we used Haploreg and Regulome annotation databases and had a hard time with downloading results from Haploreg web site since it does not allow to do this. Regulome was a little bit friendly, but still not offering API therefore we could not include it to our automated data processing pipeline.
+This package was inspired by the fact that many web-based annotation databases do not have Application Programing Interface (API) and, therefore, do not allow users to query them remotedly from R environment. In our research we used Haploreg and Regulome web databases. This amazing web databases show information about linkage disequilibrium of query variants and variants which are in LD with them, expression quantitative trait loci (eQTL), motifs changed and other useful information. We had a hard time with downloading results from those web sites since they do not allow to do this.
 
-We developed a custom analysis pipeline whcih prepares data, performs genetic association analysis and presents results in user-friendly form. Results include a list of genetic variants (SNPs), their corresponding p-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go thought the SNPs with genome-wide significant *p*-values (1e-8) and submit each SNP to Haploreg and Regulome manually, one-by-one, but of course it would take time and will not be fully automatic (which ruins one of the pipeline's paradigms). This is especially difficult if the web site does not have a download results option.
+We developed a custom analysis pipeline which prepares data, performs genome-wide association (GWA) analysis and presents results in a user-friendly format. Results include a list of genetic variants (also known as 'SNP' or single nucleotide polymorphism), their corresponding *p*-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go thought the SNPs with genome-wide significant *p*-values (1e-8) and submit each SNP to Haploreg and Regulome manually, one-by-one, but of course it would take time and will not be fully automatic (which ruins one of the pipeline's paradigms). This is especially difficult if the web site does not have a download results option.
 
-Therefore, we developed *haploR*, a user-friendly R package to connet to Haploreg and Regulome remotedly. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline.
+Therefore, we developed *haploR*, a user-friendly R package that connets to Haploreg and Regulome remotedly with methods POST and GET and downloads results in suitable R format. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline.
+
+Example of workflow is shown in a picture below.
+
+![Workflow](/vignettes/Workflow.png)
 
 Installation of *haploR* package
 --------------------------------
@@ -41,10 +45,72 @@ The package depends on the following packages:
 -   *tibble*, version 1.3.0 or later.
 -   *RUnit*, version 0.4.31 or later.
 
-Examples
---------
+Examples of usage
+-----------------
 
 ### Querying HaploReg
+
+The function
+
+    queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
+      ldPop = "EUR", epi = "vanilla", cons = "siphy", genetypes = "gencode",
+      url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
+      timeout = 10, encoding = "UTF-8", verbose = FALSE)
+
+queries HaploReg web-based tool and returns results.
+
+#### Arguments
+
+-   *query*: Query (a vector of rsIDs).
+-   *file*: A text file (one refSNP ID per line).
+-   *study*: A particular study. See function getHaploRegStudyList(...). Default: `NULL`.
+-   *ldThresh*: LD threshold, r2 (select NA to only show query variants). Default: `0.8`.
+-   *ldPop*: 1000G Phase 1 population for LD calculation. Can be: `AFR` (Africa), `AMR` (America), `ASN` (Asia). Default: `EUR` (Europe).
+-   *epi*: Source for epigenomes. Possible values: `vanilla` for ChromHMM (Core 15-state model); `imputed` for ChromHMM (25-state model using 12 imputed marks); `methyl` for H3K4me1/H3K4me3 peaks; `acetyl` for H3K27ac/H3K9ac peaks. Default: `vanilla`.
+-   *cons*: Mammalian conservation algorithm. Possible values: `gerp` for GERP (<http://mendel.stanford.edu/SidowLab/downloads/gerp/>), `siphy` for SiPhy-omega, `both` for both. Default: siphy.
+-   *genetypes*: Show position relative to. Possible values: `gencode` for Gencode genes; `refseq` for RefSeq genes; `both` for both. Default: `gencode`.
+-   *url*: HaploReg url address. Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
+-   *timeout*: A timeout parameter for curl. Default: `10`
+-   *encoding*: Set the encoding for correct retrieval web-page content. Default: `UTF-8`
+-   *verbose*: Verbosing output. Default: `FALSE`.
+
+#### Value
+
+A data frame (table) wrapped into a with results similar to HaploReg uses. Below we describe the columns.
+
+-   *chr*: Chromosome, type: numeric
+-   *pos\_hg38*: Position on the human genome, type: numeric.
+-   *r2*: Linkage disequelibrium. Type: numeric.
+-   `D'`: Linkage disequelibrium, alternative definition. Type: numeric.
+-   *is\_query\_snp*: Indicator shows query SNP, 0 - not query SNP, 1 - query SNP. Type: numeric.
+-   *rsID*: refSNP ID. Type: character.
+-   *ref*: Reference allele. Type: character.
+-   *alt*: Alternative allele. Type: character.
+-   *AFR*: *r2* calculated for Africa. Type: numeric.
+-   *AMR*: *r2* calculated for America. Type: numeric.
+-   *ASN*: *r2* calculated for Asia. Type: numeric.
+-   *EUR*: *r2* calculated for Europe. Type: numeric.
+-   *GERP\_cons*: GERP scores. Type: numeric.
+-   *SiPhy\_cons*: SiPhy scores. Type: numeric.
+-   *Chromatin\_States*: Chromatin states: reference epigenome identifiers (EID) of chromatin-associated proteins and histone modifications in that region. Type: character.
+-   *Chromatin\_States\_Imputed*: Chromatin states based on imputed data. Type: character.
+-   *Chromatin\_Marks*: Chromatin marks Type: character.
+-   *DNAse*: Type: chararcter.
+-   *Proteins*: Type: character.
+-   *eQTL*: Expression Quantitative Trait Loci. Type: character.
+-   *gwas*: GWAS study name. Type: character.
+-   *grasp*: GRASP study name: character.
+-   *Motifs*: Motif names. Type: character.
+-   *GENCODE\_id*: GENCODE transcript ID. Type: character.
+-   *GENCODE\_name*: GENCODE gene name. Type: character.
+-   *GENCODE\_direction*: GENCODE direction (transcription toward 3' or 5' end of the DNA sequence). Type: numeric.
+-   *GENCODE\_distance*: GENCODE distance. Type: numeric.
+-   *RefSeq\_id*: NCBI Reference Sequence Accesion number. Type: character.
+-   *RefSeq\_name*: NCBI Reference Sequence name. Type: character.
+-   *RefSeq\_direction*: NCBI Reference Sequence direction (transcription toward 3' or 5' end of the DNA sequence). Type: numeric.
+-   *RefSeq\_distance*: NCBI Reference Sequence distance. Type: numeric.
+-   *dbSNP\_functional\_annotation* Annotated proteins associated with the SNP. Type: numeric.
+-   *query\_snp\_rsid*: Query SNP rs ID. Type: character.
 
 #### One or several genetic variants
 
@@ -54,7 +120,7 @@ x <- queryHaploreg(query=c("rs10048158","rs4791078"))
 x
 ```
 
-    ## # A tibble: 33 x 33
+    ## # A tibble: 33 × 33
     ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
     ##    <dbl>    <dbl> <dbl> <dbl>        <dbl>      <chr> <chr> <chr> <dbl>
     ## 1     17 66213160  0.82  0.93            0  rs4790914     C     G  0.84
@@ -76,7 +142,7 @@ x
     ## #   RefSeq_direction <dbl>, RefSeq_distance <dbl>,
     ## #   dbSNP_functional_annotation <chr>, query_snp_rsid <chr>
 
-Here *query* is a vector with names of genetic variants. *results* are the table similar to the output of HaploReg.
+Here *query* is a vector with names of genetic variants.
 
 We then can create a subset from the results, for example, to choose only SNPs with r2 &gt; 0.9:
 
@@ -85,7 +151,7 @@ subset.high.LD <- x[x$r2 > 0.9, c("rsID", "r2", "chr", "pos_hg38", "is_query_snp
 subset.high.LD
 ```
 
-    ## # A tibble: 13 x 7
+    ## # A tibble: 13 × 7
     ##          rsID    r2   chr pos_hg38 is_query_snp   ref   alt
     ##         <chr> <dbl> <dbl>    <dbl>        <dbl> <chr> <chr>
     ## 1  rs10048158  1.00    17 66240200            1     T     C
@@ -106,10 +172,13 @@ We can then save the *subset.high.LD* into an Excel workbook:
 
 ``` r
 require(openxlsx)
-write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
 ```
 
-These steps are summarized in a picture below.
+    ## Warning: package 'openxlsx' was built under R version 3.3.3
+
+``` r
+write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
+```
 
 #### Uploading file with variants
 
@@ -121,7 +190,7 @@ x <- queryHaploreg(file=system.file("extdata/snps.txt", package = "haploR"))
 x
 ```
 
-    ## # A tibble: 33 x 33
+    ## # A tibble: 33 × 33
     ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
     ##    <dbl>    <dbl> <dbl> <dbl>        <dbl>      <chr> <chr> <chr> <dbl>
     ## 1     17 66213160  0.82  0.93            0  rs4790914     C     G  0.84
@@ -143,11 +212,14 @@ x
     ## #   RefSeq_direction <dbl>, RefSeq_distance <dbl>,
     ## #   dbSNP_functional_annotation <chr>, query_snp_rsid <chr>
 
-File "snps.txt" is a text file which contains one rs-ID per line.
+File "snps.txt" is a text file which contains one rs-ID per line:
+
+    rs10048158
+    rs4791078
 
 #### Using existing studies
 
-Sometimes you would like to explore results from already performed study. In this case you should first the explore existing studies from HaploReg web site and then use one of them as an input parameter. See example below:
+Sometimes one would like to explore results from already performed study. In this case you should first the explore existing studies from HaploReg web site (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>) and then use one of them as an input parameter. See example below:
 
 ``` r
 library(haploR)
@@ -158,7 +230,7 @@ studies[[1]]
 ```
 
     ## $name
-    ## [1] "<ce><b2>2-Glycoprotein I (<ce><b2>2-GPI) plasma levels (Athanasiadis G, 2013, 9 SNPs)"
+    ## [1] "Î²2-Glycoprotein I (Î²2-GPI) plasma levels (Athanasiadis G, 2013, 9 SNPs)"
     ## 
     ## $id
     ## [1] "1756"
@@ -181,7 +253,7 @@ x <- queryHaploreg(study=studies[[1]])
 x
 ```
 
-    ## # A tibble: 117 x 33
+    ## # A tibble: 117 × 33
     ##      chr pos_hg38    r2  `D'` is_query_snp       rsID   ref   alt   AFR
     ##    <dbl>    <dbl> <dbl> <dbl>        <dbl>      <chr> <chr> <chr> <dbl>
     ## 1     11 34524785  0.97  1.00            0   rs836138     C     A  0.34
@@ -214,7 +286,7 @@ To query RegulomeDB use this function:
                   check_bad_snps = TRUE, 
                   verbose = FALSE)
 
-This function queries RegulomeDB &lt;www.regulomedb.org&gt; web-based tool and returns results in a data frame.
+This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and returns results in a named list.
 
 #### Arguments
 
@@ -227,7 +299,13 @@ This function queries RegulomeDB &lt;www.regulomedb.org&gt; web-based tool and r
 
 #### Output
 
-A list of two: (1) a data frame (table) wrapped to a *tibble* object and (2) a list of bad SNP IDs. Bad SNP ID are those IDs that were not found in 1000 Genomes Phase 1 data
+A list of two: (1) a data frame (res.table) wrapped to a *tibble* object and (2) a list of bad SNP IDs (bad.snp.id). Bad SNP ID are those IDs that were not found in 1000 Genomes Phase 1 data and, therefore, in RegulomeDB.
+
+-   *\#chromosome*: Chromosome. Type: character.
+-   *coordinate*: Position. Type: numeric.
+-   *rsid*: RefSeq SNP ID. Type: character.
+-   *hits*: Contains information about chromatin structure: method and cell type.
+-   *score*: Internal RegulomeDB score. See <http://www.regulomedb.org/help#score>. Type: numeric.
 
 #### Example
 
@@ -237,12 +315,19 @@ x <- queryRegulome(c("rs4791078","rs10048158"))
 x$res.table
 ```
 
-    ## # A tibble: 2 x 5
+    ## # A tibble: 2 × 5
     ##   `#chromosome` coordinate       rsid
-    ##           <chr>      <dbl>      <chr>
+    ## *         <chr>      <dbl>      <chr>
     ## 1         chr17   64236317 rs10048158
     ## 2         chr17   64210013  rs4791078
     ## # ... with 2 more variables: hits <chr>, score <dbl>
+
+``` r
+x$bad.snp.id
+```
+
+    ## # A tibble: 0 × 1
+    ## # ... with 1 variables: rsID <chr>
 
 Session information
 -------------------
@@ -251,16 +336,16 @@ Session information
 sessionInfo()
 ```
 
-    ## R Under development (unstable) (2017-03-04 r72303)
-    ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-    ## Running under: macOS Sierra 10.12.4
-    ## 
-    ## Matrix products: default
-    ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-    ## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+    ## R version 3.3.2 (2016-10-31)
+    ## Platform: x86_64-w64-mingw32/x64 (64-bit)
+    ## Running under: Windows 10 x64 (build 14393)
     ## 
     ## locale:
-    ## [1] C
+    ## [1] LC_COLLATE=English_United States.1252 
+    ## [2] LC_CTYPE=English_United States.1252   
+    ## [3] LC_MONETARY=English_United States.1252
+    ## [4] LC_NUMERIC=C                          
+    ## [5] LC_TIME=English_United States.1252    
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
@@ -272,6 +357,5 @@ sessionInfo()
     ##  [1] Rcpp_0.12.10    XML_3.98-1.6    digest_0.6.12   rprojroot_1.2  
     ##  [5] mime_0.5        R6_2.2.0        backports_1.0.5 magrittr_1.5   
     ##  [9] evaluate_0.10   httr_1.2.1      stringi_1.1.5   curl_2.4       
-    ## [13] RUnit_0.4.31    rmarkdown_1.4   tools_3.4.0     stringr_1.2.0  
-    ## [17] yaml_2.1.14     compiler_3.4.0  htmltools_0.3.5 knitr_1.15.1   
-    ## [21] tibble_1.3.0
+    ## [13] RUnit_0.4.31    rmarkdown_1.4   tools_3.3.2     stringr_1.2.0  
+    ## [17] yaml_2.1.14     htmltools_0.3.5 knitr_1.15.1    tibble_1.3.0
