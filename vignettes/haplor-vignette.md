@@ -19,7 +19,7 @@ Therefore, we developed *haploR*, a user-friendly R package that connets to Hapl
 
 Example of workflow is shown in a picture below.
 
-![Workflow](vignettes/Workflow.png)
+![Workflow](Workflow.png)
 
 Installation of *haploR* package
 --------------------------------
@@ -35,7 +35,7 @@ install.packages("haploR", dependencies = TRUE)
 -   Or from the package web page (developing version):
 
 ``` r
-devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)
+devtools::install_github("izhbannikov/haplor")
 ```
 
 The package depends on the following packages:
@@ -259,7 +259,7 @@ Sometimes one would like to explore results from already performed study. In thi
 ``` r
 library(haploR)
 # Getting a list of existing studies:
-studies <- getHaploRegStudyList()
+studies <- getStudyList()
 # Let us look at the first element:
 studies[[1]]
 ```
@@ -386,7 +386,7 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] openxlsx_4.0.17 haploR_1.4.4   
+    ## [1] haploR_1.4.4
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] Rcpp_0.12.10    XML_3.98-1.6    digest_0.6.12   rprojroot_1.2  

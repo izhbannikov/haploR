@@ -39,16 +39,16 @@
 #' @rdname haploR-queryHaploreg
 #' @export
 queryHaploreg <- function(query=NULL, file=NULL,
-                          study=NULL,
-                          ldThresh=0.8, 
-                          ldPop="EUR", 
-                          epi="vanilla", 
-                          cons="siphy", 
-                          genetypes="gencode",
-                          url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
-                          timeout=10,
-                          encoding="UTF-8",
-                          verbose=FALSE) {
+              study=NULL,
+              ldThresh=0.8, 
+              ldPop="EUR", 
+              epi="vanilla", 
+              cons="siphy", 
+              genetypes="gencode",
+              url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
+              timeout=10,
+              encoding="UTF-8",
+              verbose=FALSE) {
     
   
     trunc <- 1000 # can be 0 2 3 4 5 1000

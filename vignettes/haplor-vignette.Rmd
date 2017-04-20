@@ -3,10 +3,10 @@ title: "Using haploR, an R package for querying HaploReg and RegulomeDB"
 author: "Ilya Y. Zhbannikov"
 date: '`r date()`'
 output:
-  #html_document: default
-  pdf_document: default
+  html_document: default
+  #pdf_document: default
   #md_document : 
-  #    variant: markdown_github
+  #  variant: markdown_github
   
 vignette: |
   %\VignetteIndexEntry{Tutorial for haploR package} %\VignetteEngine{knitr::rmarkdown}
@@ -44,7 +44,7 @@ Therefore, we developed _haploR_, a user-friendly R package that connets to Hapl
 
 Example of workflow is shown in a picture below.
 
-![Workflow](/vignettes/Workflow.png)
+![Workflow](Workflow.png)
 
 
 ## Installation of _haploR_ package
@@ -59,7 +59,7 @@ install.packages("haploR", dependencies = TRUE)
 * Or from the package web page (developing version):
 
 ```{r, echo=TRUE, eval=FALSE}
-devtools::install_github("izhbannikov/haplor", buildVignette=TRUE)
+devtools::install_github("izhbannikov/haplor")
 ```
 
 
@@ -157,7 +157,7 @@ subset.high.LD
 
 We can then save the _subset.high.LD_ into an Excel workbook:
 
-```{r, echo=TRUE, message=FALSE}
+```{r, echo=TRUE, message=FALSE, eval=FALSE}
 require(openxlsx)
 write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
 ```
@@ -200,7 +200,7 @@ them as an input parameter. See example below:
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
 # Getting a list of existing studies:
-studies <- getHaploRegStudyList()
+studies <- getStudyList()
 # Let us look at the first element:
 studies[[1]]
 # Let us look at the second element:

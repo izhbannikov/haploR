@@ -6,12 +6,12 @@
 #' @return A list of studies. Each study is itself a list
 #' of two: \code{name}, \code{id}.
 #' @examples
-#' studies <- getHaploRegStudyList()
+#' studies <- getStudyList()
 #' studies
-#' @rdname haploR-getHaploRegStudyList
+#' @rdname haploR-getStudyList
 #' @export
-getHaploRegStudyList <- function(
-    url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php") {
+getStudyList <- function(
+url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php") {
   
     doc.html <- htmlTreeParse(url, useInternalNodes = TRUE)
   
