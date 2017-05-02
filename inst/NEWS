@@ -1,6 +1,5 @@
 New for version 1.4.4
 ======================
 * Version released
-* Function name getStudyList changed to getHaploRegStudyList
 * Unit tests added
 * Minor bug fixes 

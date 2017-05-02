@@ -1,7 +1,7 @@
 Overview
 --------
 
-HaploReg <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> and RegulomeDB <http://www.regulomedb.org> are web-based tools that extract biological information such as eQTL, LD, motifs, etc. from large genomic projects such as ENCODE, the 1000 Genomes Project, Roadmap Epigenomics Project and others. This is sometimes called "post-GWAS" analysis.
+HaploReg (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>) and RegulomeDB (<http://www.regulomedb.org>) are web-based tools that extract biological information such as eQTL, LD, motifs, etc. from large genomic projects such as ENCODE, the 1000 Genomes Project, Roadmap Epigenomics Project and others. This is sometimes called "post stage GWAS" analysis.
 
 The R-package *haploR* was developed to query those tools (HaploReg and RegulomeDB) directly from *R* in order to facilitate high-throughput genomic data analysis. Below we provide several examples that show how to work with this package.
 
@@ -9,22 +9,27 @@ Note: you must have a stable Internet connection to use this package.
 
 Contact: <ilya.zhbannikov@duke.edu> for questions of usage the *haploR* or any other issues.
 
-### Motivation and general strategy
+### Motivation and typical analysis workflow
 
-This package was inspired by the fact that many web-based annotation databases do not have Application Programing Interface (API) and, therefore, do not allow users to query them remotedly from R environment. In our research we used Haploreg and Regulome web databases. These very useful web databases show information about linkage disequilibrium of query variants and variants which are in LD with them, expression quantitative trait loci (eQTL), motifs changed and other useful information. However, it is not easy to include this information into streamlined workflow since those tools also not offer API.
+This package was inspired by the fact that many web-based post stage GWAS databases do not have Application Programing Interface (API) and, therefore, do not allow users to query them remotedly from R environment. In our research we used HaploReg and RegulomeDB web databases. These very useful web databases show information about linkage disequilibrium of query variants and variants which are in LD with them, expression quantitative trait loci (eQTL), motifs changed and other useful information. However, it is not easy to include this information into streamlined workflow since those tools also not offer API.
 
-We developed a custom analysis pipeline which prepares data, performs genome-wide association (GWA) analysis and presents results in a user-friendly format. Results include a list of genetic variants (also known as 'SNP' or single nucleotide polymorphism), their corresponding *p*-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go thought the SNPs with genome-wide significant *p*-values (1e-8) and submit each SNP to Haploreg and Regulome manually, one-by-one, but it is time-consuming process and will not be fully automatic (which ruins one of the pipeline's paradigms). This is especially difficult if the web site does not have a download results option.
+We developed a custom analysis pipeline which prepares data, performs genome-wide association (GWA) analysis and presents results in a user-friendly format. Results include a list of genetic variants (also known as 'SNP' or single nucleotide polymorphism), their corresponding *p*-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go throught the list of SNPs having genome-wide significant *p*-values (1e-8) and submit each of those SNPs to HaploReg or RegulomeDB manually, one-by-one, but it is time-consuming process and will not be fully automatic (which ruins one of the pipeline's paradigms). This is especially difficult if the web site does not offer downloading results.
 
-Therefore, we developed *haploR*, a user-friendly R package that connects to Haploreg and Regulome remotedly with methods POST and GET and downloads results in a suitable R format. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline.
+Therefore, we developed *haploR*, a user-friendly R package that connects to HaploReg or RegulomeDB from R environment with methods POST and GET and downloads results in a suitable R format. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline and now we would like to present *haploR* to the research community.
 
-Example of workflow is shown in a picture below.
+Example of typical analysis workflow is shown below.
 
-![Workflow](/vignettes/Workflow.png)
+![1](vignettes/Workflow.png)
+
+-   Data preprocessing stage usually consists of basic cleaning operations (sex inconsistencies check, filtering by MAF, missing genotype rate), format conversion, population stratification, creating temporaty files, etc.
+-   Genome-wide association study (GWAS). This Includes testing hyphotesis on correlation between phenotype and genotype. Usually in form of linear or logistic regression but can be quite sophisticated especially for rare variants.
+-   Postprocessing usually includes summarizing results in tables, creating graphics (Manhattan plot, QQ-plot), sometimes filtering by significance threshold (usually 1E-8), removing temporary files, etc.
+-   Post stage GWAS analysis: connect GWAS findings with existing studies and gather information about linked SNPs, chromatin state, protein binding annotation, sequence conservation across mammals, effects on regulatory motifs and on gene expression, etc. This helps researchers to more understand functions and test additional hyphotesis of found genome-wide significant SNPs. At this stage *haploR* is especially useful because it provides a convenient R interface to mining web databases. This, in turn, streamlines analysis workflow and therefore significantly reduces analysis time. Previously researchers had to do it manually after analysis by exploring available web resources, checking each SNP of interest and downloading results (which is especially painful if website does not have a download option). With *haploR* such post-GWAS information are easily retrieved, shared and appeared in the final output tables at the end of analysis. This will save researchers' time.
 
 Installation of *haploR* package
 --------------------------------
 
-In order to install the *haploR* package, the user must first install R <https://www.r-project.org>. After that, *haploR* can be installed either:
+In order to install the *haploR* package, the user must first install R (<https://www.r-project.org>). After that, *haploR* can be installed either:
 
 -   From CRAN (stable version):
 
@@ -38,7 +43,7 @@ install.packages("haploR", dependencies = TRUE)
 devtools::install_github("izhbannikov/haplor")
 ```
 
-The package depends on the following packages:
+*haploR* depends on the following packages:
 
 -   *httr*, version 1.2.1 or later.
 -   *XML*, version version 3.98-1.6 or later.
@@ -50,7 +55,7 @@ Examples of usage
 
 ### Querying HaploReg
 
-The function
+Function
 
     queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
       ldPop = "EUR", epi = "vanilla", cons = "siphy", genetypes = "gencode",
@@ -74,14 +79,14 @@ queries HaploReg web-based tool and returns results.
 -   *encoding*: Set the encoding for correct retrieval web-page content. Default: `UTF-8`
 -   *verbose*: Verbosing output. Default: `FALSE`.
 
-#### Value
+#### Output
 
-A data frame (table) wrapped into a *tibble* object contains results similar to HaploReg uses. Below we describe the columns.
+A data frame (table) wrapped into a *tibble* object contains data extracted from HaploReg site. The colums (33 in total at the time of writing this vignette) are specific to HaploReg output. Below we describe the columns:
 
 -   *chr*: Chromosome, type: numeric
 -   *pos\_hg38*: Position on the human genome, type: numeric.
--   *r2*: Linkage dis equilibrium. Type: numeric.
--   `D'`: Linkage disequilibrium, alternative definition. Type: numeric.
+-   *r2*: Linkage disequilibrium. Type: numeric.
+-   D': Linkage disequilibrium, alternative definition. Type: numeric.
 -   *is\_query\_snp*: Indicator shows query SNP, 0 - not query SNP, 1 - query SNP. Type: numeric.
 -   *rsID*: refSNP ID. Type: character.
 -   *ref*: Reference allele. Type: character.
@@ -111,6 +116,8 @@ A data frame (table) wrapped into a *tibble* object contains results similar to 
 -   *RefSeq\_distance*: NCBI Reference Sequence distance. Type: numeric.
 -   *dbSNP\_functional\_annotation* Annotated proteins associated with the SNP. Type: numeric.
 -   *query\_snp\_rsid*: Query SNP rs ID. Type: character.
+
+Number of rows is not constant, at least equal or more than the number of query SNPs, and depends on *r2* parameter choosen in a query (default 0.8). This means that the program outputs not only query SNPs, but also those SNPs that have *r2* ≥ 0.8 with the query SNPs.
 
 #### One or several genetic variants
 
@@ -336,11 +343,17 @@ This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and 
 
 A list of two: (1) a data frame (res.table) wrapped to a *tibble* object and (2) a list of bad SNP IDs (bad.snp.id). Bad SNP ID are those IDs that were not found in 1000 Genomes Phase 1 data and, therefore, in RegulomeDB.
 
+Columns in a data frame (res.table):
+
 -   *\#chromosome*: Chromosome. Type: character.
 -   *coordinate*: Position. Type: numeric.
 -   *rsid*: RefSeq SNP ID. Type: character.
 -   *hits*: Contains information about chromatin structure: method and cell type. Type: character.
 -   *score*: Internal RegulomeDB score. See <http://www.regulomedb.org/help#score>. Type: numeric.
+
+Number of rows is equal or less (in case if not all SNPs were found in RegulomeDB database) to number of query SNPs.
+
+All the information retreived from RegulomeDB, except *hits*, are also presented in HaploReg output (`queryHaploReg(...)`).
 
 #### Example
 
