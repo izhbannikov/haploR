@@ -3,13 +3,14 @@ title: "Using haploR, an R package for querying HaploReg and RegulomeDB"
 author: "Ilya Y. Zhbannikov"
 date: '`r date()`'
 output:
-  #html_document: default
-  pdf_document: default
+  html_document: default
   #md_document : 
   #  variant: markdown_github
   
-vignette: |
-  %\VignetteIndexEntry{Tutorial for haploR package} %\VignetteEngine{knitr::rmarkdown}
+vignette: >
+  %\VignetteIndexEntry{Tutorial for haploR package} 
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
 ---
 
 
@@ -233,8 +234,8 @@ This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and 
 #### Arguments
 
 * _query_: Query (a vector of rsIDs).
-* _format_: An output format.  Only 'full' is currently supported. See <http://www.regulomedb.org/results>.
-* _url_: Regulome url address.  Default: <http://www.regulomedb.org/results>
+* _format_: An output format.  Only 'full' is currently supported. See ```http://www.regulomedb.org/results```.
+* _url_: Regulome url address.  Default: ```http://www.regulomedb.org/results```
 * _timeout_: A 'timeout' parameter for 'curl'. Default: 10.
 * _check_bad_snps_: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: 'TRUE'
 * _verbose_: Verbosing output. Default: FALSE.

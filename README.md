@@ -333,8 +333,8 @@ This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and 
 #### Arguments
 
 -   *query*: Query (a vector of rsIDs).
--   *format*: An output format. Only 'full' is currently supported. See <http://www.regulomedb.org/results>.
--   *url*: Regulome url address. Default: <http://www.regulomedb.org/results>
+-   *format*: An output format. Only 'full' is currently supported.
+-   *url*: Regulome url address. Default: http://www.regulomedb.org/results
 -   *timeout*: A 'timeout' parameter for 'curl'. Default: 10.
 -   *check\_bad\_snps*: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: 'TRUE'
 -   *verbose*: Verbosing output. Default: FALSE.
