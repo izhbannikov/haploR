@@ -4,6 +4,7 @@ author: "Ilya Y. Zhbannikov"
 date: '`r date()`'
 output:
   html_document: default
+  #pdf_document: default
   #md_document : 
   #  variant: markdown_github
   
