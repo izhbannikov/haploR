@@ -13,6 +13,11 @@ queryRegulome(query = NULL, format = "full",
 \item{query}{Query (a vector of rsIDs).}
 
 \item{format}{An output format. 
+Can be on of the following: \code{full} - plain text,
+\code{bed} -  BED (Browser Extensible Data) format, 
+see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1>,
+\code{gff} - GFF (General Feature Format), 
+see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format3>
 Only \code{full} is currently supported.}
 
 \item{url}{Regulome url address. 

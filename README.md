@@ -19,7 +19,7 @@ Therefore, we developed *haploR*, a user-friendly R package that connects to Hap
 
 Example of typical analysis workflow is shown below.
 
-![1](vignettes/Workflow.png)
+![Typical analysis workflow](vignettes/Workflow.png)
 
 -   Data preprocessing stage usually consists of basic cleaning operations (sex inconsistencies check, filtering by MAF, missing genotype rate), format conversion, population stratification, creating temporaty files, etc.
 -   Genome-wide association study (GWAS). This Includes testing hyphotesis on correlation between phenotype and genotype. Usually in form of linear or logistic regression but can be quite sophisticated especially for rare variants.
@@ -333,8 +333,8 @@ This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and 
 #### Arguments
 
 -   *query*: Query (a vector of rsIDs).
--   *format*: An output format. Only 'full' is currently supported.
--   *url*: Regulome url address. Default: http://www.regulomedb.org/results
+-   *format*: An output format. Only 'full' is currently supported. See `http://www.regulomedb.org/results`. Can be on of the following: `full` - plain text, `bed` - BED (Browser Extensible Data) format, see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1>, `gff` - GFF (General Feature Format), see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format3>. Only `full` is currently supported.
+-   *url*: Regulome url address. Default: `http://www.regulomedb.org/results`
 -   *timeout*: A 'timeout' parameter for 'curl'. Default: 10.
 -   *check\_bad\_snps*: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: 'TRUE'
 -   *verbose*: Verbosing output. Default: FALSE.

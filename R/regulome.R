@@ -3,7 +3,12 @@
 #' 
 #' @param query Query (a vector of rsIDs).
 #' @param format An output format. 
-#' Only \code{full} is currently supported.
+#' Can be on of the following: \code{full} - plain text,
+#' \code{bed} -  BED (Browser Extensible Data) format, 
+#' see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1>,
+#' \code{gff} - GFF (General Feature Format), 
+#' see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format3>
+#' Only \code{full} is currently supported. 
 #' @param url Regulome url address. 
 #' Default: <http://www.regulomedb.org/results>
 #' @param timeout A \code{timeout} parameter for \code{curl}.
