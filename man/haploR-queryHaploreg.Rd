@@ -7,7 +7,7 @@
 queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
   ldPop = "EUR", epi = "vanilla", cons = "siphy", genetypes = "gencode",
   url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
-  timeout = 10, encoding = "UTF-8", verbose = FALSE)
+  timeout = 10, encoding = "UTF-8", querySNP = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{query}{Query (a vector of rsIDs).}
@@ -50,6 +50,9 @@ Default: 10}
 
 \item{encoding}{sets the \code{encoding} for correct retrieval web-page content.
 Default: \code{UTF-8}}
+
+\item{querySNP}{A flag indicating to return query SNPs only. 
+Default: \code{FALSE}}
 
 \item{verbose}{Verbosing output. Default: FALSE.}
 }

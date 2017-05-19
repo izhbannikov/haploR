@@ -30,6 +30,8 @@
 #' Default: 10
 #' @param encoding sets the \code{encoding} for correct retrieval web-page content.
 #' Default: \code{UTF-8}
+#' @param querySNP A flag indicating to return query SNPs only. 
+#' Default: \code{FALSE}
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A data frame (table) with results similar to 
 #' HaploReg uses.
@@ -48,6 +50,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
               url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
               timeout=10,
               encoding="UTF-8",
+              querySNP=FALSE,
               verbose=FALSE) {
     
   
@@ -116,6 +119,10 @@ queryHaploreg <- function(query=NULL, file=NULL,
         if(na.rate <= 0.5) {
             res.table[,i] <- col.num.conv
         }
+    }
+    
+    if(querySNP) {
+        res.table <- res.table[which(res.table$is_query_snp == 1), ]
     }
     
     return(as_tibble(res.table))
