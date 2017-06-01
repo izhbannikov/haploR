@@ -1,5 +1,4 @@
-New for version 1.4.4
+New for version 1.4.6
 ======================
 * Version released
-* Unit tests added
-* Minor bug fixes 
+* Parameters 'fields' and 'querySNP' added

@@ -32,6 +32,8 @@
 #' Default: \code{UTF-8}
 #' @param querySNP A flag indicating to return query SNPs only. 
 #' Default: \code{FALSE}
+#' @param fields A set of fields to extract. Refer to the package vignette 
+#' for available fields. Default: \code{All}.
 #' @param verbose Verbosing output. Default: FALSE.
 #' @return A data frame (table) with results similar to 
 #' HaploReg uses.
@@ -51,6 +53,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
               timeout=10,
               encoding="UTF-8",
               querySNP=FALSE,
+              fields=NULL,
               verbose=FALSE) {
     
   
@@ -123,6 +126,10 @@ queryHaploreg <- function(query=NULL, file=NULL,
     
     if(querySNP) {
         res.table <- res.table[which(res.table$is_query_snp == 1), ]
+    }
+    
+    if(!is.null(fields)) {
+        res.table <- res.table[, fields]
     }
     
     return(as_tibble(res.table))

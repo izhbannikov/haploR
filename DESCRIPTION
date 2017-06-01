@@ -1,8 +1,8 @@
 Package: haploR
 Type: Package
 Title: Query HaploReg and RegulomeDB
-Version: 1.4.5
-Date: 2017-05-04
+Version: 1.4.6
+Date: 2017-06-01
 Authors@R: c(person(c("Ilya", "Y."), "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
              person(c("Konstantin", "G"), "Arbeev", role = c("ctb"), comment = "Konstantin supervised the technical/software development."),
              person(c("Anatoliy","I"), "Yashin", role = c("ctb"), comment = "Anatoliy supervised the technical/software development and is a Principal Invesigator of this project"))
