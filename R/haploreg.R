@@ -77,7 +77,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
       query <- upload_file(file)
       body <- list(upload_file=query, 
                    gwas_idx=gwas_idx,
-                   ldThresh=as.character(ldThresh), 
+                   ldThresh=ifelse(!is.na(ldThresh), as.character(ldThresh), "1.1"), 
                    ldPop=ldPop, epi=epi, 
                    cons=cons, 
                    genetypes=genetypes,
@@ -89,7 +89,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
       query <- paste(query, collapse = ',') 
       body <- list(query=query, 
                    gwas_idx=gwas_idx,
-                   ldThresh=as.character(ldThresh), 
+                   ldThresh=ifelse(!is.na(ldThresh), as.character(ldThresh), "1.1"), 
                    ldPop=ldPop, epi=epi, 
                    cons=cons, 
                    genetypes=genetypes,
@@ -119,7 +119,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
     for(i in 1:dim(res.table)[2]) {
         col.num.conv <- suppressWarnings(as.numeric(res.table[,i]))
         na.rate <- length(which(is.na(col.num.conv)))/length(col.num.conv)
-        if(na.rate <= 0.5) {
+        if(na.rate <= 0.1) {
             res.table[,i] <- col.num.conv
         }
     }
@@ -131,6 +131,9 @@ queryHaploreg <- function(query=NULL, file=NULL,
     if(!is.null(fields)) {
         res.table <- res.table[, fields]
     }
+    
+    # Removing blank rows:
+    res.table <- res.table[, colSums(is.na(res.table)) <= 1] 
     
     return(as_tibble(res.table))
 }
