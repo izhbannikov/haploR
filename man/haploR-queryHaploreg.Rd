@@ -7,7 +7,7 @@
 queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
   ldPop = "EUR", epi = "vanilla", cons = "siphy", genetypes = "gencode",
   url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
-  timeout = 10, encoding = "UTF-8", querySNP = FALSE, fields = NULL,
+  timeout = 100, encoding = "UTF-8", querySNP = FALSE, fields = NULL,
   verbose = FALSE)
 }
 \arguments{
@@ -47,7 +47,7 @@ Default: \code{gencode}.}
 Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
 
 \item{timeout}{A \code{timeout} parameter for \code{curl}.
-Default: 10}
+Default: 100}
 
 \item{encoding}{sets the \code{encoding} for correct retrieval web-page content.
 Default: \code{UTF-8}}

@@ -27,7 +27,7 @@
 #' @param url HaploReg url address. 
 #' Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
 #' @param timeout A \code{timeout} parameter for \code{curl}.
-#' Default: 10
+#' Default: 100
 #' @param encoding sets the \code{encoding} for correct retrieval web-page content.
 #' Default: \code{UTF-8}
 #' @param querySNP A flag indicating to return query SNPs only. 
@@ -50,7 +50,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
               cons="siphy", 
               genetypes="gencode",
               url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
-              timeout=10,
+              timeout=100,
               encoding="UTF-8",
               querySNP=FALSE,
               fields=NULL,
