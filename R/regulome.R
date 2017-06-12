@@ -31,7 +31,7 @@
 queryRegulome <- function(query=NULL, 
                           format = "full",
                           url="http://www.regulomedb.org/results",
-                          timeout=10,
+                          timeout=100,
                           check_bad_snps=TRUE,
                           verbose=FALSE) {
   
