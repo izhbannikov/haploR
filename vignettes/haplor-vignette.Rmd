@@ -218,6 +218,23 @@ x <- queryHaploreg(study=studies[[1]])
 x
 ```
 
+#### Extended view of SNP
+
+If you want to see more information about SNP of interest, you can use the ```getExtendedView```:
+Parameters:
+*```snp``` - A SNP of interest.
+*```url``` - A url to the HaploReg. Default: "http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id="
+
+Return A list of tables ```t1```, ```t2```, ..., etc, depending on information contained in HaploReg database.
+
+Example:
+
+```{r, echo=TRUE, message=FALSE}
+library(haploR)
+tables <- getExtendedView(snp="rs10048158")
+tables
+```
+
 ### Querying RegulomeDB
 
 To query RegulomeDB use this function:

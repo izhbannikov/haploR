@@ -6,7 +6,7 @@
 and returns results in a data frame.}
 \usage{
 queryRegulome(query = NULL, format = "full",
-  url = "http://www.regulomedb.org/results", timeout = 10,
+  url = "http://www.regulomedb.org/results", timeout = 100,
   check_bad_snps = TRUE, verbose = FALSE)
 }
 \arguments{
