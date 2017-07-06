@@ -38,6 +38,7 @@
 #' @return A data frame (table) with results similar to 
 #' HaploReg uses.
 #' @examples
+#' library(haploR)
 #' data <- queryHaploreg(c("rs10048158","rs4791078"))
 #' head(data)
 #' @rdname haploR-queryHaploreg
@@ -135,5 +136,56 @@ queryHaploreg <- function(query=NULL, file=NULL,
     # Removing blank rows:
     res.table <- res.table[, colSums(is.na(res.table)) <= 1] 
     
-    return(as_tibble(res.table))
+    # Adding two additional columns: 
+    user.agent <- "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0"
+    body$output <- "html"
+    request.data <- POST(url=url, body=body, encode="multipart",  timeout(100), user_agent(user.agent))
+    html.content <- content(request.data, useInternalNodes=TRUE, encoding="ISO-8859-1",as="text")
+    tmp.tables <- readHTMLTable(html.content)
+    html.table <- NULL
+    if(length(tmp.tables) == 4) {
+        html.table <- tmp.tables[[4]]
+    } else if(length(tmp.tables) > 4) {
+        html.table <- tmp.tables[[4]]
+        for(i in 5:length(tmp.tables)) {
+            if(dim(tmp.tables[[i]])[2] == 6) 
+                next
+            if(dim(html.table)[2] == dim(tmp.tables[[i]])[2]) {
+                html.table <- rbind(html.table, tmp.tables[[i]])
+            }
+        }
+    }
+    
+    if(!is.null(html.table)) {
+        tmp.table <- html.table[, c(5,13:14)]
+        tmp.table <- tmp.table[!duplicated(tmp.table), ]
+        if("variant" %in% colnames(tmp.table)) {
+            data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="variant")
+        } else {
+            data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="V5")
+        }
+      
+        #res.table <- cbind(res.table, "Promoter_histone_marks"=data.merged[,45], "Enhancer_histone_marks"=data.merged[,46])
+        colnames(data.merged) <- c("chr", "pos_hg38", "r2", "D'", "is_query_snp", 
+                                 "rsID", "ref", "alt", "AFR", "AMR", 
+                                 "ASN", "EUR", "GERP_cons", "SiPhy_cons", 
+                                 "Chromatin_States",
+                                 "Chromatin_States_Imputed", "Chromatin_Marks", 
+                                 "DNAse", "Proteins", "eQTL",
+                                 "gwas", "grasp", "Motifs", "GENCODE_id", 
+                                 "GENCODE_name",
+                                 "GENCODE_direction", "GENCODE_distance", "RefSeq_id", 
+                                 "RefSeq_name", "RefSeq_direction",
+                                 "RefSeq_distance", "dbSNP_functional_annotation", 
+                                 "query_snp_rsid", "Promoter_histone_marks", 
+                                 "Enhancer_histone_marks")
+      
+        #colnames(res.table)[18] <-"DNAse"
+        #colnames(res.table)[34] <- "Promoter_histone_marks"
+        #colnames(res.table)[35] <- "Enhancer_histone_marks"
+    }
+    
+    
+    return(as_tibble(data.merged))
+    #return(as_tibble(res.table))
 }

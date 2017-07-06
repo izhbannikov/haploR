@@ -68,6 +68,7 @@ HaploReg uses.
 This function queries HaploReg web-based tool and returns results.
 }
 \examples{
+library(haploR)
 data <- queryHaploreg(c("rs10048158","rs4791078"))
 head(data)
 }
