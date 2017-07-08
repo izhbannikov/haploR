@@ -136,7 +136,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
     # Removing blank rows:
     res.table <- res.table[, colSums(is.na(res.table)) <= 1] 
     
-    # Adding two additional columns: 
+    # Adding additional columns: 
     user.agent <- "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0"
     body$output <- "html"
     request.data <- POST(url=url, body=body, encode="multipart",  timeout(100), user_agent(user.agent))
@@ -164,8 +164,42 @@ queryHaploreg <- function(query=NULL, file=NULL,
         } else {
             data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="V5")
         }
-      
-        #res.table <- cbind(res.table, "Promoter_histone_marks"=data.merged[,45], "Enhancer_histone_marks"=data.merged[,46])
+        
+        data.merged1 <- cbind(data.merged[["chr"]],
+                             data.merged[["pos_hg38"]],
+                             data.merged[["r2"]],
+                             data.merged[["D'"]],
+                             data.merged[["is_query_snp"]],
+                             data.merged[["rsID"]],
+                             data.merged[["ref"]],
+                             data.merged[["alt"]],
+                             data.merged[["AFR"]],
+                             data.merged[["AMR"]],
+                             data.merged[["ASN"]],
+                             data.merged[["EUR"]],
+                             data.merged[["GERP_cons"]],
+                             data.merged[["SiPhy_cons"]],
+                             data.merged[["Chromatin_States"]],
+                             data.merged[["Chromatin_States_Imputed"]],
+                             data.merged[["Chromatin_Marks"]],
+                             data.merged[["DNAse"]],
+                             data.merged[["Proteins"]],
+                             data.merged[["eQTL"]],
+                             data.merged[["gwas"]],
+                             data.merged[["grasp"]],
+                             data.merged[["Motifs"]],
+                             data.merged[["GENCODE_id"]],
+                             data.merged[["GENCODE_name"]],
+                             data.merged[["GENCODE_direction"]],
+                             data.merged[["GENCODE_distance"]],
+                             data.merged[["RefSeq_id"]],
+                             data.merged[["RefSeq_name"]],
+                             data.merged[["RefSeq_direction"]],
+                             data.merged[["RefSeq_distance"]],
+                             data.merged[["dbSNP_functional_annotation"]],
+                             data.merged[["query_snp_rsid"]])
+        data.merged <- data.frame(data.merged1, data.merged[,34:35])
+        
         colnames(data.merged) <- c("chr", "pos_hg38", "r2", "D'", "is_query_snp", 
                                  "rsID", "ref", "alt", "AFR", "AMR", 
                                  "ASN", "EUR", "GERP_cons", "SiPhy_cons", 
@@ -180,12 +214,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
                                  "query_snp_rsid", "Promoter_histone_marks", 
                                  "Enhancer_histone_marks")
       
-        #colnames(res.table)[18] <-"DNAse"
-        #colnames(res.table)[34] <- "Promoter_histone_marks"
-        #colnames(res.table)[35] <- "Enhancer_histone_marks"
     }
     
-    
     return(as_tibble(data.merged))
-    #return(as_tibble(res.table))
 }
