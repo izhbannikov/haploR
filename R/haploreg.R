@@ -142,17 +142,29 @@ queryHaploreg <- function(query=NULL, file=NULL,
     request.data <- POST(url=url, body=body, encode="multipart",  timeout(100), user_agent(user.agent))
     html.content <- content(request.data, useInternalNodes=TRUE, encoding="ISO-8859-1",as="text")
     tmp.tables <- readHTMLTable(html.content)
+    
     html.table <- NULL
-    if(length(tmp.tables) == 4) {
-        html.table <- tmp.tables[[4]]
-    } else if(length(tmp.tables) > 4) {
-        html.table <- tmp.tables[[4]]
-        for(i in 5:length(tmp.tables)) {
-            if(dim(tmp.tables[[i]])[2] == 6) 
-                next
-            if(dim(html.table)[2] == dim(tmp.tables[[i]])[2]) {
-                html.table <- rbind(html.table, tmp.tables[[i]])
+    for(i in 4:length(tmp.tables)) {
+        tmp.table <- tmp.tables[[i]]
+        n.col <- dim(tmp.table)[2]
+        n.row <- dim(tmp.table)[1]
+        if(n.col <= 6) {
+            next
+        } 
+        
+        if(n.col < 22) {
+            tmp.col <- data.frame(replicate(n.row, ""))
+            colnames(tmp.col) <- paste("V",dim(tmp.table)[2]+1, sep="")
+            while(dim(tmp.table)[2] < 22) {
+                tmp.table <- cbind(tmp.table, tmp.col)
             }
+        }
+        
+        if(is.null(html.table)) {
+            html.table <- tmp.table
+        } else {   
+            colnames(html.table) <- colnames(tmp.table)
+            html.table <- rbind(html.table, tmp.table)
         }
     }
     
@@ -162,6 +174,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
         if("variant" %in% colnames(tmp.table)) {
             data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="variant")
         } else {
+            #print(head(tmp.table))
             data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="V5")
         }
         
