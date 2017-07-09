@@ -142,6 +142,8 @@ A data frame (table) wrapped into a _tibble_ object contains data extracted from
 * _RefSeq_distance_: NCBI Reference Sequence distance. Type: numeric.
 * _dbSNP_functional_annotation_ Annotated proteins associated with the SNP. Type: numeric. 
 * _query_snp_rsid_: Query SNP rs ID. Type: character.
+* _Promoter_histone_marks_: Promoter histone marks. Type: factor.
+* _Enhancer_histone_marks_: Enhancer histone marks. Type: factor.
 
 Number of rows is not constant, at least equal or more than the number of query SNPs, and depends on _r2_ parameter choosen in a query (default 0.8). This means that the program outputs not only query SNPs, but also those SNPs that have _r2_ $\geq$ 0.8 with the query SNPs.
 
@@ -229,7 +231,7 @@ Return A list of tables ```t1```, ```t2```, ..., etc, depending on information c
 
 Example:
 
-```{r, echo=TRUE, message=FALSE}
+```{r, echo=TRUE, eval=FALSE, message=FALSE}
 library(haploR)
 tables <- getExtendedView(snp="rs10048158")
 tables

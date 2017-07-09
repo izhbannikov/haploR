@@ -116,8 +116,10 @@ A data frame (table) wrapped into a *tibble* object contains data extracted from
 -   *RefSeq\_distance*: NCBI Reference Sequence distance. Type: numeric.
 -   *dbSNP\_functional\_annotation* Annotated proteins associated with the SNP. Type: numeric.
 -   *query\_snp\_rsid*: Query SNP rs ID. Type: character.
+-   *Promoter\_histone\_marks*: Promoter histone marks. Type: factor.
+-   *Enhancer\_histone\_marks*: Enhancer histone marks. Type: factor.
 
-Number of rows is not constant, at least equal or more than the number of query SNPs, and depends on *r2* parameter choosen in a query (default 0.8). This means that the program outputs not only query SNPs, but also those SNPs that have *r2* ≥ 0.8 with the query SNPs.
+Number of rows is not constant, at least equal or more than the number of query SNPs, and depends on *r2* parameter choosen in a query (default 0.8). This means that the program outputs not only query SNPs, but also those SNPs that have *r2* ??? 0.8 with the query SNPs.
 
 #### One or several genetic variants
 
