@@ -5,4 +5,5 @@
 #' @importFrom XML htmlParse
 #' @importFrom tibble as_tibble
 #' @importFrom RUnit checkEqualsNumeric
+#' @importFrom plyr ldply
 NULL

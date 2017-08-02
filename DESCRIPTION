@@ -1,16 +1,16 @@
 Package: haploR
 Type: Package
-Title: Query HaploReg and RegulomeDB
-Version: 1.5.1
-Date: 2017-07-05
+Title: Query 'HaploReg' and 'RegulomeDB'
+Version: 1.6.0
+Date: 2017-08-02
 Authors@R: c(person(c("Ilya", "Y."), "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
              person(c("Konstantin", "G"), "Arbeev", role = c("ctb"), comment = "Konstantin supervised the technical/software development."),
              person(c("Anatoliy","I"), "Yashin", role = c("ctb"), comment = "Anatoliy supervised the technical/software development and is a Principal Invesigator of this project"))
 Maintainer: Ilya Y. Zhbannikov <ilya.zhbannikov@duke.edu>
 Description: A set of utilities for querying 
-             HaploReg <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> 
-             and RegulomeDB <http://www.regulomedb.org> web-based tools. The package connects to 
-             HaploReg or RegulomeDB, searches and downloads results, without 
+             'HaploReg' <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php> 
+             and 'RegulomeDB' <http://www.regulomedb.org> web-based tools. The package connects to 
+             'HaploReg' or 'RegulomeDB', searches and downloads results, without 
              opening web pages, directly from R environment. 
              Results are stored in a data frame that can be directly used in various 
              kinds of downstream analyses.
@@ -18,7 +18,7 @@ RoxygenNote: 6.0.1
 Suggests: knitr, rmarkdown,openxlsx
 VignetteBuilder: knitr
 Imports:
-	httr,XML,tibble,RUnit
+	httr,XML,tibble,RUnit,plyr
 Depends:
     R (>= 3.3.2)
 Encoding: UTF-8
