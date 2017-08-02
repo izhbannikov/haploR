@@ -49,6 +49,7 @@ devtools::install_github("izhbannikov/haplor")
 -   *XML*, version version 3.98-1.6 or later.
 -   *tibble*, version 1.3.0 or later.
 -   *RUnit*, version 0.4.31 or later.
+-   *plyr*, version 1.8.4 or later.
 
 Examples of usage
 -----------------
