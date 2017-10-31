@@ -223,31 +223,46 @@ simpleQuery <- function(query=NULL, file=NULL,
     # Adding additional columns: 
     user.agent <- "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0"
     body$output <- "html"
-    request.data <- POST(url=url, body=body, encode="multipart",  timeout(100), user_agent(user.agent))
+    request.data <- POST(url=url, body=body, encode="multipart",  timeout(timeout), user_agent(user.agent))
     html.content <- content(request.data, useInternalNodes=TRUE, encoding="ISO-8859-1",as="text")
     tmp.tables <- readHTMLTable(html.content)
   
     html.table <- NULL
     for(i in 4:length(tmp.tables)) {
         tmp.table <- tmp.tables[[i]]
+        if(is.null(tmp.table))
+        {
+            next
+        }
+        
         n.col <- dim(tmp.table)[2]
         n.row <- dim(tmp.table)[1]
-        if(n.col <= 6) {
-          next
+        
+        if(n.col <= 6) 
+        {
+            next
         } 
     
-        if(n.col < 22) {
-            tmp.col <- data.frame(replicate(n.row, ""))
-            colnames(tmp.col) <- paste("V",dim(tmp.table)[2]+1, sep="")
-            while(dim(tmp.table)[2] < 22) {
+        if(n.col < 23) {
+            while(n.col < 23) {
+                tmp.col <- data.frame(replicate(n.row, ""))
+                colnames(tmp.col) <- paste("V",n.col+1, sep="")
                 tmp.table <- cbind(tmp.table, tmp.col)
+                n.col <- dim(tmp.table)[2]
             }
         }
     
         if(is.null(html.table)) {
             html.table <- tmp.table
         } else {   
+            #print(head(tmp.table))
             colnames(html.table) <- colnames(tmp.table)
+            #print("*****")
+            #print(head(html.table))
+            #print(dim(html.table))
+            #print("=====")
+            #print(head(tmp.table))
+            #print(dim(tmp.table))
             html.table <- rbind(html.table, tmp.table)
         }
     }
