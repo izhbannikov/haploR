@@ -11,8 +11,8 @@
 #' Only \code{full} is currently supported. 
 #' @param url Regulome url address. 
 #' Default: <http://www.regulomedb.org/results>
-#' @param timeout A \code{timeout} parameter for \code{curl}.
-#' Default: 10
+#' @param timeout A \code{timeout} parameter for \code{httr::POST}.
+#' Default: 100
 #' @param check_bad_snps Checks if all SNPs are annotated.
 #' Default: \code{TRUE}
 #' @param verbose Verbosing output. Default: FALSE.
