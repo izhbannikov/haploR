@@ -6,4 +6,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom RUnit checkEqualsNumeric
 #' @importFrom plyr ldply
+#' @importFrom utils read.csv
+#' @importFrom stats runif
+#' @importFrom DT datatable formatStyle styleInterval %>%
 NULL

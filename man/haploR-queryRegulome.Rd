@@ -23,8 +23,8 @@ Only \code{full} is currently supported.}
 \item{url}{Regulome url address. 
 Default: <http://www.regulomedb.org/results>}
 
-\item{timeout}{A \code{timeout} parameter for \code{curl}.
-Default: 10}
+\item{timeout}{A \code{timeout} parameter for \code{httr::POST}.
+Default: 100}
 
 \item{check_bad_snps}{Checks if all SNPs are annotated.
 Default: \code{TRUE}}
