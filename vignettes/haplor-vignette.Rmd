@@ -162,7 +162,7 @@ Here _query_ is a vector with names of genetic variants.
 We then can create a subset from the results, for example, to choose only SNPs with r2 $>$ 0.9:
 
 ```{r, echo=TRUE, message=FALSE}
-subset.high.LD <- x[x$r2 > 0.9, c("rsID", "r2", "chr", "pos_hg38", "is_query_snp", "ref", "alt")]
+subset.high.LD <- x[as.numeric(x$r2) > 0.9, c("rsID", "r2", "chr", "pos_hg38", "is_query_snp", "ref", "alt")]
 subset.high.LD
 ```
 

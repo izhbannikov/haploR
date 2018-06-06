@@ -190,12 +190,13 @@ simpleQuery <- function(query=NULL, file=NULL,
     
         dat <- content(r, "text", encoding=encoding)
         sp <- strsplit(dat, '\n')
-        res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])))
+        res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])), stringsAsFactors = FALSE)
         colnames(res.table) <- strsplit(sp[[1]][1], '\t')[[1]]
     
         for(i in 2:length(sp[[1]])) {
             res.table[i-1,] <- strsplit(sp[[1]][i], '\t')[[1]]
         }
+        
     }, error=function(e) {
         print(e)
     })
@@ -208,7 +209,8 @@ simpleQuery <- function(query=NULL, file=NULL,
             res.table[,i] <- col.num.conv
         }
     }
-  
+    
+    
     if(querySNP) {
         res.table <- res.table[which(res.table$is_query_snp == 1), ]
     }
@@ -219,7 +221,7 @@ simpleQuery <- function(query=NULL, file=NULL,
   
     # Removing blank rows:
     res.table <- res.table[, colSums(is.na(res.table)) <= 1] 
-  
+    
     # Adding additional columns: 
     user.agent <- "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0"
     body$output <- "html"
@@ -245,7 +247,7 @@ simpleQuery <- function(query=NULL, file=NULL,
     
         if(n.col < 23) {
             while(n.col < 23) {
-                tmp.col <- data.frame(replicate(n.row, ""))
+                tmp.col <- data.frame(replicate(n.row, ""), stringsAsFactors = FALSE)
                 colnames(tmp.col) <- paste("V",n.col+1, sep="")
                 tmp.table <- cbind(tmp.table, tmp.col)
                 n.col <- dim(tmp.table)[2]
@@ -276,7 +278,7 @@ simpleQuery <- function(query=NULL, file=NULL,
             #print(head(tmp.table))
             data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="V5")
         }
-    
+        
         data.merged1 <- cbind(data.merged[["chr"]],
                           data.merged[["pos_hg38"]],
                           data.merged[["r2"]],
@@ -310,7 +312,7 @@ simpleQuery <- function(query=NULL, file=NULL,
                           data.merged[["RefSeq_distance"]],
                           data.merged[["dbSNP_functional_annotation"]],
                           data.merged[["query_snp_rsid"]])
-        data.merged <- data.frame(data.merged1, data.merged[,34:35])
+        data.merged <- data.frame(data.merged1, data.merged[,34:35], stringsAsFactors = FALSE)
     
         colnames(data.merged) <- c("chr", "pos_hg38", "r2", "D'", "is_query_snp", 
                                "rsID", "ref", "alt", "AFR", "AMR", 
@@ -327,6 +329,15 @@ simpleQuery <- function(query=NULL, file=NULL,
                                "Enhancer_histone_marks")
     
     }
-  
+    
+    # Make important columns to be numeric
+    data.merged$r2 <- as.numeric(data.merged$r2)
+    data.merged$is_query_snp <- as.numeric(data.merged$is_query_snp)
+    data.merged[["D'"]] <- as.numeric(data.merged[["D'"]])
+    data.merged$AFR <- as.numeric(data.merged$AFR)
+    data.merged$AMR <- as.numeric(data.merged$AMR)
+    data.merged$ASN <- as.numeric(data.merged$ASN)
+    data.merged$EUR <- as.numeric(data.merged$EUR)
+    
     return(data.merged)
 }
