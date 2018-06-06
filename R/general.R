@@ -7,6 +7,6 @@
 #' @importFrom RUnit checkEqualsNumeric
 #' @importFrom plyr ldply
 #' @importFrom utils read.csv
-#' @importFrom stats runif
+#' @importFrom stats runif setNames
 #' @importFrom DT datatable formatStyle styleInterval %>%
 NULL

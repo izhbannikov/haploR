@@ -1,4 +1,6 @@
-New for version 1.6.4
+New for version 2.0.1
 ======================
 * Version released
-* Fix timeout default in documentation
+* LDlink.LDmatrix function added
+* Vignette updated
+* README updated

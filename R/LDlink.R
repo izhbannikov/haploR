@@ -2,28 +2,27 @@
 #' 
 #' @param snps A list of snps (a vector of rsIDs, or a file, one SNP per line).
 #' @param r2d Show r2 or D'. Default: \code{r2}
-#' @param population A particular study.
+#' @param population A particular genetic population.
 #' Default: \code{ALL}.
-#' @param snp.gene.map A list (map) in which a gene is a key.
-#' Example: list("GENE1"=c("SNP1", "SNP2", "SNP3"), "GENE2"=c("SNP4", "SNP5"))
-#' Default: \code{NA}
-#' @return A list of two: (1) raw LD matrix and (2) colored (fancy) matrix with LD gradient.
+#' @return A list of three: (1) raw LD r2 matrix, 
+#' (2) colored (fancy) matrix with LD r2 gradient (an object of classses \code{datatables}, \code{htmlwidget}),
+#' (3) raw LD D-prime matrix.
 #' @examples
 #' library(haploR)
 #' data <- LDlink.LDmatrix(c("rs10048158","rs4791078"))
 #' head(data)
 #' @rdname haploR-LDlink.LDmatrix
 #' @export
-LDlink.LDmatrix <- function(snps, r2d="r2", population="ALL", snp.gene.map=NA) {
-    url <- "https://analysistools.nci.nih.gov/LDlink/LDlinkRest/ldmatrix"
-    avail.pop <- c("YRI","LWK","GWD","MSL","ESN","ASW","ACB",
-                   "MXL","PUR","CLM","PEL","CHB","JPT","CHS",
-                   "CDX","KHV","CEU","TSI","FIN","GBR","IBS",
-                   "GIH","PJL","BEB","STU","ITU",
-                   "ALL", "AFR", "AMR", "EAS", "EUR", "SAS")
+LDlink.LDmatrix <- function(snps, r2d="r2", population="ALL") {
+    
+    url <- LD.settings[["ldmatrix.url"]]
+    avail.pop <- LD.settings[["avail.pop"]]
+    avail.ld <- LD.settings[["avail.ld"]]
+    file.r2.url <- LD.settings[["ldmatrix.file.r2.url"]]
+    file.dprime.url <- LD.settings[["ldmatrix.file.dprime.url"]]
     
     # Checking parameters for validity
-    if(!(r2d %in% c("r2", "d"))) {
+    if(!(r2d %in% avail.ld)) {
         stop("Not valid r2d")
     }
     
@@ -32,30 +31,34 @@ LDlink.LDmatrix <- function(snps, r2d="r2", population="ALL", snp.gene.map=NA) {
     }
     
     query <- c()
+    snps.to.upload <- c()
     if(mode(snps) %in% c("logical","numeric","complex","character")) {
         # Assume it is a file
         if(file.exists(snps)) {
             # Try to read data into lines
             tryCatch({
-                query <- readLines(snps)
-                query <- gsub("\n", "", query)
-                query <- gsub("\r", "", query)
+                snps.to.upload <- readLines(snps)
+                snps.to.upload <- gsub("\n", "", snps.to.upload)
+                snps.to.upload <- gsub("\r", "", snps.to.upload)
             }, error=function(e) {
                 print(e)
                 stop()
             }, warning=function(w) {
                 print(w)
             })
-            query <- paste(query, collapse = '%0A')  # %0A - new line character '\n'
+            query <- paste(snps.to.upload, collapse = '%0A')  # %0A - new line character '\n'
         } else {
-            query <- paste(snps, collapse = '%0A')  # %0A - new line character '\n'
+            snps.to.upload <- snps
+            query <- paste(snps.to.upload, collapse = '%0A')  # %0A - new line character '\n'
         }
        
     }
     
+    
+    
     reference <- floor(runif(1) * (99999 - 10000 + 1))
     body <- list(paste("snps=",query, sep=""), 
-                 "pop=ALL", 
+                 paste("pop=", population, sep=""), 
                  paste("reference=",reference, sep=""),
                  paste("r2_d=","r2",sep=""))
     
@@ -63,19 +66,36 @@ LDlink.LDmatrix <- function(snps, r2d="r2", population="ALL", snp.gene.map=NA) {
     r <- GET(url=t.url)
     #dat <- content(r, "text")
     
-    file.url <- paste("https://analysistools.nci.nih.gov/LDlink/tmp/r2_", reference, ".txt", sep="")
-    #r <- GET(url=file.url)
-    raw.ldmat <- read.csv(file=file.url, sep="\t")
+    # Download r2 data
+    file.r2.url <- paste(file.r2.url, reference, ".txt", sep="")
+    raw.ldmat.r2 <- read.csv(file=file.r2.url, sep="\t")
+    
+    # Download D prime data
+    file.dprime.url <- paste(file.dprime.url, reference, ".txt", sep="")
+    raw.ldmat.dprime <- read.csv(file=file.dprime.url, sep="\t")
 
     #r <- GET(url=paste("https://analysistools.nci.nih.gov/LDlink/tmp/matrix", reference, ".json", sep=""))
     #dat <- content(r, "parsed")
     
     # Manipulation
-    ldmat <- raw.ldmat
-    if(!(is.na(snp.gene.map))) {
-        ldmat <- raw.ldmat
-        cnames<-colnames(ldmat)[-1]
+    # load gene names using haploreg:
+    snp.gene.map <- NA
+    tryCatch({
+        haploreg.data <- data.frame(queryHaploreg(query=unique(snps.to.upload), querySNP = TRUE, timeout = 1000), stringsAsFactors=FALSE)
+        snp.gene <- unique(haploreg.data[, c("query_snp_rsid", "GENCODE_name")])
+        snp.gene$GENCODE_name <- as.character(snp.gene$GENCODE_name)
+        snp.gene$query_snp_rsid <- as.character(snp.gene$query_snp_rsid)
+        snp.gene.map <- setNames(snp.gene$GENCODE_name, snp.gene$query_snp_rsid)
+    }, error=function(e) {
+        print(e)
+    }, waring=function(w) {
+        print(w)
+    })
     
+    ldmat <- raw.ldmat.r2
+    
+    if(!(is.na(snp.gene.map))) {
+        cnames<-colnames(ldmat)[-1]
         ldmat <- rbind(NA, ldmat)
         ldmat <- cbind(NA, ldmat)
     
@@ -94,5 +114,7 @@ LDlink.LDmatrix <- function(snps, r2d="r2", population="ALL", snp.gene.map=NA) {
                                             c('white', 'lightyellow', "yellow", "orange", "red"))
     )
     
-    return(list(raw.matrix=raw.ldmat, stylish.matrix=ld.matrix.out))
+    return(list(raw.matrix.r2=raw.ldmat.r2, 
+                stylish.matrix.r2=ld.matrix.out, 
+                raw.matrix.dprime=raw.ldmat.dprime))
 }

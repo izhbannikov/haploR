@@ -1,5 +1,5 @@
 ---
-title: "Using haploR, an R package for querying HaploReg and RegulomeDB"
+title: "Using haploR, an R package for querying HaploReg, RegulomeDB and LDlink"
 author: "Ilya Y. Zhbannikov"
 date: '`r date()`'
 output:
@@ -18,14 +18,15 @@ vignette: >
 ## Overview
 
 HaploReg (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>) and 
-RegulomeDB (<http://www.regulomedb.org>)
+RegulomeDB (<http://www.regulomedb.org>),
+LDlink (<https://analysistools.nci.nih.gov/LDlink/>),
 are web-based tools that extract biological information such as eQTL, 
-LD, motifs, etc. from large genomic projects such as ENCODE, 
+LD, LD matrices, motifs, etc. from large genomic projects such as ENCODE, 
 the 1000 Genomes Project, Roadmap Epigenomics Project and others. 
 This is sometimes called "post stage GWAS" analysis.
 
 The R-package _haploR_ was developed to query 
-those tools (HaploReg and RegulomeDB) directly from 
+those tools (HaploReg, RegulomeDB, LDlink) directly from 
 _R_ in order to facilitate high-throughput 
 genomic data analysis. Below we provide several examples 
 that show how to work with this package.
@@ -40,9 +41,9 @@ usage the _haploR_ or any other issues.
 
 This package was inspired by the fact that many web-based post stage GWAS databases do not have Application Programing Interface (API) and, therefore, do not allow users to query them remotedly from R environment. In our research we used HaploReg and RegulomeDB web databases. These very useful web databases show information about linkage disequilibrium of query variants and variants which are in LD with them, expression quantitative trait loci (eQTL), motifs changed and other useful information. However, it is not easy to include this information into streamlined workflow since those tools also not offer API.
 
-We developed a custom analysis pipeline which prepares data, performs genome-wide association (GWA) analysis and presents results in a user-friendly format. Results include a list of genetic variants (also known as 'SNP' or single nucleotide polymorphism), their corresponding _p_-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go throught the list of SNPs having genome-wide significant _p_-values (1e-8) and submit each of those SNPs to HaploReg or RegulomeDB manually, one-by-one, but it is time-consuming process and will not be fully automatic (which ruins one of the pipeline's paradigms). This is especially difficult if the web site does not offer downloading results.
+We developed a custom analysis pipeline which prepares data, performs genome-wide association (GWA) analysis and presents results in a user-friendly format. Results include a list of genetic variants (also known as 'SNP' or single nucleotide polymorphism), their corresponding _p_-values, phenotypes (traits) tested and other meta-information such as LD, alternative allele, minor allele frequency, motifs changed, etc. Of course, we could go throught the list of SNPs having genome-wide significant _p_-values (1e-8) and submit each of those SNPs to web-based tools manually, one-by-one, but it is time-consuming process and will not be fully automatic (which ruins one of the pipeline's paradigms). This is especially difficult if the web site does not offer downloading results.
 
-Therefore, we developed _haploR_, a user-friendly R package that connects to HaploReg or RegulomeDB from R environment with methods POST and GET and downloads results in a suitable R format. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline and now we would like to present _haploR_ to the research community.
+Therefore, we developed _haploR_, a user-friendly R package that connects to the web tool from R environment with methods POST/GET and downloads results in a suitable R format. This package siginificantly saved our time in developing reporting system for our internal genomic analysis pipeline and now we would like to present _haploR_ to the research community.
 
 Example of typical analysis workflow is shown below.
 
@@ -75,6 +76,7 @@ _haploR_ depends on the following packages:
 * _XML_, version version 3.98-1.6 or later.
 * _tibble_, version 1.3.0 or later.
 * _RUnit_, version 0.4.31 or later.
+* _DT_, version 0.4 or later.
 
 ## Examples of usage
 
@@ -284,6 +286,53 @@ x <- queryRegulome(c("rs4791078","rs10048158"))
 x$res.table
 x$bad.snp.id
 ```
+
+
+### Querying LDlink
+
+_LDlink_ is a set of web-based tools that allow exloring Linkage Disequilibrium of provided set of SNPs. _LDlink_ allows for the following tools:
+
+* _LDassoc_
+* _LDhap_
+* _LDmatrix_
+* _LDpair_
+* _LDproxy_
+* _SNPchip_
+* _SNPclip_
+
+Currently _haploR_ support _LDmatrix_ only but we are currently working on adding other tools from _LDlink_ project.
+
+#### LDmatrix
+Function 
+```
+LDlink.LDmatrix(snps, r2d = "r2", population = "ALL")
+```
+
+This function queries HaploReg web-based tool and returns results.
+
+##### Arguments
+
+* _snps_:	A list of snps (a vector of rsIDs, or a file, one SNP per line).
+* _r2d_:	Show r2 or D'. Default: r2
+* _population_:	A particular population. Default: ```ALL```.
+
+##### Value
+
+A list of three: (1) raw LD r2 matrix, (2) colored (fancy) matrix with LD r2 gradient (an object of classses _datatables_, _htmlwidget_), (3) raw LD D-prime matrix.
+
+##### Example
+
+```{r, echo=TRUE, message=FALSE}
+library(haploR)
+ldmat <- LDlink.LDmatrix(snps=c("rs77264218", "rs11229158", "rs10896659", "rs10896702", "rs2042592"), population="AFR")
+# Raw LD matrix r2:
+head(ldmat$raw.matrix.r2)
+# Raw LD matrix D prime:
+head(ldmat$raw.matrix.dprime)
+# Fancy-looking LD matrix r2:
+ldmat$stylish.matrix.r2
+```
+
 
 ### Roadmap cell types
 

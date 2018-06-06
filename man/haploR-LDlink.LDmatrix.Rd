@@ -4,22 +4,20 @@
 \alias{LDlink.LDmatrix}
 \title{This function queries HaploReg web-based tool and returns results.}
 \usage{
-LDlink.LDmatrix(snps, r2d = "r2", population = "ALL", snp.gene.map = NA)
+LDlink.LDmatrix(snps, r2d = "r2", population = "ALL")
 }
 \arguments{
 \item{snps}{A list of snps (a vector of rsIDs, or a file, one SNP per line).}
 
 \item{r2d}{Show r2 or D'. Default: \code{r2}}
 
-\item{population}{A particular study.
+\item{population}{A particular genetic population.
 Default: \code{ALL}.}
-
-\item{snp.gene.map}{A list (map) in which a gene is a key.
-Example: list("GENE1"=c("SNP1", "SNP2", "SNP3"), "GENE2"=c("SNP4", "SNP5"))
-Default: \code{NA}}
 }
 \value{
-A list of two: (1) raw LD matrix and (2) colored (fancy) matrix with LD gradient.
+A list of three: (1) raw LD r2 matrix, 
+(2) colored (fancy) matrix with LD r2 gradient (an object of classses \code{datatables}, \code{htmlwidget}),
+(3) raw LD D-prime matrix.
 }
 \description{
 This function queries HaploReg web-based tool and returns results.
