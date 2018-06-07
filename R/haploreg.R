@@ -191,6 +191,7 @@ simpleQuery <- function(query=NULL, file=NULL,
         dat <- content(r, "text", encoding=encoding)
         sp <- strsplit(dat, '\n')
         res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])), stringsAsFactors = FALSE)
+        #res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])))
         colnames(res.table) <- strsplit(sp[[1]][1], '\t')[[1]]
     
         for(i in 2:length(sp[[1]])) {
@@ -270,12 +271,11 @@ simpleQuery <- function(query=NULL, file=NULL,
     }
   
     if(!is.null(html.table)) {
-        tmp.table <- html.table[, c(5,13:14)]
+        tmp.table <- data.frame(html.table[, c(5,13:14)], stringsAsFactors = FALSE)
         tmp.table <- tmp.table[!duplicated(tmp.table), ]
         if("variant" %in% colnames(tmp.table)) {
             data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="variant")
         } else {
-            #print(head(tmp.table))
             data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="V5")
         }
         
@@ -313,6 +313,7 @@ simpleQuery <- function(query=NULL, file=NULL,
                           data.merged[["dbSNP_functional_annotation"]],
                           data.merged[["query_snp_rsid"]])
         data.merged <- data.frame(data.merged1, data.merged[,34:35], stringsAsFactors = FALSE)
+        #data.merged <- cbind(data.merged1, data.merged[,34:35])
     
         colnames(data.merged) <- c("chr", "pos_hg38", "r2", "D'", "is_query_snp", 
                                "rsID", "ref", "alt", "AFR", "AMR", 
@@ -331,13 +332,15 @@ simpleQuery <- function(query=NULL, file=NULL,
     }
     
     # Make important columns to be numeric
-    data.merged$r2 <- as.numeric(data.merged$r2)
-    data.merged$is_query_snp <- as.numeric(data.merged$is_query_snp)
-    data.merged[["D'"]] <- as.numeric(data.merged[["D'"]])
-    data.merged$AFR <- as.numeric(data.merged$AFR)
-    data.merged$AMR <- as.numeric(data.merged$AMR)
-    data.merged$ASN <- as.numeric(data.merged$ASN)
-    data.merged$EUR <- as.numeric(data.merged$EUR)
+    data.merged[["chr"]] <- as.num(data.merged[["chr"]])
+    data.merged[["r2"]] <- as.num(data.merged[["r2"]])
+    data.merged[["D'"]] <- as.num(data.merged[["D'"]])
+    data.merged[["is_query_snp"]] <- as.num(data.merged[["is_query_snp"]])
+    data.merged[["AFR"]] <- as.num(data.merged[["AFR"]])
+    data.merged[["AMR"]] <- as.num(data.merged[["AMR"]])
+    data.merged[["ASN"]] <- as.num(data.merged[["ASN"]])
+    data.merged[["EUR"]] <- as.num(data.merged[["EUR"]])
+    
     
     return(data.merged)
 }

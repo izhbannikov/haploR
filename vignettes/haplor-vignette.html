@@ -128,7 +128,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Using haploR, an R package for querying HaploReg, RegulomeDB and LDlink</h1>
 <h4 class="author"><em>Ilya Y. Zhbannikov</em></h4>
-<h4 class="date"><em>Wed Jun 6 14:18:15 2018</em></h4>
+<h4 class="date"><em>Thu Jun 7 16:33:23 2018</em></h4>
 
 </div>
 
@@ -252,18 +252,18 @@ $(document).ready(function () {
 x &lt;- queryHaploreg(query=c(&quot;rs10048158&quot;,&quot;rs4791078&quot;))
 x</code></pre>
 <pre><code>## # A tibble: 33 x 35
-##    chr   pos_hg38    r2  `D'` is_query_snp rsID    ref   alt     AFR   AMR
-##    &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 17    66240200  1     1               1 rs1004… T     C      0.93  0.66
-##  2 17    66240200  0.82  0.93            0 rs1004… T     C      0.93  0.66
-##  3 17    66231972  0.82  0.99            0 rs1107… G     T      0.88  0.63
-##  4 17    66248387  0.99  1               0 rs1260… T     C      0.93  0.66
-##  5 17    66248387  0.81  0.92            0 rs1260… T     C      0.93  0.66
-##  6 17    66214285  0.98  0.99            0 rs1971… G     C      0.86  0.67
-##  7 17    66214285  0.83  0.93            0 rs1971… G     C      0.86  0.67
-##  8 17    66240359  0.83  1               0 rs2013… A     G      0.64  0.6 
-##  9 17    66219777  0.82  0.99            0 rs2215… A     G      0.89  0.63
-## 10 17    66219453  0.83  0.93            0 rs2215… G     A      0.91  0.67
+##      chr pos_hg38    r2  `D'` is_query_snp rsID    ref   alt     AFR   AMR
+##    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1    17 66240200  1     1               1 rs1004… T     C      0.93  0.66
+##  2    17 66240200  0.82  0.93            0 rs1004… T     C      0.93  0.66
+##  3    17 66231972  0.82  0.99            0 rs1107… G     T      0.88  0.63
+##  4    17 66248387  0.99  1               0 rs1260… T     C      0.93  0.66
+##  5    17 66248387  0.81  0.92            0 rs1260… T     C      0.93  0.66
+##  6    17 66214285  0.98  0.99            0 rs1971… G     C      0.86  0.67
+##  7    17 66214285  0.83  0.93            0 rs1971… G     C      0.86  0.67
+##  8    17 66240359  0.83  1               0 rs2013… A     G      0.64  0.6 
+##  9    17 66219777  0.82  0.99            0 rs2215… A     G      0.89  0.63
+## 10    17 66219453  0.83  0.93            0 rs2215… G     A      0.91  0.67
 ## # ... with 23 more rows, and 25 more variables: ASN &lt;dbl&gt;, EUR &lt;dbl&gt;,
 ## #   GERP_cons &lt;chr&gt;, SiPhy_cons &lt;chr&gt;, Chromatin_States &lt;chr&gt;,
 ## #   Chromatin_States_Imputed &lt;chr&gt;, Chromatin_Marks &lt;chr&gt;, DNAse &lt;chr&gt;,
@@ -278,21 +278,21 @@ x</code></pre>
 <pre class="r"><code>subset.high.LD &lt;- x[as.numeric(x$r2) &gt; 0.9, c(&quot;rsID&quot;, &quot;r2&quot;, &quot;chr&quot;, &quot;pos_hg38&quot;, &quot;is_query_snp&quot;, &quot;ref&quot;, &quot;alt&quot;)]
 subset.high.LD</code></pre>
 <pre><code>## # A tibble: 13 x 7
-##    rsID          r2 chr   pos_hg38 is_query_snp ref   alt  
-##    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-##  1 rs10048158  1    17    66240200            1 T     C    
-##  2 rs12603947  0.99 17    66248387            0 T     C    
-##  3 rs1971682   0.98 17    66214285            0 G     C    
-##  4 rs2215415   0.99 17    66219453            0 G     A    
-##  5 rs3744317   0.99 17    66220526            0 G     A    
-##  6 rs4366742   0.99 17    66216124            0 T     C    
-##  7 rs4790914   1    17    66213160            0 C     G    
-##  8 rs4791078   1    17    66213896            1 A     C    
-##  9 rs4791079   1    17    66213422            0 T     G    
-## 10 rs71160546  0.94 17    66230111            0 GA    G    
-## 11 rs7342920   0.99 17    66248527            0 T     G    
-## 12 rs8178827   0.96 17    66227121            0 C     T    
-## 13 rs9895261   1    17    66244318            0 A     G</code></pre>
+##    rsID          r2   chr pos_hg38 is_query_snp ref   alt  
+##    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 rs10048158  1       17 66240200            1 T     C    
+##  2 rs12603947  0.99    17 66248387            0 T     C    
+##  3 rs1971682   0.98    17 66214285            0 G     C    
+##  4 rs2215415   0.99    17 66219453            0 G     A    
+##  5 rs3744317   0.99    17 66220526            0 G     A    
+##  6 rs4366742   0.99    17 66216124            0 T     C    
+##  7 rs4790914   1       17 66213160            0 C     G    
+##  8 rs4791078   1       17 66213896            1 A     C    
+##  9 rs4791079   1       17 66213422            0 T     G    
+## 10 rs71160546  0.94    17 66230111            0 GA    G    
+## 11 rs7342920   0.99    17 66248527            0 T     G    
+## 12 rs8178827   0.96    17 66227121            0 C     T    
+## 13 rs9895261   1       17 66244318            0 A     G</code></pre>
 <p>We can then save the <em>subset.high.LD</em> into an Excel workbook:</p>
 <pre class="r"><code>require(openxlsx)
 write.xlsx(x=subset.high.LD, file=&quot;subset.high.LD.xlsx&quot;)</code></pre>
@@ -335,18 +335,18 @@ write.xlsx(x=subset.high.LD, file=&quot;subset.high.LD.xlsx&quot;)</code></pre>
 x &lt;- queryHaploreg(file=system.file(&quot;extdata/snps.txt&quot;, package = &quot;haploR&quot;))
 x</code></pre>
 <pre><code>## # A tibble: 33 x 35
-##    chr   pos_hg38    r2  `D'` is_query_snp rsID    ref   alt     AFR   AMR
-##    &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 17    66240200  1     1               1 rs1004… T     C      0.93  0.66
-##  2 17    66240200  0.82  0.93            0 rs1004… T     C      0.93  0.66
-##  3 17    66231972  0.82  0.99            0 rs1107… G     T      0.88  0.63
-##  4 17    66248387  0.99  1               0 rs1260… T     C      0.93  0.66
-##  5 17    66248387  0.81  0.92            0 rs1260… T     C      0.93  0.66
-##  6 17    66214285  0.98  0.99            0 rs1971… G     C      0.86  0.67
-##  7 17    66214285  0.83  0.93            0 rs1971… G     C      0.86  0.67
-##  8 17    66240359  0.83  1               0 rs2013… A     G      0.64  0.6 
-##  9 17    66219777  0.82  0.99            0 rs2215… A     G      0.89  0.63
-## 10 17    66219453  0.83  0.93            0 rs2215… G     A      0.91  0.67
+##      chr pos_hg38    r2  `D'` is_query_snp rsID    ref   alt     AFR   AMR
+##    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1    17 66240200  1     1               1 rs1004… T     C      0.93  0.66
+##  2    17 66240200  0.82  0.93            0 rs1004… T     C      0.93  0.66
+##  3    17 66231972  0.82  0.99            0 rs1107… G     T      0.88  0.63
+##  4    17 66248387  0.99  1               0 rs1260… T     C      0.93  0.66
+##  5    17 66248387  0.81  0.92            0 rs1260… T     C      0.93  0.66
+##  6    17 66214285  0.98  0.99            0 rs1971… G     C      0.86  0.67
+##  7    17 66214285  0.83  0.93            0 rs1971… G     C      0.86  0.67
+##  8    17 66240359  0.83  1               0 rs2013… A     G      0.64  0.6 
+##  9    17 66219777  0.82  0.99            0 rs2215… A     G      0.89  0.63
+## 10    17 66219453  0.83  0.93            0 rs2215… G     A      0.91  0.67
 ## # ... with 23 more rows, and 25 more variables: ASN &lt;dbl&gt;, EUR &lt;dbl&gt;,
 ## #   GERP_cons &lt;chr&gt;, SiPhy_cons &lt;chr&gt;, Chromatin_States &lt;chr&gt;,
 ## #   Chromatin_States_Imputed &lt;chr&gt;, Chromatin_Marks &lt;chr&gt;, DNAse &lt;chr&gt;,
@@ -385,18 +385,18 @@ studies[[2]]</code></pre>
 x &lt;- queryHaploreg(study=studies[[1]])
 x</code></pre>
 <pre><code>## # A tibble: 117 x 35
-##    chr   pos_hg38    r2  `D'` is_query_snp rsID    ref   alt     AFR   AMR
-##    &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 17    66240200  1     1               1 rs1004… T     C     0.93   0.66
-##  2 17    66083697  0.91  0.98            0 rs1016… A     C     0.17   0.25
-##  3 17    66083844  0.92  0.99            0 rs1016… C     T     0.27   0.25
-##  4 11    34524788  0.87  0.97            0 rs1103… C     T     0.04   0.1 
-##  5 11    9080475   0.87  0.93            0 rs1104… C     A     0.290  0.85
-##  6 17    66231972  0.82  0.99            0 rs1107… G     T     0.88   0.63
-##  7 17    66103942  1     1               0 rs1113… T     C     0.05   0.25
-##  8 11    34542502  0.9   0.96            0 rs1115… G     GT    0.35   0.15
-##  9 10    99597960  0.93  0.97            0 rs1119… G     C     0.08   0.08
-## 10 10    99598624  0.93  0.97            0 rs1119… T     C     0.08   0.08
+##      chr pos_hg38    r2  `D'` is_query_snp rsID    ref   alt     AFR   AMR
+##    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1    17 66240200  1     1               1 rs1004… T     C     0.93   0.66
+##  2    17 66083697  0.91  0.98            0 rs1016… A     C     0.17   0.25
+##  3    17 66083844  0.92  0.99            0 rs1016… C     T     0.27   0.25
+##  4    11 34524788  0.87  0.97            0 rs1103… C     T     0.04   0.1 
+##  5    11 9080475   0.87  0.93            0 rs1104… C     A     0.290  0.85
+##  6    17 66231972  0.82  0.99            0 rs1107… G     T     0.88   0.63
+##  7    17 66103942  1     1               0 rs1113… T     C     0.05   0.25
+##  8    11 34542502  0.9   0.96            0 rs1115… G     GT    0.35   0.15
+##  9    10 99597960  0.93  0.97            0 rs1119… G     C     0.08   0.08
+## 10    10 99598624  0.93  0.97            0 rs1119… T     C     0.08   0.08
 ## # ... with 107 more rows, and 25 more variables: ASN &lt;dbl&gt;, EUR &lt;dbl&gt;,
 ## #   GERP_cons &lt;chr&gt;, SiPhy_cons &lt;chr&gt;, Chromatin_States &lt;chr&gt;,
 ## #   Chromatin_States_Imputed &lt;chr&gt;, Chromatin_Marks &lt;chr&gt;, DNAse &lt;chr&gt;,
@@ -500,42 +500,33 @@ x$res.table</code></pre>
 <div id="example-1" class="section level5">
 <h5>Example</h5>
 <pre class="r"><code>library(haploR)
-ldmat &lt;- LDlink.LDmatrix(snps=c(&quot;rs77264218&quot;, &quot;rs11229158&quot;, &quot;rs10896659&quot;, &quot;rs10896702&quot;, &quot;rs2042592&quot;), population=&quot;AFR&quot;)</code></pre>
-<pre><code>## Warning in if (file.exists(snps)) {: the condition has length &gt; 1 and only
-## the first element will be used</code></pre>
-<pre><code>## Warning in simpleQuery(query = query, file = file, study = study, ldThresh
-## = ldThresh, : NAs introduced by coercion
-
-## Warning in simpleQuery(query = query, file = file, study = study, ldThresh
-## = ldThresh, : NAs introduced by coercion
-
-## Warning in simpleQuery(query = query, file = file, study = study, ldThresh
-## = ldThresh, : NAs introduced by coercion
-
-## Warning in simpleQuery(query = query, file = file, study = study, ldThresh
-## = ldThresh, : NAs introduced by coercion</code></pre>
-<pre><code>## Warning in if (!(is.na(snp.gene.map))) {: the condition has length &gt; 1 and
-## only the first element will be used</code></pre>
-<pre class="r"><code># Raw LD matrix r2:
-head(ldmat$raw.matrix.r2)</code></pre>
-<pre><code>##    RS_number rs77264218 rs11229158 rs10896659 rs10896702 rs2042592
+ldmat &lt;- LDlink.LDmatrix(snps=c(&quot;rs77264218&quot;, &quot;rs11229158&quot;, &quot;rs10896659&quot;, &quot;rs10896702&quot;, &quot;rs2042592&quot;), population=&quot;AFR&quot;)
+ldmat</code></pre>
+<pre><code>## $matrix.r2
+##    RS_number rs77264218 rs11229158 rs10896659 rs10896702 rs2042592
 ## 1 rs77264218      1.000      0.198      0.198      0.133     0.545
 ## 2 rs11229158      0.198      1.000      1.000      0.666     0.355
 ## 3 rs10896659      0.198      1.000      1.000      0.666     0.355
 ## 4 rs10896702      0.133      0.666      0.666      1.000     0.245
-## 5  rs2042592      0.545      0.355      0.355      0.245     1.000</code></pre>
-<pre class="r"><code># Raw LD matrix D prime:
-head(ldmat$raw.matrix.dprime)</code></pre>
-<pre><code>##    RS_number rs77264218 rs11229158 rs10896659 rs10896702 rs2042592
+## 5  rs2042592      0.545      0.355      0.355      0.245     1.000
+## 
+## $matrix.dprime
+##    RS_number rs77264218 rs11229158 rs10896659 rs10896702 rs2042592
 ## 1 rs77264218          1      1.000      1.000      1.000     1.000
 ## 2 rs11229158          1      1.000      1.000      0.995     0.988
 ## 3 rs10896659          1      1.000      1.000      0.995     0.988
 ## 4 rs10896702          1      0.995      0.995      1.000     1.000
 ## 5  rs2042592          1      0.988      0.988      1.000     1.000</code></pre>
-<pre class="r"><code># Fancy-looking LD matrix r2:
-ldmat$stylish.matrix.r2</code></pre>
-<div id="htmlwidget-9fdd4f76cd9c6244863d" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9fdd4f76cd9c6244863d">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[null,"OR4A16","OR4A16","OR4A16","OR4A15","OR4A15"],[null,"rs77264218","rs11229158","rs10896659","rs10896702","rs2042592"],["OR4A16","1","0.198","0.198","0.133","0.545"],["OR4A16","0.198","1","1","0.666","0.355"],["OR4A16","0.198","1","1","0.666","0.355"],["OR4A15","0.133","0.666","0.666","1","0.245"],["OR4A15","0.545","0.355","0.355","0.245","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>NA<\/th>\n      <th>RS_number<\/th>\n      <th>rs77264218<\/th>\n      <th>rs11229158<\/th>\n      <th>rs10896659<\/th>\n      <th>rs10896702<\/th>\n      <th>rs2042592<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"rowCallback":"function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<pre class="r"><code># Stylish matrix R2
+stylish.matrix.r2 &lt;- makeStylishLDmatrix(ldmat$matrix.r2)
+stylish.matrix.r2</code></pre>
+<div id="htmlwidget-f371dafd326cdc17f5d2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f371dafd326cdc17f5d2">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[null,"OR4A16","OR4A16","OR4A16","OR4A15","OR4A15"],[null,"rs77264218","rs11229158","rs10896659","rs10896702","rs2042592"],["OR4A16","1","0.198","0.198","0.133","0.545"],["OR4A16","0.198","1","1","0.666","0.355"],["OR4A16","0.198","1","1","0.666","0.355"],["OR4A15","0.133","0.666","0.666","1","0.245"],["OR4A15","0.545","0.355","0.355","0.245","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>NA<\/th>\n      <th>RS_number<\/th>\n      <th>rs77264218<\/th>\n      <th>rs11229158<\/th>\n      <th>rs10896659<\/th>\n      <th>rs10896702<\/th>\n      <th>rs2042592<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"rowCallback":"function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<pre class="r"><code># Stylish matrix D'
+stylish.matrix.Dprime &lt;- makeStylishLDmatrix(ldmat$matrix.dprime)
+stylish.matrix.Dprime</code></pre>
+<div id="htmlwidget-ca1330fe4b01979b664c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ca1330fe4b01979b664c">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[null,"OR4A16","OR4A16","OR4A16","OR4A15","OR4A15"],[null,"rs77264218","rs11229158","rs10896659","rs10896702","rs2042592"],["OR4A16","1","1","1","1","1"],["OR4A16","1","1","1","0.995","0.988"],["OR4A16","1","1","1","0.995","0.988"],["OR4A15","1","0.995","0.995","1","1"],["OR4A15","1","0.988","0.988","1","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>NA<\/th>\n      <th>RS_number<\/th>\n      <th>rs77264218<\/th>\n      <th>rs11229158<\/th>\n      <th>rs10896659<\/th>\n      <th>rs10896702<\/th>\n      <th>rs2042592<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"rowCallback":"function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
