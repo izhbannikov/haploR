@@ -290,7 +290,7 @@ x$bad.snp.id
 
 ### Querying LDlink
 
-_LDlink_ is a set of web-based tools that allow exloring Linkage Disequilibrium of provided set of SNPs. _LDlink_ allows for the following tools:
+_LDlink_ (<https://analysistools.nci.nih.gov/LDlink/>) is a set of web-based tools that allow exloring Linkage Disequilibrium of provided set of SNPs. _LDlink_ allows for the following tools:
 
 * _LDassoc_
 * _LDhap_
@@ -300,7 +300,7 @@ _LDlink_ is a set of web-based tools that allow exloring Linkage Disequilibrium 
 * _SNPchip_
 * _SNPclip_
 
-Currently _haploR_ support _LDmatrix_ only but we are currently working on adding other tools from _LDlink_ project.
+Currently _haploR_ supports _LDmatrix_ only but we are currently working on adding other tools from _LDlink_ project.
 
 #### LDmatrix
 Function 

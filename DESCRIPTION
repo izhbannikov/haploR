@@ -2,14 +2,16 @@ Package: haploR
 Type: Package
 Title: Query 'HaploReg', 'RegulomeDB', 'LDlink'
 Version: 2.0.1
-Date: 2018-06-05
-Authors@R: c(person(c("Ilya", "Y."), "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")))
+Date: 2018-06-07
+Authors@R: c(person(c("Ilya", "Y."), "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
+             person(c("Konstantin", "G."), "Arbeev", email = "konstantin.arbeev@duke.edu", role = c("aut")),
+             person(c("Anatoliy", "I."), "Yashin", email = "aiy@duke.edu", role = c("aut")))
 Maintainer: Ilya Y. Zhbannikov <ilya.zhbannikov@duke.edu>
 Description: A set of utilities for querying 
              'HaploReg' <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>, 
-             'RegulomeDB' <http://www.regulomedb.org>, or LDlink <https://analysistools.nci.nih.gov/LDlink>
+             'RegulomeDB' <http://www.regulomedb.org>, and LDlink <https://analysistools.nci.nih.gov/LDlink>
              web-based tools. The package connects to 
-             'HaploReg', 'RegulomeDB' or 'LDlink', searches and downloads results, without 
+             'HaploReg', 'RegulomeDB' and 'LDlink', searches and downloads results, without 
              opening web pages, directly from R environment. 
              Results are stored in a data frame that can be directly used in various 
              kinds of downstream analyses.

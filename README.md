@@ -380,6 +380,58 @@ x$bad.snp.id
     ## # A tibble: 0 x 1
     ## # ... with 1 variables: rsID <chr>
 
+### Querying LDlink
+
+*LDlink* (<https://analysistools.nci.nih.gov/LDlink/>) is a set of web-based tools that allow exloring Linkage Disequilibrium of provided set of SNPs. *LDlink* allows for the following tools:
+
+- *LDassoc*
+- *LDhap*
+- *LDmatrix*
+- *LDpair*
+- *LDproxy*
+- *SNPchip*
+- *SNPclip*
+
+Currently *haploR* supports *LDmatrix* only but we are currently working on adding other tools from *LDlink* project.
+
+#### LDmatrix
+Function 
+``` r
+LDlink.LDmatrix(snps, r2d = "r2", population = "ALL")
+```
+
+This function queries HaploReg web-based tool and returns results.
+
+##### Arguments
+
+* *snps*:	A list of snps (a vector of rsIDs, or a file, one SNP per line).
+* *population*:	A particular population. Default: ```ALL```.
+
+##### Value
+
+A list of two: (1) raw LD r2 matrix, (2) raw LD D-prime matrix.
+
+##### Example
+
+``` r
+library(haploR)
+ldmat <- LDlink.LDmatrix(snps=c("rs77264218", "rs11229158", "rs10896659", "rs10896702", "rs2042592"), population="AFR")
+ldmat
+# Stylish matrix R2
+stylish.matrix.r2 <- makeStylishLDmatrix(ldmat$matrix.r2)
+stylish.matrix.r2
+```
+![](vignettes/stylish.ldmatrix.r2.png)
+``` r
+# Stylish matrix D'
+stylish.matrix.Dprime <- makeStylishLDmatrix(ldmat$matrix.dprime)
+stylish.matrix.Dprime
+```
+![](vignettes/stylish.ldmatrix.dprime.png)
+
+
+
+
 Session information
 -------------------
 
@@ -387,27 +439,31 @@ Session information
 sessionInfo()
 ```
 
-    ## R Under development (unstable) (2017-03-04 r72303)
-    ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-    ## Running under: macOS Sierra 10.12.4
+    ## R Under development (unstable) (2018-04-05 r74542)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+    ## Running under: macOS High Sierra 10.13.4
     ## 
     ## Matrix products: default
-    ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-    ## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+    ## BLAS: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
     ## 
     ## locale:
-    ## [1] C
+    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] haploR_1.4.4
+    ## [1] haploR_2.0.1
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.10    XML_3.98-1.6    digest_0.6.12   rprojroot_1.2  
-    ##  [5] mime_0.5        R6_2.2.0        backports_1.0.5 magrittr_1.5   
-    ##  [9] evaluate_0.10   httr_1.2.1      stringi_1.1.5   curl_2.4       
-    ## [13] RUnit_0.4.31    rmarkdown_1.4   tools_3.4.0     stringr_1.2.0  
-    ## [17] yaml_2.1.14     compiler_3.4.0  htmltools_0.3.5 knitr_1.15.1   
-    ## [21] tibble_1.3.0
+    ##  [1] Rcpp_0.12.16     knitr_1.20       magrittr_1.5     xtable_1.8-2    
+    ##  [5] R6_2.2.2         rlang_0.2.0      stringr_1.3.0    httr_1.3.1      
+    ##  [9] plyr_1.8.4       tools_3.6.0      DT_0.4           utf8_1.1.3      
+    ## [13] cli_1.0.0        crosstalk_1.0.0  htmltools_0.3.6  assertthat_0.2.0
+    ## [17] yaml_2.1.18      rprojroot_1.3-2  digest_0.6.15    tibble_1.4.2    
+    ## [21] crayon_1.3.4     shiny_1.1.0      later_0.7.2      promises_1.0.1  
+    ## [25] htmlwidgets_1.2  RUnit_0.4.32     curl_3.2         mime_0.5        
+    ## [29] evaluate_0.10.1  rmarkdown_1.9    stringi_1.1.7    compiler_3.6.0  
+    ## [33] pillar_1.2.2     backports_1.1.2  XML_3.98-1.10    jsonlite_1.5    
+    ## [37] httpuv_1.4.3
