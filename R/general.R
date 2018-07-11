@@ -1,5 +1,6 @@
 #' @importFrom httr POST GET content 
 #' @importFrom httr upload_file timeout user_agent
+#' @importFrom httr config set_config
 #' @importFrom XML htmlTreeParse htmlTreeParse xpathApply
 #' @importFrom XML xmlValue xmlGetAttr readHTMLTable
 #' @importFrom XML htmlParse xpathSApply

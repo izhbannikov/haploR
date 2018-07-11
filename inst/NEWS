@@ -1,7 +1,4 @@
-New for version 2.0.2
+New for version 2.0.4
 ======================
 * Version released
-* LDlink.LDmatrix function added
-* Table names added to getExtendedView function
-* Vignette updated
-* README updated
+* LDlink.LDmatrix: URL updated

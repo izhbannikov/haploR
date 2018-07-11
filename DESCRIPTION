@@ -1,8 +1,8 @@
 Package: haploR
 Type: Package
 Title: Query 'HaploReg', 'RegulomeDB', 'LDlink'
-Version: 2.0.2
-Date: 2018-06-25
+Version: 2.0.4
+Date: 2018-07-11
 Authors@R: c(person(c("Ilya", "Y."), "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
              person(c("Konstantin", "G."), "Arbeev", email = "konstantin.arbeev@duke.edu", role = c("aut")),
              person(c("Anatoliy", "I."), "Yashin", email = "aiy@duke.edu", role = c("aut")))

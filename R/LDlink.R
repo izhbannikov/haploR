@@ -120,6 +120,7 @@ LDlink.LDmatrix <- function(snps, population="ALL") {
                  paste("r2_d=","r2",sep=""))
     
     t.url <- paste(url, "?", paste(unlist(body), collapse = "&"), sep="")
+    set_config(config(ssl_verifypeer = 0L, ssl_verifyhost = 0L))
     r <- GET(url=t.url)
     #dat <- content(r, "text")
     
