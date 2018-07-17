@@ -16,8 +16,10 @@ colored (fancy) matrix with LD gradient (an object of classses \code{datatables}
 This function queries HaploReg web-based tool and returns results.
 }
 \examples{
+\dontrun{ 
 library(haploR)
 data <- LDlink.LDmatrix(c("rs10048158","rs4791078"))
 head(data)
 makeStylishLDmatrix(data$matrix.r2)
+}
 }

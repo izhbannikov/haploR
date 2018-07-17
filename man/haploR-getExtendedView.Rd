@@ -5,14 +5,14 @@
 \title{This function queries HaploReg web-based tool 
 in order to Extended view for SNP of interest}
 \usage{
-getExtendedView(snp,
-  url = "http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=")
+getExtendedView(snp, url = Haploreg.settings[["extended.view.url"]])
 }
 \arguments{
 \item{snp}{A SNP of interest.}
 
 \item{url}{A url to HaploReg.
-Default: <"http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=">}
+Default: <https://pubs.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=>
+Previously was: <"http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=">}
 }
 \value{
 A list of tables t1, t2, ..., etc 

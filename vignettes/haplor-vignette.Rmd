@@ -102,7 +102,7 @@ queries HaploReg web-based tool and returns results.
 * _epi_: Source for epigenomes. Possible values: ```vanilla``` for ChromHMM (Core 15-state model); ```imputed``` for ChromHMM (25-state model using 12 imputed marks); ```methyl``` for H3K4me1/H3K4me3 peaks; ```acetyl``` for H3K27ac/H3K9ac peaks. Default: ```vanilla```.
 * _cons_:	Mammalian conservation algorithm. Possible values: ```gerp``` for GERP (<http://mendel.stanford.edu/SidowLab/downloads/gerp/>), ```siphy``` for SiPhy-omega, ```both``` for both. Default: siphy.
 * _genetypes_:	Show position relative to. Possible values: ```gencode``` for Gencode genes; ```refseq``` for RefSeq genes; ```both``` for both. Default: ```gencode```.
-* _url_: HaploReg url address. Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
+* _url_: HaploReg url address. Default: <https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>
 * _timeout_:	A timeout parameter for curl. Default: ```10```
 * _encoding_: Set the encoding for correct retrieval web-page content. Default: ```UTF-8```
 * _verbose_: Verbosing output. Default: ```FALSE```.
@@ -174,7 +174,7 @@ write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
 ```
 
 
-This was an example of gathering post-gwas information directly from the online tool. _haploR_ has an additional advantage because it downloads the full information for query retrieved by HaploReg. For example, if you go online and submit these two SNPs to HaploReg (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>), you will see that some cells of columns "Motifs changed" and "Selected eQTL hits" are hidded (only number of hits are given). _haploR_ retrives this information in a form of a data frame which can be saved into Excel file.
+This was an example of gathering post-gwas information directly from the online tool. _haploR_ has an additional advantage because it downloads the full information for query retrieved by HaploReg. For example, if you go online and submit these two SNPs to HaploReg (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>), you will see that some cells of columns "Motifs changed" and "Selected eQTL hits" are hidded (only number of hits are given). _haploR_ retrives this information in a form of a data frame which can be saved into Excel file.
 
 ```{r, echo=TRUE, message=FALSE}
 x[, c("Motifs", "rsID")]
@@ -205,7 +205,7 @@ rs4791078
 Sometimes one would like to explore results from 
 already performed study. In this case you should 
 first explore the existing studies from 
-HaploReg web site (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>) and then use one of 
+HaploReg web site (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>) and then use one of 
 them as an input parameter. See example below:
 
 ```{r, echo=TRUE, message=FALSE}

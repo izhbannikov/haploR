@@ -11,6 +11,11 @@ LD.settings <- list(ldmatrix.url="https://ldlink.nci.nih.gov/LDlinkRestWeb/ldmat
                                 "ALL", "AFR", "AMR", "EAS", "EUR", "SAS"),
                     avail.ld=c("r2", "d"))
 
+# Haploreg settings
+Haploreg.settings <- list(base.url="https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php",
+                          extended.view.url="https://pubs.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=",
+                          study.url="http://pubs.broadinstitute.org/mammals/haploreg/haploreg.php")
+
 # TODO - add other settings if needed
 
 

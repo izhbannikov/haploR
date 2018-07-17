@@ -5,12 +5,12 @@
 \title{This function queries HaploReg web-based tool 
 in order to see a list of GWAS.}
 \usage{
-
-  getStudyList(url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php")
+getStudyList(url = Haploreg.settings[["base.url"]])
 }
 \arguments{
 \item{url}{A url to HaploReg.
-Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
+Default: <https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>
+Previously was: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
 }
 \value{
 A list of studies. Each study is itself a list

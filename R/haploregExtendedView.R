@@ -3,7 +3,8 @@
 #' 
 #' @param snp A SNP of interest.
 #' @param url A url to HaploReg.
-#' Default: <"http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=">
+#' Default: <https://pubs.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=>
+#' Previously was: <"http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=">
 #' @return A list of tables t1, t2, ..., etc 
 #' depending on information contained in HaploReg database.
 #' @examples
@@ -11,7 +12,7 @@
 #' tables
 #' @rdname haploR-getExtendedView
 #' @export
-getExtendedView <- function(snp, url="http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=") {
+getExtendedView <- function(snp, url=Haploreg.settings[["extended.view.url"]]) {
     
     res <- list()
     snp <- as.list(snp)

@@ -25,7 +25,8 @@
 #' \code{both} for both.
 #' Default: \code{gencode}.
 #' @param url HaploReg url address. 
-#' Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
+#' Default: <https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>
+#' Prefiously was: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
 #' @param timeout A \code{timeout} parameter for \code{curl}.
 #' Default: 100
 #' @param encoding sets the \code{encoding} for correct retrieval web-page content.
@@ -50,7 +51,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
               epi="vanilla", 
               cons="siphy", 
               genetypes="gencode",
-              url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
+              url=Haploreg.settings[["base.url"]],
               timeout=100,
               encoding="UTF-8",
               querySNP=FALSE,
@@ -133,7 +134,7 @@ simpleQuery <- function(query=NULL, file=NULL,
                         epi="vanilla", 
                         cons="siphy", 
                         genetypes="gencode",
-                        url="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
+                        url=Haploreg.settings[["base.url"]],
                         timeout=100,
                         encoding="UTF-8",
                         querySNP=FALSE,
