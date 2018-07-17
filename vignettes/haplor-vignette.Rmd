@@ -17,7 +17,7 @@ vignette: >
 
 ## Overview
 
-HaploReg (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>) and 
+HaploReg (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>) and 
 RegulomeDB (<http://www.regulomedb.org>),
 LDlink (<https://analysistools.nci.nih.gov/LDlink/>),
 are web-based tools that extract biological information such as eQTL, 
@@ -86,7 +86,7 @@ Function
 ```
 queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
   ldPop = "EUR", epi = "vanilla", cons = "siphy", genetypes = "gencode",
-  url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
+  url = "https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php",
   timeout = 10, encoding = "UTF-8", verbose = FALSE)
 ```
 
@@ -227,7 +227,7 @@ x
 If you want to see more information about SNP of interest, you can use the ```getExtendedView```:
 Parameters:
 *```snp``` - A SNP of interest.
-*```url``` - A url to the HaploReg. Default: "http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id="
+*```url``` - A url to the HaploReg. Default: "https://pubs.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id="
 
 Return A list of tables ```t1```, ```t2```, ..., etc, depending on information contained in HaploReg database.
 
