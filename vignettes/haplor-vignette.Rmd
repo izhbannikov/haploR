@@ -7,19 +7,29 @@ output:
   #pdf_document: default
   #md_document : 
   #  variant: markdown_github
-  
+bibliography: "references.bib"  
 vignette: >
   %\VignetteIndexEntry{Tutorial for haploR package} 
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
 
+```{r, message=FALSE, echo=FALSE}
+library(knitcitations)
+cleanbib()
+options("citation_format" = "pandoc")
+r<-citep("10.1093/nar/gkr917") 
+r<-citep("10.1101/gr.137323.112")
+r<-citep("10.1093/bioinformatics/btv402")
+write.bibtex(file="references.bib")
+```
+
 
 ## Overview
 
-HaploReg (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>) and 
-RegulomeDB (<http://www.regulomedb.org>),
-LDlink (<https://analysistools.nci.nih.gov/LDlink/>),
+HaploReg (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>) [@Ward_2011], 
+RegulomeDB (<http://www.regulomedb.org>) [@Boyle_2012], and
+LDlink (<https://analysistools.nci.nih.gov/LDlink/>) [@Machiela_2015]
 are web-based tools that extract biological information such as eQTL, 
 LD, LD matrices, motifs, etc. from large genomic projects such as ENCODE, 
 the 1000 Genomes Project, Roadmap Epigenomics Project and others. 
@@ -469,7 +479,11 @@ The Roadmap Epigenomics project employs data organization schema based on anatom
 | E112 | Thymus         | THYMUS             | Other           | THYM                       | Thymus                                                         | Thymus                                                                     | PrimaryTissue  |
 | E113 | Other          | SPLEEN             | Other           | SPLN                       | Spleen                                                         | Spleen                                                                     | PrimaryTissue  |
 
+
+
 ## Session information
 ```{r, echo=TRUE}
 sessionInfo()
 ```
+
+##References

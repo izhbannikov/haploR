@@ -11,7 +11,7 @@ getExtendedView(snp, url = Haploreg.settings[["extended.view.url"]])
 \item{snp}{A SNP of interest.}
 
 \item{url}{A url to HaploReg.
-Default: <https://pubs.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=>
+Default: <http://pubs.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=>
 Previously was: <"http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query=&id=">}
 }
 \value{

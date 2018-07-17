@@ -128,14 +128,14 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Using haploR, an R package for querying HaploReg, RegulomeDB and LDlink</h1>
 <h4 class="author"><em>Ilya Y. Zhbannikov</em></h4>
-<h4 class="date"><em>Thu Jun 7 20:08:10 2018</em></h4>
+<h4 class="date"><em>Tue Jul 17 14:28:55 2018</em></h4>
 
 </div>
 
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>HaploReg (<a href="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php" class="uri">http://archive.broadinstitute.org/mammals/haploreg/haploreg.php</a>) and RegulomeDB (<a href="http://www.regulomedb.org" class="uri">http://www.regulomedb.org</a>), LDlink (<a href="https://analysistools.nci.nih.gov/LDlink/" class="uri">https://analysistools.nci.nih.gov/LDlink/</a>), are web-based tools that extract biological information such as eQTL, LD, LD matrices, motifs, etc. from large genomic projects such as ENCODE, the 1000 Genomes Project, Roadmap Epigenomics Project and others. This is sometimes called “post stage GWAS” analysis.</p>
+<p>HaploReg (<a href="https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php" class="uri">https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php</a>) <span class="citation">(Ward and Kellis 2011)</span>, RegulomeDB (<a href="http://www.regulomedb.org" class="uri">http://www.regulomedb.org</a>) <span class="citation">(Boyle et al. 2012)</span>, and LDlink (<a href="https://analysistools.nci.nih.gov/LDlink/" class="uri">https://analysistools.nci.nih.gov/LDlink/</a>) <span class="citation">(Machiela and Chanock 2015)</span> are web-based tools that extract biological information such as eQTL, LD, LD matrices, motifs, etc. from large genomic projects such as ENCODE, the 1000 Genomes Project, Roadmap Epigenomics Project and others. This is sometimes called “post stage GWAS” analysis.</p>
 <p>The R-package <em>haploR</em> was developed to query those tools (HaploReg, RegulomeDB, LDlink) directly from <em>R</em> in order to facilitate high-throughput genomic data analysis. Below we provide several examples that show how to work with this package.</p>
 <p>Note: you must have a stable Internet connection to use this package.</p>
 <p>Contact: <a href="mailto:ilya.zhbannikov@duke.edu">ilya.zhbannikov@duke.edu</a> for questions of usage the <em>haploR</em> or any other issues.</p>
@@ -184,7 +184,7 @@ $(document).ready(function () {
 <p>Function</p>
 <pre><code>queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
   ldPop = &quot;EUR&quot;, epi = &quot;vanilla&quot;, cons = &quot;siphy&quot;, genetypes = &quot;gencode&quot;,
-  url = &quot;http://archive.broadinstitute.org/mammals/haploreg/haploreg.php&quot;,
+  url = &quot;https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php&quot;,
   timeout = 10, encoding = &quot;UTF-8&quot;, verbose = FALSE)</code></pre>
 <p>queries HaploReg web-based tool and returns results.</p>
 <div id="arguments" class="section level4">
@@ -198,7 +198,7 @@ $(document).ready(function () {
 <li><em>epi</em>: Source for epigenomes. Possible values: <code>vanilla</code> for ChromHMM (Core 15-state model); <code>imputed</code> for ChromHMM (25-state model using 12 imputed marks); <code>methyl</code> for H3K4me1/H3K4me3 peaks; <code>acetyl</code> for H3K27ac/H3K9ac peaks. Default: <code>vanilla</code>.</li>
 <li><em>cons</em>: Mammalian conservation algorithm. Possible values: <code>gerp</code> for GERP (<a href="http://mendel.stanford.edu/SidowLab/downloads/gerp/" class="uri">http://mendel.stanford.edu/SidowLab/downloads/gerp/</a>), <code>siphy</code> for SiPhy-omega, <code>both</code> for both. Default: siphy.</li>
 <li><em>genetypes</em>: Show position relative to. Possible values: <code>gencode</code> for Gencode genes; <code>refseq</code> for RefSeq genes; <code>both</code> for both. Default: <code>gencode</code>.</li>
-<li><em>url</em>: HaploReg url address. Default: <a href="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php" class="uri">http://archive.broadinstitute.org/mammals/haploreg/haploreg.php</a></li>
+<li><em>url</em>: HaploReg url address. Default: <a href="https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php" class="uri">https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php</a></li>
 <li><em>timeout</em>: A timeout parameter for curl. Default: <code>10</code></li>
 <li><em>encoding</em>: Set the encoding for correct retrieval web-page content. Default: <code>UTF-8</code></li>
 <li><em>verbose</em>: Verbosing output. Default: <code>FALSE</code>.</li>
@@ -296,7 +296,7 @@ subset.high.LD</code></pre>
 <p>We can then save the <em>subset.high.LD</em> into an Excel workbook:</p>
 <pre class="r"><code>require(openxlsx)
 write.xlsx(x=subset.high.LD, file=&quot;subset.high.LD.xlsx&quot;)</code></pre>
-<p>This was an example of gathering post-gwas information directly from the online tool. <em>haploR</em> has an additional advantage because it downloads the full information for query retrieved by HaploReg. For example, if you go online and submit these two SNPs to HaploReg (<a href="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php" class="uri">http://archive.broadinstitute.org/mammals/haploreg/haploreg.php</a>), you will see that some cells of columns “Motifs changed” and “Selected eQTL hits” are hidded (only number of hits are given). <em>haploR</em> retrives this information in a form of a data frame which can be saved into Excel file.</p>
+<p>This was an example of gathering post-gwas information directly from the online tool. <em>haploR</em> has an additional advantage because it downloads the full information for query retrieved by HaploReg. For example, if you go online and submit these two SNPs to HaploReg (<a href="https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php" class="uri">https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php</a>), you will see that some cells of columns “Motifs changed” and “Selected eQTL hits” are hidded (only number of hits are given). <em>haploR</em> retrives this information in a form of a data frame which can be saved into Excel file.</p>
 <pre class="r"><code>x[, c(&quot;Motifs&quot;, &quot;rsID&quot;)]</code></pre>
 <pre><code>## # A tibble: 33 x 2
 ##    Motifs                                                        rsID     
@@ -362,7 +362,7 @@ rs4791078</code></pre>
 </div>
 <div id="using-existing-studies" class="section level4">
 <h4>Using existing studies</h4>
-<p>Sometimes one would like to explore results from already performed study. In this case you should first explore the existing studies from HaploReg web site (<a href="http://archive.broadinstitute.org/mammals/haploreg/haploreg.php" class="uri">http://archive.broadinstitute.org/mammals/haploreg/haploreg.php</a>) and then use one of them as an input parameter. See example below:</p>
+<p>Sometimes one would like to explore results from already performed study. In this case you should first explore the existing studies from HaploReg web site (<a href="https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php" class="uri">https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php</a>) and then use one of them as an input parameter. See example below:</p>
 <pre class="r"><code>library(haploR)
 # Getting a list of existing studies:
 studies &lt;- getStudyList()
@@ -409,7 +409,7 @@ x</code></pre>
 </div>
 <div id="extended-view-of-snp" class="section level4">
 <h4>Extended view of SNP</h4>
-<p>If you want to see more information about SNP of interest, you can use the <code>getExtendedView</code>: Parameters: <em><code>snp</code> - A SNP of interest. </em><code>url</code> - A url to the HaploReg. Default: “<a href="http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query" class="uri">http://archive.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query</a>=&amp;id=”</p>
+<p>If you want to see more information about SNP of interest, you can use the <code>getExtendedView</code>: Parameters: <em><code>snp</code> - A SNP of interest. </em><code>url</code> - A url to the HaploReg. Default: “<a href="https://pubs.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query" class="uri">https://pubs.broadinstitute.org/mammals/haploreg/detail_v4.1.php?query</a>=&amp;id=”</p>
 <p>Return A list of tables <code>t1</code>, <code>t2</code>, …, etc, depending on information contained in HaploReg database.</p>
 <p>Example:</p>
 <pre class="r"><code>library(haploR)
@@ -519,13 +519,13 @@ ldmat</code></pre>
 <pre class="r"><code># Stylish matrix R2
 stylish.matrix.r2 &lt;- makeStylishLDmatrix(ldmat$matrix.r2)
 stylish.matrix.r2</code></pre>
-<div id="htmlwidget-9a1646c5e1602d91fa11" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9a1646c5e1602d91fa11">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[null,"OR4A16","OR4A16","OR4A16","OR4A15","OR4A15"],[null,"rs77264218","rs11229158","rs10896659","rs10896702","rs2042592"],["OR4A16","1","0.198","0.198","0.133","0.545"],["OR4A16","0.198","1","1","0.666","0.355"],["OR4A16","0.198","1","1","0.666","0.355"],["OR4A15","0.133","0.666","0.666","1","0.245"],["OR4A15","0.545","0.355","0.355","0.245","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>NA<\/th>\n      <th>RS_number<\/th>\n      <th>rs77264218<\/th>\n      <th>rs11229158<\/th>\n      <th>rs10896659<\/th>\n      <th>rs10896702<\/th>\n      <th>rs2042592<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"rowCallback":"function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div id="htmlwidget-3e72f53569866f165183" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3e72f53569866f165183">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[null,"OR4A16","OR4A16","OR4A16","OR4A15","OR4A15"],[null,"rs77264218","rs11229158","rs10896659","rs10896702","rs2042592"],["OR4A16","1","0.198","0.198","0.133","0.545"],["OR4A16","0.198","1","1","0.666","0.355"],["OR4A16","0.198","1","1","0.666","0.355"],["OR4A15","0.133","0.666","0.666","1","0.245"],["OR4A15","0.545","0.355","0.355","0.245","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>NA<\/th>\n      <th>RS_number<\/th>\n      <th>rs77264218<\/th>\n      <th>rs11229158<\/th>\n      <th>rs10896659<\/th>\n      <th>rs10896702<\/th>\n      <th>rs2042592<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"rowCallback":"function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 <pre class="r"><code># Stylish matrix D'
 stylish.matrix.Dprime &lt;- makeStylishLDmatrix(ldmat$matrix.dprime)
 stylish.matrix.Dprime</code></pre>
-<div id="htmlwidget-677168a37606d44149fd" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-677168a37606d44149fd">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[null,"OR4A16","OR4A16","OR4A16","OR4A15","OR4A15"],[null,"rs77264218","rs11229158","rs10896659","rs10896702","rs2042592"],["OR4A16","1","1","1","1","1"],["OR4A16","1","1","1","0.995","0.988"],["OR4A16","1","1","1","0.995","0.988"],["OR4A15","1","0.995","0.995","1","1"],["OR4A15","1","0.988","0.988","1","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>NA<\/th>\n      <th>RS_number<\/th>\n      <th>rs77264218<\/th>\n      <th>rs11229158<\/th>\n      <th>rs10896659<\/th>\n      <th>rs10896702<\/th>\n      <th>rs2042592<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"rowCallback":"function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div id="htmlwidget-7c537e0d2f281bd30adb" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7c537e0d2f281bd30adb">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[null,"OR4A16","OR4A16","OR4A16","OR4A15","OR4A15"],[null,"rs77264218","rs11229158","rs10896659","rs10896702","rs2042592"],["OR4A16","1","1","1","1","1"],["OR4A16","1","1","1","0.995","0.988"],["OR4A16","1","1","1","0.995","0.988"],["OR4A15","1","0.995","0.995","1","1"],["OR4A15","1","0.988","0.988","1","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>NA<\/th>\n      <th>RS_number<\/th>\n      <th>rs77264218<\/th>\n      <th>rs11229158<\/th>\n      <th>rs10896659<\/th>\n      <th>rs10896702<\/th>\n      <th>rs2042592<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"rowCallback":"function(row, data) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'background-color':isNaN(parseFloat(value)) ? '' : value <= 0 ? 'white' : value <= 0.5 ? 'lightyellow' : value <= 0.75 ? 'yellow' : value <= 0.85 ? 'orange' : 'red'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -1838,7 +1838,7 @@ stylish.matrix.Dprime</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R Under development (unstable) (2018-04-05 r74542)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.4
+## Running under: macOS High Sierra 10.13.6
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
@@ -1851,19 +1851,34 @@ stylish.matrix.Dprime</code></pre>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] haploR_2.0.1
+## [1] haploR_2.0.5        knitcitations_1.0.8
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.16     knitr_1.20       magrittr_1.5     xtable_1.8-2    
-##  [5] R6_2.2.2         rlang_0.2.0      stringr_1.3.0    httr_1.3.1      
-##  [9] plyr_1.8.4       tools_3.6.0      DT_0.4           utf8_1.1.3      
-## [13] cli_1.0.0        crosstalk_1.0.0  htmltools_0.3.6  assertthat_0.2.0
-## [17] yaml_2.1.18      rprojroot_1.3-2  digest_0.6.15    tibble_1.4.2    
-## [21] crayon_1.3.4     shiny_1.1.0      later_0.7.2      promises_1.0.1  
-## [25] htmlwidgets_1.2  RUnit_0.4.32     curl_3.2         mime_0.5        
-## [29] evaluate_0.10.1  rmarkdown_1.9    stringi_1.1.7    compiler_3.6.0  
-## [33] pillar_1.2.2     backports_1.1.2  XML_3.98-1.10    jsonlite_1.5    
-## [37] httpuv_1.4.3</code></pre>
+##  [1] Rcpp_0.12.16     compiler_3.6.0   pillar_1.2.2     later_0.7.2     
+##  [5] plyr_1.8.4       tools_3.6.0      digest_0.6.15    lubridate_1.7.4 
+##  [9] jsonlite_1.5     evaluate_0.10.1  tibble_1.4.2     rlang_0.2.0     
+## [13] bibtex_0.4.2     shiny_1.1.0      cli_1.0.0        crosstalk_1.0.0 
+## [17] curl_3.2         yaml_2.1.18      RefManageR_1.2.0 httr_1.3.1      
+## [21] stringr_1.3.0    xml2_1.2.0       knitr_1.20       htmlwidgets_1.2 
+## [25] rprojroot_1.3-2  DT_0.4           R6_2.2.2         XML_3.98-1.10   
+## [29] rmarkdown_1.9    magrittr_1.5     backports_1.1.2  promises_1.0.1  
+## [33] htmltools_0.3.6  RUnit_0.4.32     assertthat_0.2.0 mime_0.5        
+## [37] xtable_1.8-2     httpuv_1.4.3     utf8_1.1.3       stringi_1.1.7   
+## [41] crayon_1.3.4</code></pre>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-Boyle_2012">
+<p>Boyle, A. P., E. L. Hong, M. Hariharan, Y. Cheng, M. A. Schaub, M. Kasowski, K. J. Karczewski, et al. 2012. “Annotation of Functional Variation in Personal Genomes Using RegulomeDB.” <em>Genome Research</em> 22 (9). Cold Spring Harbor Laboratory: 1790–7. doi:<a href="https://doi.org/10.1101/gr.137323.112">10.1101/gr.137323.112</a>.</p>
+</div>
+<div id="ref-Machiela_2015">
+<p>Machiela, Mitchell J., and Stephen J. Chanock. 2015. “LDlink: A Web-Based Application for Exploring Population-Specific Haplotype Structure and Linking Correlated Alleles of Possible Functional Variants: Fig. 1.” <em>Bioinformatics</em> 31 (21). Oxford University Press (OUP): 3555–7. doi:<a href="https://doi.org/10.1093/bioinformatics/btv402">10.1093/bioinformatics/btv402</a>.</p>
+</div>
+<div id="ref-Ward_2011">
+<p>Ward, L. D., and M. Kellis. 2011. “HaploReg: A Resource for Exploring Chromatin States, Conservation, and Regulatory Motif Alterations Within Sets of Genetically Linked Variants.” <em>Nucleic Acids Research</em> 40 (D1). Oxford University Press (OUP): D930–D934. doi:<a href="https://doi.org/10.1093/nar/gkr917">10.1093/nar/gkr917</a>.</p>
+</div>
+</div>
 </div>
 
 

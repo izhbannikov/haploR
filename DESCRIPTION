@@ -19,7 +19,7 @@ RoxygenNote: 6.0.1
 Suggests: knitr, rmarkdown,openxlsx
 VignetteBuilder: knitr
 Imports:
-	httr,XML,tibble,RUnit,plyr,DT
+	httr,XML,tibble,RUnit,plyr,DT,knitcitations
 Depends:
     R (>= 3.3.2)
 Encoding: UTF-8

@@ -1,8 +1,10 @@
 #' This function queries HaploReg web-based tool and returns results.
 #' 
 #' @param ldmat A LDmatrix in which the first column should contain rdIDs
+#' @param haploreg.url URL to HaploReg project. 
+#' Default: <https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>
 #' @return colored (fancy) matrix with LD gradient (an object of classses \code{datatables}, \code{htmlwidget})
-#' @examples \dontrun{ 
+#' @examples \donotrun {
 #' library(haploR)
 #' data <- LDlink.LDmatrix(c("rs10048158","rs4791078"))
 #' head(data)
@@ -10,12 +12,12 @@
 #' }
 #' @rdname haploR-makeStylishLDmatrix
 #' @export
-makeStylishLDmatrix <- function(ldmat) {
+makeStylishLDmatrix <- function(ldmat, haploreg.url=Haploreg.settings[["base.url"]]) {
     # load gene names using haploreg:
     snps <- ldmat[,1]
     snp.gene.map <- NULL
     tryCatch({
-        haploreg.data <- data.frame(queryHaploreg(query=unique(snps), querySNP = TRUE, timeout = 1000))
+        haploreg.data <- data.frame(queryHaploreg(query=unique(snps), querySNP=TRUE, url=haploreg.url, timeout=1000))
         snp.gene <- unique(haploreg.data[, c("query_snp_rsid", "GENCODE_name")])
         snp.gene$GENCODE_name <- as.character(snp.gene$GENCODE_name)
         snp.gene$query_snp_rsid <- as.character(snp.gene$query_snp_rsid)
