@@ -1,8 +1,8 @@
 Package: haploR
 Type: Package
 Title: Query 'HaploReg', 'RegulomeDB', 'LDlink'
-Version: 2.0.5
-Date: 2018-07-17
+Version: 2.0.6
+Date: 2018-07-31
 Authors@R: c(person(c("Ilya", "Y."), "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
              person(c("Konstantin", "G."), "Arbeev", email = "konstantin.arbeev@duke.edu", role = c("aut")),
              person(c("Anatoliy", "I."), "Yashin", email = "aiy@duke.edu", role = c("aut")))
@@ -19,8 +19,8 @@ RoxygenNote: 6.0.1
 Suggests: knitr, rmarkdown,openxlsx
 VignetteBuilder: knitr
 Imports:
-	httr,XML,tibble,RUnit,plyr,DT,knitcitations
+	httr,XML,tibble,RUnit,plyr,DT
 Depends:
-    R (>= 3.3.2)
+    R (>= 3.4.0)
 Encoding: UTF-8
 License: GPL-3

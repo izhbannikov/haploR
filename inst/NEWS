@@ -1,4 +1,4 @@
-New for version 2.0.5
+New for version 2.0.6
 ======================
 * Version released
-* Haploreg: URLs updated to their most-up-to-date.
+* knitcitations package is not used anymore in order to avoid warnings on CRAN results page
