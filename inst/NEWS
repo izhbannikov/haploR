@@ -1,4 +1,4 @@
-New for version 2.0.6
+New for version 2.0.7
 ======================
 * Version released
-* knitcitations package is not used anymore in order to avoid warnings on CRAN results page
+* Minor bug fixes

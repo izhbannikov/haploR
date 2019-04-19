@@ -5,6 +5,7 @@ if( identical( .Platform$OS.type, "windows" ) &&
   print( "unit tests not run on windows 64 (workaround alert)" )
 } else {
   if(require("RUnit", quietly = TRUE)) {
+    require("RCurl", quietly = TRUE)
     pkg <- "haploR"
     if(Sys.getenv("RCMDCHECK") == "FALSE") {
       path <- file.path(getwd(), "..", "inst", "unitTests")

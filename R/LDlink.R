@@ -4,12 +4,6 @@
 #' @param haploreg.url URL to HaploReg project. 
 #' Default: <https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>
 #' @return colored (fancy) matrix with LD gradient (an object of classses \code{datatables}, \code{htmlwidget})
-#' @examples \donotrun {
-#' library(haploR)
-#' data <- LDlink.LDmatrix(c("rs10048158","rs4791078"))
-#' head(data)
-#' makeStylishLDmatrix(data$matrix.r2)
-#' }
 #' @rdname haploR-makeStylishLDmatrix
 #' @export
 makeStylishLDmatrix <- function(ldmat, haploreg.url=Haploreg.settings[["base.url"]]) {

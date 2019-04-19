@@ -1,8 +1,8 @@
 Package: haploR
 Type: Package
 Title: Query 'HaploReg', 'RegulomeDB', 'LDlink'
-Version: 2.0.6
-Date: 2018-07-31
+Version: 2.0.7
+Date: 2019-04-19
 Authors@R: c(person(c("Ilya", "Y."), "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
              person(c("Konstantin", "G."), "Arbeev", email = "konstantin.arbeev@duke.edu", role = c("aut")),
              person(c("Anatoliy", "I."), "Yashin", email = "aiy@duke.edu", role = c("aut")))
@@ -15,11 +15,11 @@ Description: A set of utilities for querying
              opening web pages, directly from R environment. 
              Results are stored in a data frame that can be directly used in various 
              kinds of downstream analyses.
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests: knitr, rmarkdown,openxlsx
 VignetteBuilder: knitr
 Imports:
-	httr,XML,tibble,RUnit,plyr,DT
+	httr,XML,tibble,RUnit,plyr,DT,RCurl
 Depends:
     R (>= 3.4.0)
 Encoding: UTF-8

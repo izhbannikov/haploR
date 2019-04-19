@@ -4,7 +4,8 @@
 \alias{makeStylishLDmatrix}
 \title{This function queries HaploReg web-based tool and returns results.}
 \usage{
-makeStylishLDmatrix(ldmat, haploreg.url = Haploreg.settings[["base.url"]])
+makeStylishLDmatrix(ldmat,
+  haploreg.url = Haploreg.settings[["base.url"]])
 }
 \arguments{
 \item{ldmat}{A LDmatrix in which the first column should contain rdIDs}
@@ -17,10 +18,4 @@ colored (fancy) matrix with LD gradient (an object of classses \code{datatables}
 }
 \description{
 This function queries HaploReg web-based tool and returns results.
-}
-\examples{
-library(haploR)
-data <- LDlink.LDmatrix(c("rs10048158","rs4791078"))
-head(data)
-makeStylishLDmatrix(data$matrix.r2)
 }
