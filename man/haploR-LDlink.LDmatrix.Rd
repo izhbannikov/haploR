@@ -21,7 +21,9 @@ A list of three: \cr
 This function queries HaploReg web-based tool and returns results.
 }
 \examples{
+\dontrun{
 library(haploR)
 data <- LDlink.LDmatrix(c("rs10048158","rs4791078"))
 head(data)
+}
 }

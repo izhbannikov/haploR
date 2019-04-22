@@ -60,10 +60,12 @@ makeStylishLDmatrix <- function(ldmat, haploreg.url=Haploreg.settings[["base.url
 #' @return A list of three: \cr
 #' (1) raw LD r2 matrix; \cr
 #' (3) raw LD D-prime matrix
-#' @examples
+#' @examples 
+#' \dontrun{
 #' library(haploR)
 #' data <- LDlink.LDmatrix(c("rs10048158","rs4791078"))
 #' head(data)
+#' }
 #' @rdname haploR-LDlink.LDmatrix
 #' @export
 LDlink.LDmatrix <- function(snps, population="ALL") {
