@@ -382,53 +382,7 @@ x$bad.snp.id
 
 ### Querying LDlink
 
-*LDlink* (<https://analysistools.nci.nih.gov/LDlink/>) is a set of web-based tools that allow exloring Linkage Disequilibrium of provided set of SNPs. *LDlink* allows for the following tools:
-
-- *LDassoc*
-- *LDhap*
-- *LDmatrix*
-- *LDpair*
-- *LDproxy*
-- *SNPchip*
-- *SNPclip*
-
-Currently *haploR* supports *LDmatrix* only but we are currently working on adding other tools from *LDlink* project.
-
-#### LDmatrix
-Function 
-``` r
-LDlink.LDmatrix(snps, r2d = "r2", population = "ALL")
-```
-
-This function queries HaploReg web-based tool and returns results.
-
-##### Arguments
-
-* *snps*:	A list of snps (a vector of rsIDs, or a file, one SNP per line).
-* *population*:	A particular population. Default: ```ALL```.
-
-##### Value
-
-A list of two: (1) raw LD r2 matrix, (2) raw LD D-prime matrix.
-
-##### Example
-
-``` r
-library(haploR)
-ldmat <- LDlink.LDmatrix(snps=c("rs77264218", "rs11229158", "rs10896659", "rs10896702", "rs2042592"), population="AFR")
-ldmat
-# Stylish matrix R2
-stylish.matrix.r2 <- makeStylishLDmatrix(ldmat$matrix.r2)
-stylish.matrix.r2
-```
-![](vignettes/stylish.ldmatrix.r2.png)
-``` r
-# Stylish matrix D'
-stylish.matrix.Dprime <- makeStylishLDmatrix(ldmat$matrix.dprime)
-stylish.matrix.Dprime
-```
-![](vignettes/stylish.ldmatrix.dprime.png)
-
+Access to _LDlink_ (<https://doi.org/10.1093/bioinformatics/btv402>) was temporarily removed from ```haploR```.
 
 
 

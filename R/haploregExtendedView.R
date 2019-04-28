@@ -19,8 +19,29 @@ getExtendedView <- function(snp, url=Haploreg.settings[["extended.view.url"]]) {
     for(s in snp) {
         # Construct a direct link:
         ext.url <- paste(url, s, sep="")
+      
         # Get data:
-        page <- htmlParse(ext.url)
+        page <- tryCatch(
+          {
+            htmlParse(ext.url)
+          }, error=function(e) {
+            if(url.exists(ext.url)) {
+                message(paste("URL does not seem to exist:", url))
+            }
+            message("Here's the original error message:")
+            message(e$message)
+            # Choose a return value in case of error
+            return(NULL)
+          }, warning=function(e) {
+            message(e$message)
+            # Choose a return value in case of warning
+            return(NULL)
+          }
+        )
+        if(is.null(page)) {
+            next
+        }
+        
         tables <- readHTMLTable(page)
     
         #t1 <- readHTMLTable(page)[[1]]

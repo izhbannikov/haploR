@@ -62,6 +62,9 @@ queryHaploreg <- function(query=NULL, file=NULL,
     {
         stop("'query' and 'file' can not be supplied simultaneously")
     }
+    parameters <- list(query=query, file=file, study=study, ldThresh=ldThresh, ldPop=ldPop, 
+                       epi=epi, cons=cons, genetypes=genetypes, url=url, timeout=timeout,
+                       encoding=encoding, querySNP=querySNP, fields=fields, verbose=verbose)
     
     recTable <- data.frame(matrix(nrow=0, ncol=35))
     if(!is.null(query))
@@ -69,23 +72,18 @@ queryHaploreg <- function(query=NULL, file=NULL,
         if(grepl("chr", query[1])) 
         {
             res <- lapply(1:length(query), function(i) {
-                tryCatch({
-                    simpleQuery(query=query[i], file=file, study=study, ldThresh=ldThresh, ldPop=ldPop, 
+               simpleQuery(query=query[i], file=file, study=study, ldThresh=ldThresh, ldPop=ldPop, 
                               epi=epi, cons=cons, genetypes=genetypes, url=url, timeout=timeout,
                               encoding=encoding, querySNP=querySNP, fields=fields, verbose=verbose)
-                  
-                }, error=function(e){})
             })
             
             recTable <- ldply(res, data.frame)
-            #recTable <- do.call(rbind.data.frame, res)
             recTable <- recTable[!duplicated(recTable), ]
         } else {
+            
             recTable <- simpleQuery(query=query, file=file, study=study, ldThresh=ldThresh, ldPop=ldPop, 
                              epi=epi, cons=cons, genetypes=genetypes, url=url, timeout=timeout,
                              encoding=encoding, querySNP=querySNP, fields=fields, verbose=verbose)
-            
-          
         }
     } else if(!is.null(file)) 
     {
@@ -95,13 +93,11 @@ queryHaploreg <- function(query=NULL, file=NULL,
         if(grepl("chr", lines[1]))
         {
             res <- lapply(1:length(lines), function(i) {
-                tryCatch({
-                    simpleQuery(query=lines[i], file=NULL, study=study, ldThresh=ldThresh, ldPop=ldPop, 
-                          epi=epi, cons=cons, genetypes=genetypes, url=url, timeout=timeout,
-                          encoding=encoding, querySNP=querySNP, fields=fields, verbose=verbose)
-              
-                }, error=function(e){})
+                simpleQuery(query=lines[i], file=NULL, study=study, ldThresh=ldThresh, ldPop=ldPop, 
+                            epi=epi, cons=cons, genetypes=genetypes, url=url, timeout=timeout,
+                            encoding=encoding, querySNP=querySNP, fields=fields, verbose=verbose)
             })
+            
             recTable <- ldply(res, data.frame)
             recTable <- recTable[!duplicated(recTable), ]
         } 
@@ -110,11 +106,12 @@ queryHaploreg <- function(query=NULL, file=NULL,
             recTable <- simpleQuery(query=query, file=file, study=study, ldThresh=ldThresh, ldPop=ldPop, 
                                   epi=epi, cons=cons, genetypes=genetypes, url=url, timeout=timeout,
                                   encoding=encoding, querySNP=querySNP, fields=fields, verbose=verbose)
-          
+            
         }
         
     } else if(!is.null(study))
     {
+        
         recTable <- simpleQuery(query=query, file=file, study=study, ldThresh=ldThresh, ldPop=ldPop, 
                               epi=epi, cons=cons, genetypes=genetypes, url=url, timeout=timeout,
                               encoding=encoding, querySNP=querySNP, fields=fields, verbose=verbose)
@@ -123,7 +120,7 @@ queryHaploreg <- function(query=NULL, file=NULL,
     {
         stop("Parameters 'query', 'study' and 'file' are NULL.")
     }
-      
+    #ifelse(!is.null(recTable), as_tibble(recTable), NULL)
     return(as_tibble(recTable))
 }
 
@@ -185,24 +182,22 @@ simpleQuery <- function(query=NULL, file=NULL,
   
   
     res.table <- data.frame()
-    tryCatch({
-        # Form encoded: multipart encoded
-        r <- POST(url=url, body = body, encode="multipart",  timeout(timeout))
+    # Form encoded: multipart encoded
+    r <- getHaploregData(url, body, timeout)
     
-        dat <- content(r, "text", encoding=encoding)
-        sp <- strsplit(dat, '\n')
-        res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])), stringsAsFactors = FALSE)
-        #res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])))
-        colnames(res.table) <- strsplit(sp[[1]][1], '\t')[[1]]
+    if(is.null(r)) {
+        return(r)
+    }
     
-        for(i in 2:length(sp[[1]])) {
-            res.table[i-1,] <- strsplit(sp[[1]][i], '\t')[[1]]
-        }
-        
-    }, error=function(e) {
-        print(e)
-    })
-  
+    dat <- content(r, "text", encoding=encoding)
+    sp <- strsplit(dat, '\n')
+    res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])), stringsAsFactors = FALSE)
+    colnames(res.table) <- strsplit(sp[[1]][1], '\t')[[1]]
+    
+    for(i in 2:length(sp[[1]])) {
+      res.table[i-1,] <- strsplit(sp[[1]][i], '\t')[[1]]
+    }
+    
     #Convert numeric-like columns to actual numeric #
     for(i in 1:dim(res.table)[2]) {
         col.num.conv <- suppressWarnings(as.numeric(res.table[,i]))
@@ -344,4 +339,28 @@ simpleQuery <- function(query=NULL, file=NULL,
     
     
     return(data.merged)
+}
+
+getHaploregData <- function(url, body, timeout) {
+    # Form encoded: multipart encoded
+    r <- tryCatch(
+      {
+          POST(url=url, body = body, encode="multipart",  timeout(timeout))
+      },
+      error=function(e) {
+        if(url.exists(url)) {
+          message(paste("URL does not seem to exist:", url))
+        }
+        message("Here's the original error message:")
+        message(e$message)
+        # Choose a return value in case of error
+        return(NULL)
+      },
+      warning=function(e) {
+        message(e$message)
+        # Choose a return value in case of warning
+        return(NULL)
+      }
+    )
+    return(r)
 }

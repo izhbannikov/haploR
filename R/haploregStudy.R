@@ -13,9 +13,28 @@
 #' @export
 getStudyList <- function(
 url=Haploreg.settings[["study.url"]]) {
-  
-    doc.html <- htmlTreeParse(url, useInternalNodes = TRUE)
-  
+    
+    doc.html <- tryCatch(
+      {
+        htmlTreeParse(url, useInternalNodes = TRUE)
+      }, error=function(e) {
+        if(url.exists(url)) {
+          message(paste("URL does not seem to exist:", url))
+        }
+        message("Here's the original error message:")
+        message(e$message)
+        # Choose a return value in case of error
+        return(NULL)
+      }, warning=function(e) {
+        message(e$message)
+        # Choose a return value in case of warning
+        return(NULL)
+      }
+    )
+    
+    if(is.null(doc.html)) {
+        return(doc.html)
+    }
     # Extract all the paragraphs (HTML tag is p, starting at
     # the root of the document). Unlist flattens the list to
     # create a character vector.
