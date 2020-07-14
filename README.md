@@ -1,11 +1,7 @@
 Overview
 --------
 
-<<<<<<< HEAD
 HaploReg (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>) and RegulomeDB (<http://www.regulomedb.org>) are web-based tools that extract biological information such as eQTL, LD, motifs, etc. from large genomic projects such as ENCODE, the 1000 Genomes Project, Roadmap Epigenomics Project and others. This is sometimes called "post stage GWAS" analysis.
-=======
-HaploReg (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>) and RegulomeDB (<http://www.regulomedb.org>) are web-based tools that extract biological information such as eQTL, LD, motifs, etc. from large genomic projects such as ENCODE, the 1000 Genomes Project, Roadmap Epigenomics Project and others. This is sometimes called "post stage GWAS" analysis.
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 
 The R-package *haploR* was developed to query those tools (HaploReg and RegulomeDB) directly from *R* in order to facilitate high-throughput genomic data analysis. Below we provide several examples that show how to work with this package.
 
@@ -54,11 +50,8 @@ devtools::install_github("izhbannikov/haplor")
 -   *tibble*, version 1.3.0 or later.
 -   *RUnit*, version 0.4.31 or later.
 -   *plyr*, version 1.8.4 or later.
-<<<<<<< HEAD
 -   *RJSONIO*, version 1.3-1.4 or later.
 -   *R*
-=======
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 
 Examples of usage
 -----------------
@@ -69,11 +62,7 @@ Function
 
     queryHaploreg(query = NULL, file = NULL, study = NULL, ldThresh = 0.8,
       ldPop = "EUR", epi = "vanilla", cons = "siphy", genetypes = "gencode",
-<<<<<<< HEAD
       url = "https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php",
-=======
-      url = "http://archive.broadinstitute.org/mammals/haploreg/haploreg.php",
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
       timeout = 10, encoding = "UTF-8", verbose = FALSE)
 
 queries HaploReg web-based tool and returns results.
@@ -88,11 +77,7 @@ queries HaploReg web-based tool and returns results.
 -   *epi*: Source for epigenomes. Possible values: `vanilla` for ChromHMM (Core 15-state model); `imputed` for ChromHMM (25-state model using 12 imputed marks); `methyl` for H3K4me1/H3K4me3 peaks; `acetyl` for H3K27ac/H3K9ac peaks. Default: `vanilla`.
 -   *cons*: Mammalian conservation algorithm. Possible values: `gerp` for GERP (<http://mendel.stanford.edu/SidowLab/downloads/gerp/>), `siphy` for SiPhy-omega, `both` for both. Default: siphy.
 -   *genetypes*: Show position relative to. Possible values: `gencode` for Gencode genes; `refseq` for RefSeq genes; `both` for both. Default: `gencode`.
-<<<<<<< HEAD
 -   *url*: HaploReg url address. Default: <https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>
-=======
--   *url*: HaploReg url address. Default: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 -   *timeout*: A timeout parameter for curl. Default: `10`
 -   *encoding*: Set the encoding for correct retrieval web-page content. Default: `UTF-8`
 -   *verbose*: Verbosing output. Default: `FALSE`.
@@ -202,11 +187,7 @@ require(openxlsx)
 write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
 ```
 
-<<<<<<< HEAD
 This was an example of gathering post-gwas information directly from the online tool. *haploR* has an additional advantage because it downloads the full information for query retrieved by HaploReg. For example, if you go online and submit these two SNPs to HaploReg (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>), you will see that some cells of columns "Motifs changed" and "Selected eQTL hits" are hidded (only number of hits are given). *haploR* retrives this information in a form of a data frame which can be saved into Excel file.
-=======
-This was an example of gathering post-gwas information directly from the online tool. *haploR* has an additional advantage because it downloads the full information for query retrieved by HaploReg. For example, if you go online and submit these two SNPs to HaploReg (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>), you will see that some cells of columns "Motifs changed" and "Selected eQTL hits" are hidded (only number of hits are given). *haploR* retrives this information in a form of a data frame which can be saved into Excel file.
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 
 ``` r
 x[, c("Motifs", "rsID")]
@@ -285,11 +266,7 @@ File "snps.txt" is a text file which contains one rs-ID per line:
 
 #### Using existing studies
 
-<<<<<<< HEAD
 Sometimes one would like to explore results from already performed study. In this case you should first explore the existing studies from HaploReg web site (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>) and then use one of them as an input parameter. See example below:
-=======
-Sometimes one would like to explore results from already performed study. In this case you should first explore the existing studies from HaploReg web site (<http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>) and then use one of them as an input parameter. See example below:
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 
 ``` r
 library(haploR)
@@ -347,35 +324,22 @@ x
 
 ### Querying RegulomeDB
 
-<<<<<<< HEAD
-To query RegulomeDB use these 2 functions:
-
-    regulomeSummary(query = NULL, 
-=======
 To query RegulomeDB use this function:
 
-    queryRegulome(query = NULL, 
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
-                  format = "full",
-                  url = "http://www.regulomedb.org/results", 
-                  timeout = 10,
-                  check_bad_snps = TRUE, 
-                  verbose = FALSE)
+queryRegulome(query = NULL, 
+              genomeAssembly=""
+              limit=1000,
+              timeout = 10)
 
 This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and returns results in a named list.
 
 #### Arguments
 
 -   *query*: Query (a vector of rsIDs).
--   *format*: An output format. Only 'full' is currently supported. See `http://www.regulomedb.org/results`. Can be on of the following: `full` - plain text, `bed` - BED (Browser Extensible Data) format, see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1>, `gff` - GFF (General Feature Format), see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format3>. Only `full` is currently supported.
--   *url*: Regulome url address. Default: `http://www.regulomedb.org/results`
 -   *timeout*: A 'timeout' parameter for 'curl'. Default: 10.
--   *check\_bad\_snps*: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: 'TRUE'
--   *verbose*: Verbosing output. Default: FALSE.
 
 #### Output
 
-<<<<<<< HEAD
 A data frame (table)
 OR a list with the following items:
 - guery_coordinates
@@ -384,51 +348,16 @@ OR a list with the following items:
 - variants
 - nearby_snps
 - assembly
-=======
-A list of two: (1) a data frame (res.table) wrapped to a *tibble* object and (2) a list of bad SNP IDs (bad.snp.id). Bad SNP ID are those IDs that were not found in 1000 Genomes Phase 1 data and, therefore, in RegulomeDB.
 
-Columns in a data frame (res.table):
 
--   *\#chromosome*: Chromosome. Type: character.
--   *coordinate*: Position. Type: numeric.
--   *rsid*: RefSeq SNP ID. Type: character.
--   *hits*: Contains information about chromatin structure: method and cell type. Type: character.
--   *score*: Internal RegulomeDB score. See <http://www.regulomedb.org/help#score>. Type: numeric.
-
-Number of rows is equal or less (in case if not all SNPs were found in RegulomeDB database) to number of query SNPs.
-
-All the information retreived from RegulomeDB, except *hits*, are also presented in HaploReg output (`queryHaploReg(...)`).
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 
 #### Example
 
 ``` r
 library(haploR)
-<<<<<<< HEAD
-x <- regulomeSummary(c("rs4791078","rs10048158"))
+x <- queryRegulome(c("rs4791078","rs10048158"))
 x
 ```
-
-
-=======
-x <- queryRegulome(c("rs4791078","rs10048158"))
-x$res.table
-```
-
-    ## # A tibble: 2 x 5
-    ##   `#chromosome` coordinate       rsid
-    ##           <chr>      <dbl>      <chr>
-    ## 1         chr17   64236317 rs10048158
-    ## 2         chr17   64210013  rs4791078
-    ## # ... with 2 more variables: hits <chr>, score <dbl>
-
-``` r
-x$bad.snp.id
-```
-
-    ## # A tibble: 0 x 1
-    ## # ... with 1 variables: rsID <chr>
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 
 ### Querying LDlink
 
@@ -436,38 +365,3 @@ Access to _LDlink_ (<https://doi.org/10.1093/bioinformatics/btv402>) was tempora
 
 
 
-Session information
--------------------
-
-``` r
-sessionInfo()
-```
-
-    ## R Under development (unstable) (2018-04-05 r74542)
-    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-    ## Running under: macOS High Sierra 10.13.4
-    ## 
-    ## Matrix products: default
-    ## BLAS: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
-    ## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
-    ## 
-    ## locale:
-    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-    ## 
-    ## attached base packages:
-    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
-    ## 
-    ## other attached packages:
-    ## [1] haploR_2.0.1
-    ## 
-    ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.16     knitr_1.20       magrittr_1.5     xtable_1.8-2    
-    ##  [5] R6_2.2.2         rlang_0.2.0      stringr_1.3.0    httr_1.3.1      
-    ##  [9] plyr_1.8.4       tools_3.6.0      DT_0.4           utf8_1.1.3      
-    ## [13] cli_1.0.0        crosstalk_1.0.0  htmltools_0.3.6  assertthat_0.2.0
-    ## [17] yaml_2.1.18      rprojroot_1.3-2  digest_0.6.15    tibble_1.4.2    
-    ## [21] crayon_1.3.4     shiny_1.1.0      later_0.7.2      promises_1.0.1  
-    ## [25] htmlwidgets_1.2  RUnit_0.4.32     curl_3.2         mime_0.5        
-    ## [29] evaluate_0.10.1  rmarkdown_1.9    stringi_1.1.7    compiler_3.6.0  
-    ## [33] pillar_1.2.2     backports_1.1.2  XML_3.98-1.10    jsonlite_1.5    
-    ## [37] httpuv_1.4.3
