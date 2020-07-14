@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 New for version 4.0.1
 ======================
 * Version released
 * regulomeSummary() and regulomeSearch() added
+=======
+New for version 3.0.1
+======================
+* Version released
+* Access to LDlink was temporarily removed.
+>>>>>>> 222e12c342c60fd04825117621e09891331b7c32

@@ -11,5 +11,8 @@
 #' @importFrom stats runif setNames
 #' @importFrom RCurl url.exists
 #' @importFrom DT datatable formatStyle styleInterval %>% 
+<<<<<<< HEAD
 #' @importFrom RJSONIO fromJSON
+=======
+>>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 NULL

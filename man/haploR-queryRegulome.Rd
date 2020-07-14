@@ -2,6 +2,7 @@
 % Please edit documentation in R/regulome.R
 \name{queryRegulome}
 \alias{queryRegulome}
+<<<<<<< HEAD
 \title{This function queries RegulomeDB web-based tool 
 and returns results in a data frame.}
 \usage{
@@ -36,9 +37,55 @@ a list with the following items:
 }
 \description{
 This function queries RegulomeDB web-based tool 
+=======
+\title{This function queries RegulomeDB \url{www.regulomedb.org} web-based tool 
+and returns results in a data frame.}
+\usage{
+queryRegulome(query = NULL, format = "full",
+  url = "http://www.regulomedb.org/results", timeout = 100,
+  check_bad_snps = TRUE, verbose = FALSE)
+}
+\arguments{
+\item{query}{Query (a vector of rsIDs).}
+
+\item{format}{An output format. 
+Can be on of the following: \code{full} - plain text,
+\code{bed} -  BED (Browser Extensible Data) format, 
+see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1>,
+\code{gff} - GFF (General Feature Format), 
+see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format3>
+Only \code{full} is currently supported.}
+
+\item{url}{Regulome url address. 
+Default: <http://www.regulomedb.org/results>}
+
+\item{timeout}{A \code{timeout} parameter for \code{httr::POST}.
+Default: 100}
+
+\item{check_bad_snps}{Checks if all SNPs are annotated.
+Default: \code{TRUE}}
+
+\item{verbose}{Verbosing output. Default: FALSE.}
+}
+\value{
+A list of two:
+(1) a data frame (table) and
+(2) a list of bad SNP IDs. 
+Bad SNP ID are those IDs 
+that were not found in 1000 Genomes 
+Phase 1 data
+}
+\description{
+This function queries RegulomeDB \url{www.regulomedb.org} web-based tool 
+>>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 and returns results in a data frame.
 }
 \examples{
 data <- queryRegulome(c("rs4791078","rs10048158"))
+<<<<<<< HEAD
 head(data)
+=======
+head(data[["res.table"]])
+head(data[["bad.snp.id"]])
+>>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 }

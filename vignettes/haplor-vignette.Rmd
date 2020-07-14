@@ -259,9 +259,17 @@ tables
 To query RegulomeDB use this function:
 ```
 queryRegulome(query = NULL, 
+<<<<<<< HEAD
               genomeAssembly = GRCh37,
               limit = 1000,
               timeout = 100)
+=======
+              format = "full",
+              url = "http://www.regulomedb.org/results", 
+              timeout = 10,
+              check_bad_snps = TRUE, 
+              verbose = FALSE)
+>>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 ```
 
 This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and returns results in a named list.
@@ -269,6 +277,7 @@ This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and 
 #### Arguments
 
 * _query_: Query (a vector of rsIDs).
+<<<<<<< HEAD
 * _genomeAssembly_ : Genome assembly built: can be GRCh37 or GRCh38
 * _limit_ : It controls how many variants will be queried and returned for a large region. It can be a number (1000 by default) or "all". Please note that large number or "all" may get yourself hurt because you could get timeout or may even crash the server.
 * _timeout_: A 'timeout' parameter for 'curl'. Default: 100
@@ -282,11 +291,35 @@ A data frame (table) OR a list with the following items:
  - variants
  - nearby_snps
  - assembly
+=======
+* _format_: An output format.  Only 'full' is currently supported. See ```http://www.regulomedb.org/results```. Can be on of the following: ```full``` - plain text, ```bed``` -  BED (Browser Extensible Data) format, see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1>, ```gff``` - GFF (General Feature Format), see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format3>. Only ```full``` is currently supported. 
+* _url_: Regulome url address.  Default: ```http://www.regulomedb.org/results```
+* _timeout_: A 'timeout' parameter for 'curl'. Default: 10.
+* _check_bad_snps_: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: 'TRUE'
+* _verbose_: Verbosing output. Default: FALSE.
+
+#### Output
+
+A list of two: (1) a data frame (res.table) wrapped to a _tibble_ object and (2) a list of bad SNP IDs (bad.snp.id).  Bad SNP ID are those IDs that were not found in 1000 Genomes Phase 1 data and, therefore, in RegulomeDB.
+
+Columns in a data frame (res.table):
+
+* _#chromosome_: Chromosome. Type: character.
+* _coordinate_: Position. Type: numeric.
+* _rsid_: RefSeq SNP ID. Type: character.
+* _hits_: Contains information about chromatin structure: method and cell type. Type: character.
+* _score_: Internal RegulomeDB score. See <http://www.regulomedb.org/help#score>. Type: numeric.
+
+Number of rows is equal or less (in case if not all SNPs were found in RegulomeDB database) to number of query SNPs.
+
+All the information retreived from RegulomeDB, except _hits_, are also presented in HaploReg output (```queryHaploReg(...)```).
+>>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 
 #### Example
 
 ```{r, echo=TRUE, message=FALSE}
 library(haploR)
+<<<<<<< HEAD
 
 # With RsIDs:
 x <- queryRegulome(c("rs4791078","rs10048158"))
@@ -295,6 +328,11 @@ x
 # With region:
 y <- queryRegulome("chr1:39492461-39492462")
 y
+=======
+x <- queryRegulome(c("rs4791078","rs10048158"))
+x$res.table
+x$bad.snp.id
+>>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 ```
 
 

@@ -4,6 +4,7 @@
 \alias{queryHaploreg}
 \title{This function queries HaploReg web-based tool and returns results.}
 \usage{
+<<<<<<< HEAD
 queryHaploreg(
   query = NULL,
   file = NULL,
@@ -20,6 +21,13 @@ queryHaploreg(
   fields = NULL,
   verbose = FALSE
 )
+=======
+queryHaploreg(query = NULL, file = NULL, study = NULL,
+  ldThresh = 0.8, ldPop = "EUR", epi = "vanilla", cons = "siphy",
+  genetypes = "gencode", url = Haploreg.settings[["base.url"]],
+  timeout = 100, encoding = "UTF-8", querySNP = FALSE,
+  fields = NULL, verbose = FALSE)
+>>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 }
 \arguments{
 \item{query}{Query (a vector of rsIDs).}
