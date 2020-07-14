@@ -324,19 +324,25 @@ x
 
 ### Querying RegulomeDB
 
-To query RegulomeDB use this function:
+To query RegulomeDB use these 2 functions:
 
-queryRegulome(query = NULL, 
-              genomeAssembly=""
-              limit=1000,
-              timeout = 10)
+    regulomeSummary(query = NULL, 
+                  format = "full",
+                  url = "http://www.regulomedb.org/results", 
+                  timeout = 10,
+                  check_bad_snps = TRUE, 
+                  verbose = FALSE)
 
 This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and returns results in a named list.
 
 #### Arguments
 
 -   *query*: Query (a vector of rsIDs).
+-   *format*: An output format. Only 'full' is currently supported. See `http://www.regulomedb.org/results`. Can be on of the following: `full` - plain text, `bed` - BED (Browser Extensible Data) format, see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1>, `gff` - GFF (General Feature Format), see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format3>. Only `full` is currently supported.
+-   *url*: Regulome url address. Default: `http://www.regulomedb.org/results`
 -   *timeout*: A 'timeout' parameter for 'curl'. Default: 10.
+-   *check\_bad\_snps*: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: 'TRUE'
+-   *verbose*: Verbosing output. Default: FALSE.
 
 #### Output
 
@@ -349,15 +355,15 @@ OR a list with the following items:
 - nearby_snps
 - assembly
 
-
-
 #### Example
 
 ``` r
 library(haploR)
-x <- queryRegulome(c("rs4791078","rs10048158"))
+x <- regulomeSummary(c("rs4791078","rs10048158"))
 x
 ```
+
+
 
 ### Querying LDlink
 
@@ -365,3 +371,38 @@ Access to _LDlink_ (<https://doi.org/10.1093/bioinformatics/btv402>) was tempora
 
 
 
+Session information
+-------------------
+
+``` r
+sessionInfo()
+```
+
+    ## R Under development (unstable) (2018-04-05 r74542)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+    ## Running under: macOS High Sierra 10.13.4
+    ## 
+    ## Matrix products: default
+    ## BLAS: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+    ## 
+    ## locale:
+    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## other attached packages:
+    ## [1] haploR_2.0.1
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] Rcpp_0.12.16     knitr_1.20       magrittr_1.5     xtable_1.8-2    
+    ##  [5] R6_2.2.2         rlang_0.2.0      stringr_1.3.0    httr_1.3.1      
+    ##  [9] plyr_1.8.4       tools_3.6.0      DT_0.4           utf8_1.1.3      
+    ## [13] cli_1.0.0        crosstalk_1.0.0  htmltools_0.3.6  assertthat_0.2.0
+    ## [17] yaml_2.1.18      rprojroot_1.3-2  digest_0.6.15    tibble_1.4.2    
+    ## [21] crayon_1.3.4     shiny_1.1.0      later_0.7.2      promises_1.0.1  
+    ## [25] htmlwidgets_1.2  RUnit_0.4.32     curl_3.2         mime_0.5        
+    ## [29] evaluate_0.10.1  rmarkdown_1.9    stringi_1.1.7    compiler_3.6.0  
+    ## [33] pillar_1.2.2     backports_1.1.2  XML_3.98-1.10    jsonlite_1.5    
+    ## [37] httpuv_1.4.3

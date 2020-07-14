@@ -5,20 +5,14 @@ export(getExtendedView)
 export(getStudyList)
 export(queryHaploreg)
 export(queryRegulome)
-<<<<<<< HEAD
 export(regulomeSearch)
 export(regulomeSummary)
-=======
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 importFrom(DT,"%>%")
 importFrom(DT,datatable)
 importFrom(DT,formatStyle)
 importFrom(DT,styleInterval)
 importFrom(RCurl,url.exists)
-<<<<<<< HEAD
 importFrom(RJSONIO,fromJSON)
-=======
->>>>>>> 222e12c342c60fd04825117621e09891331b7c32
 importFrom(RUnit,checkEqualsNumeric)
 importFrom(RUnit,checkTrue)
 importFrom(XML,htmlParse)
