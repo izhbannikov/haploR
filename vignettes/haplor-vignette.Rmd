@@ -1,5 +1,5 @@
 ---
-title: "Using haploR, an R package for querying HaploReg, RegulomeDB and LDlink"
+title: "Using haploR, an R package for querying HaploReg and RegulomeDB"
 author: "Ilya Y. Zhbannikov"
 date: '`r date()`'
 output:
@@ -254,7 +254,7 @@ queryRegulome(query = NULL,
               timeout = 100)
 ```
 
-This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and returns results in a named list.
+This function queries RegulomeDB <https://www.regulomedb.org/regulome-search/> web-based tool and returns results in a named list.
 
 #### Arguments
 

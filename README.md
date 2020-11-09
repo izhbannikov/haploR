@@ -1,7 +1,7 @@
 Overview
 --------
 
-HaploReg (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>) and RegulomeDB (<http://www.regulomedb.org>) are web-based tools that extract biological information such as eQTL, LD, motifs, etc. from large genomic projects such as ENCODE, the 1000 Genomes Project, Roadmap Epigenomics Project and others. This is sometimes called "post stage GWAS" analysis.
+HaploReg (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>) and RegulomeDB (<https://www.regulomedb.org/regulome-search/>) are web-based tools that extract biological information such as eQTL, LD, motifs, etc. from large genomic projects such as ENCODE, the 1000 Genomes Project, Roadmap Epigenomics Project and others. This is sometimes called "post stage GWAS" analysis.
 
 The R-package *haploR* was developed to query those tools (HaploReg and RegulomeDB) directly from *R* in order to facilitate high-throughput genomic data analysis. Below we provide several examples that show how to work with this package.
 
@@ -327,21 +327,18 @@ x
 To query RegulomeDB use these 2 functions:
 
     regulomeSummary(query = NULL, 
-                  format = "full",
-                  url = "http://www.regulomedb.org/results", 
-                  timeout = 10,
-                  check_bad_snps = TRUE, 
-                  verbose = FALSE)
+                    genomeAssembly = "GRCh37",
+                    limit=1000,
+                    timeout=10)
 
-This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and returns results in a named list.
+This function queries RegulomeDB <https://www.regulomedb.org/regulome-search/> web-based tool and returns results in a named list.
 
 #### Arguments
 
 -   *query*: Query (a vector of rsIDs).
--   *format*: An output format. Only 'full' is currently supported. See `http://www.regulomedb.org/results`. Can be on of the following: `full` - plain text, `bed` - BED (Browser Extensible Data) format, see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1>, `gff` - GFF (General Feature Format), see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format3>. Only `full` is currently supported.
--   *url*: Regulome url address. Default: `http://www.regulomedb.org/results`
--   *timeout*: A 'timeout' parameter for 'curl'. Default: 10.
--   *check\_bad\_snps*: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: 'TRUE'
+-   *genomeAssembly*: version of genome assembly
+-   *limit*: results output limit
+-   *timeout*: time out in second  
 -   *verbose*: Verbosing output. Default: FALSE.
 
 #### Output

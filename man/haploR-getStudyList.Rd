@@ -9,8 +9,7 @@ getStudyList(url = Haploreg.settings[["study.url"]])
 }
 \arguments{
 \item{url}{A url to HaploReg.
-Default: <http://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>
-Previously was: <http://archive.broadinstitute.org/mammals/haploreg/haploreg.php>}
+Default: <https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>}
 }
 \value{
 A list of studies. Each study is itself a list
