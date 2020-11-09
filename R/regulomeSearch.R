@@ -24,6 +24,7 @@ regulomeSearch <- function(query=NULL,
                           limit=1000,
                           timeout=100) {
     
+  
     if(is.null(genomeAssembly)) {
         genomeAssembly <- "GRCh37"
     }
@@ -56,20 +57,24 @@ regulomeSearch <- function(query=NULL,
         regulome_score <- t(data.frame(do.call("rbind", regulome_score), check.names = FALSE, check.rows = FALSE))
         rownames(regulome_score) <- seq(1:nrow(regulome_score))
         
-        ###
-        variants <- lapply(json_content$variants, function(x) {
-          x[sapply(x, is.null)] <- NA
-          unlist(x)
+        tryCatch({
+            variants <- lapply(json_content$variants, function(x) {
+                x[sapply(x, is.null)] <- NA
+                unlist(x)
+            })
+            variants <- t(data.frame(do.call("rbind", variants), check.names = FALSE, check.rows = FALSE))
+            rownames(variants) <- seq(1:nrow(variants))
+        }, error=function(e) {
+          print(e)
+          variants <- NULL
         })
-        variants <- t(data.frame(do.call("rbind", variants), check.names = FALSE, check.rows = FALSE))
-        rownames(variants) <- seq(1:nrow(variants))
         
         ###
         nearby_snps <- lapply(json_content$nearby_snps, function(x) {
           x[sapply(x, is.null)] <- NA
           unlist(x)
         })
-        nearby_snps <- as.data.frame(do.call("rbind", nearby_snps))
+        nearby_snps <- data.frame(do.call("rbind", nearby_snps))
         
         ###
         assembly <- json_content$assembly

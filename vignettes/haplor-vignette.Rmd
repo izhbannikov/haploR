@@ -14,16 +14,6 @@ vignette: >
   %\usepackage[utf8]{inputenc}
 ---
 
-```{r, message=FALSE, echo=FALSE}
-#library(knitcitations)
-#cleanbib()
-#options("citation_format" = "pandoc")
-#r<-citep("10.1093/nar/gkr917") 
-#r<-citep("10.1101/gr.137323.112")
-#r<-citep("10.1093/bioinformatics/btv402")
-#write.bibtex(file="references.bib")
-```
-
 
 ## Overview
 
@@ -444,4 +434,3 @@ The Roadmap Epigenomics project employs data organization schema based on anatom
 sessionInfo()
 ```
 
-##References

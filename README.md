@@ -324,47 +324,49 @@ x
 
 ### Querying RegulomeDB
 
-To query RegulomeDB use this function:
+To query RegulomeDB use these 2 functions:
 
-queryRegulome(
-       query = NULL,
-       genomeAssembly = "GRCh37",
-       limit = 1000,
-       timeout = 100
-     )
-     
-#### Arguments:
+    regulomeSummary(query = NULL, 
+                  format = "full",
+                  url = "http://www.regulomedb.org/results", 
+                  timeout = 10,
+                  check_bad_snps = TRUE, 
+                  verbose = FALSE)
 
-* query: Query (a vector of rsIDs or exact one query region in rsid or
-          like "chr1:39492461-39492462").
+This function queries RegulomeDB <http://www.regulomedb.org> web-based tool and returns results in a named list.
 
-* genomeAssembly: Genome assembly built: can be GRCh37 (default) or
-          GRCh38.
+#### Arguments
 
-* limit: It controls how many variants will be queried and returned
-          for a large region. It can be a number (1000 by default) or
-          "all".  Please note that large number or "all" may get
-          yourself hurt because you could get timeout or may even crash
-          the server.
+-   *query*: Query (a vector of rsIDs).
+-   *format*: An output format. Only 'full' is currently supported. See `http://www.regulomedb.org/results`. Can be on of the following: `full` - plain text, `bed` - BED (Browser Extensible Data) format, see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format5.1>, `gff` - GFF (General Feature Format), see e.g. <https://genome.ucsc.edu/FAQ/FAQformat.html#format3>. Only `full` is currently supported.
+-   *url*: Regulome url address. Default: `http://www.regulomedb.org/results`
+-   *timeout*: A 'timeout' parameter for 'curl'. Default: 10.
+-   *check\_bad\_snps*: Checks if all query SNPs are annotated (i.e. presented in the Regulome Database). Default: 'TRUE'
+-   *verbose*: Verbosing output. Default: FALSE.
 
-* timeout: A ‘timeout’ parameter for ‘httr::GET’. Default: 100
+#### Output
 
-#### Value:
+A data frame (table)
+OR a list with the following items:
+- guery_coordinates
+- features
+- regulome_score
+- variants
+- nearby_snps
+- assembly
 
-     a data frame (table) OR a list with the following items: -
-     guery_coordinates - features - regulome_score - variants -
-     nearby_snps, - assembly
+#### Example
 
-#### Examples:
-
-     data <- queryRegulome(c("rs4791078","rs10048158"))
-     head(data)
+``` r
+library(haploR)
+x <- regulomeSummary(c("rs4791078","rs10048158"))
+x
+```
 
 
 
 ### Querying LDlink
 
 Access to _LDlink_ (<https://doi.org/10.1093/bioinformatics/btv402>) was temporarily removed from ```haploR```.
-
 
 
