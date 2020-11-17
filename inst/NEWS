@@ -1,4 +1,4 @@
-New for version 4.0.1
+New for version 4.0.3
 ======================
 * Version released
-* regulomeSummary() and regulomeSearch() added
+* getExtendedView() errors fixed

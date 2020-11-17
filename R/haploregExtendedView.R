@@ -22,7 +22,8 @@ getExtendedView <- function(snp, url=Haploreg.settings[["extended.view.url"]]) {
         # Get data:
         page <- tryCatch(
           {
-            htmlParse(ext.url)
+            xData <- getURL(ext.url)
+            htmlParse(xData)
           }, error=function(e) {
             if(url.exists(ext.url)) {
                 message(paste("URL does not seem to exist:", url))
