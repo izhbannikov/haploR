@@ -9,7 +9,7 @@
 #' @importFrom plyr ldply
 #' @importFrom utils read.csv
 #' @importFrom stats runif setNames
-#' @importFrom RCurl url.exists
+#' @importFrom RCurl url.exists getURL
 #' @importFrom DT datatable formatStyle styleInterval %>% 
 #' @importFrom RJSONIO fromJSON
 NULL
