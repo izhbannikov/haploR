@@ -1,8 +1,8 @@
 Package: haploR
 Type: Package
 Title: Query 'HaploReg', 'RegulomeDB'
-Version: 4.0.4
-Date: 2021-09-04
+Version: 4.0.5
+Date: 2021-09-07
 Authors@R: c(person(c("Ilya", "Y."), "Zhbannikov", email = "ilya.zhbannikov@duke.edu", role = c("aut", "cre")),
              person(c("Konstantin", "G."), "Arbeev", email = "konstantin.arbeev@duke.edu", role = c("aut")),
              person(c("Anatoliy", "I."), "Yashin", email = "aiy@duke.edu", role = c("aut")))

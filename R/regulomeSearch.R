@@ -33,7 +33,6 @@ regulomeSearch <- function(query=NULL,
         # Querying
         qr <- paste("https://", "www.regulomedb.org/regulome-search/?regions=", paste(query, collapse = '%0A'), "&genome=", genomeAssembly, "&limit=", limit, "&format=json", sep="")
         r <- GET(qr, timeout=timeout)
-        
         # Extracting content
         raw <- content(r, "text") 
         json_content <- fromJSON(raw)
@@ -70,24 +69,30 @@ regulomeSearch <- function(query=NULL,
         })
         
         ###
-        nearby_snps <- lapply(json_content$nearby_snps, function(x) {
-          x[sapply(x, is.null)] <- NA
-          unlist(x)
-        })
-        nearby_snps <- data.frame(do.call("rbind", nearby_snps))
+        #nearby_snps <- lapply(json_content$nearby_snps, function(x) {
+        #  x[sapply(x, is.null)] <- NA
+        #  unlist(x)
+        #})
+        nearby_snps <- data.frame(do.call("rbind", json_content$nearby_snps))
         
-        ###
         assembly <- json_content$assembly
         
+        return(list(guery_coordinates=guery_coordinates, 
+                    features=features,
+                    regulome_score=regulome_score,
+                    variants=variants,
+                    nearby_snps=nearby_snps,
+                    assembly=assembly))
         
     }, error=function(e) {
         print(e)
+        return(NULL)
     })
     
-    return(list(guery_coordinates=guery_coordinates, 
-                features=features,
-                regulome_score=regulome_score,
-                variants=variants,
-                nearby_snps=nearby_snps,
-                assembly=assembly))
+    #return(list(guery_coordinates=guery_coordinates, 
+    #            features=features,
+    #            regulome_score=regulome_score,
+    #            variants=variants,
+    #            nearby_snps=nearby_snps,
+    #            assembly=assembly))
 }

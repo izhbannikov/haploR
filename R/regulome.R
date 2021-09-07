@@ -25,11 +25,18 @@ queryRegulome <- function(query=NULL,
                           genomeAssembly = "GRCh37",
                           limit=1000,
                           timeout=100) {
-  
+    res <- list()
     if(length(query) == 1) {
-        res <- regulomeSearch(query=query, genomeAssembly=genomeAssembly, limit=limit, timeout=timeout)
+        res[[query]] <- regulomeSearch(query=query, genomeAssembly=genomeAssembly, limit=limit, timeout=timeout)
     } else if(length(query) > 1) {
-        res <- regulomeSummary(query=query, genomeAssembly=genomeAssembly, limit=limit, timeout=timeout)
+        # Extract summary table
+        summary <- regulomeSummary(query=query, genomeAssembly=genomeAssembly, limit=limit, timeout=timeout)
+        # Extract individual variants
+        res <- list()
+        for(q in query) {
+            res[[q]] <- regulomeSearch(query=q, genomeAssembly=genomeAssembly, limit=limit, timeout=timeout)
+        }
+        res$summary <- summary
     } else {
         stop("Invalid query")
     }
