@@ -177,7 +177,7 @@ write.xlsx(x=subset.high.LD, file="subset.high.LD.xlsx")
 
 This was an example of gathering post-gwas information directly from the online tool. _haploR_ has an additional advantage because it downloads the full information for query retrieved by HaploReg. For example, if you go online and submit these two SNPs to HaploReg (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>), you will see that some cells of columns "Motifs changed" and "Selected eQTL hits" are hidded (only number of hits are given). _haploR_ retrives this information in a form of a data frame which can be saved into Excel file.
 
-```{r, echo=TRUE, message=FALSE}
+```{r, echo=TRUE, message=FALSE, eval=FALSE}
 if(length(x)!=0) {
     x[, c("Motifs", "rsID")]
     x[, c("eQTL", "rsID")]
@@ -190,7 +190,7 @@ If you have a file with your SNPs you would like
 to analyze, you can 
 supply it as an input as follows:
 
-```{r, echo=TRUE, message=FALSE}
+```{r, echo=TRUE, message=FALSE, eval=FALSE}
 library(haploR)
 x <- queryHaploreg(file=system.file("extdata/snps.txt", package = "haploR"))
 x
@@ -211,7 +211,7 @@ first explore the existing studies from
 HaploReg web site (<https://pubs.broadinstitute.org/mammals/haploreg/haploreg.php>) and then use one of 
 them as an input parameter. See example below:
 
-```{r, echo=TRUE, message=FALSE}
+```{r, echo=TRUE, message=FALSE, eval=FALSE}
 library(haploR)
 # Getting a list of existing studies:
 studies <- getStudyList()
@@ -275,7 +275,7 @@ A data frame (table) OR a list with the following items:
 
 #### Example
 
-```{r, echo=TRUE, message=FALSE}
+```{r, echo=TRUE, message=FALSE, eval=FALSE}
 library(haploR)
 
 # With RsIDs:
@@ -290,7 +290,7 @@ y
 
 ### Querying LDlink
 
-Access to _LDlink_ (<https://doi.org/10.1093/bioinformatics/btv402>) was temporarily removed from ```haploR```.
+Querying _LDlink_ (<https://doi.org/10.1093/bioinformatics/btv402>) was temporarily removed from ```haploR```.
 
 ### Roadmap cell types
 

@@ -39,6 +39,7 @@ regulomeSummary <- function(query=NULL,
         
     }, error=function(e) {
         print(e)
+        return(NULL)
     })
     
     return(res.table=as_tibble(out))

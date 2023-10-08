@@ -68,11 +68,6 @@ regulomeSearch <- function(query=NULL,
           variants <- NULL
         })
         
-        ###
-        #nearby_snps <- lapply(json_content$nearby_snps, function(x) {
-        #  x[sapply(x, is.null)] <- NA
-        #  unlist(x)
-        #})
         nearby_snps <- data.frame(do.call("rbind", json_content$nearby_snps))
         
         assembly <- json_content$assembly
@@ -88,11 +83,4 @@ regulomeSearch <- function(query=NULL,
         print(e)
         return(NULL)
     })
-    
-    #return(list(guery_coordinates=guery_coordinates, 
-    #            features=features,
-    #            regulome_score=regulome_score,
-    #            variants=variants,
-    #            nearby_snps=nearby_snps,
-    #            assembly=assembly))
 }

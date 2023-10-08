@@ -12,4 +12,5 @@
 #' @importFrom RCurl url.exists getURL
 #' @importFrom DT datatable formatStyle styleInterval %>% 
 #' @importFrom RJSONIO fromJSON
+#' @importFrom methods is
 NULL

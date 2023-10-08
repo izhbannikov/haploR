@@ -142,7 +142,7 @@ simpleQuery <- function(query=NULL, file=NULL,
     output <- "text"
   
     if(!is.null(study)) {
-        if(class(study) == "list") {
+        if(is(study) == "list") {
             gwas_idx <- study$id
         } else {
         stop("Parameter study is not a list with 
@@ -188,13 +188,16 @@ simpleQuery <- function(query=NULL, file=NULL,
         return(r)
     }
     
+    # Add additional information
     dat <- content(r, "text", encoding=encoding)
     sp <- strsplit(dat, '\n')
     res.table <- data.frame(matrix(nrow=length(sp[[1]])-1, ncol=length(strsplit(sp[[1]][1], '\t')[[1]])), stringsAsFactors = FALSE)
     colnames(res.table) <- strsplit(sp[[1]][1], '\t')[[1]]
     
     for(i in 2:length(sp[[1]])) {
-      res.table[i-1,] <- strsplit(sp[[1]][i], '\t')[[1]]
+      if(sp[[1]][i] != "") {
+          res.table[i-1,] <- strsplit(sp[[1]][i], '\t')[[1]]
+      }
     }
     
     #Convert numeric-like columns to actual numeric #
@@ -215,127 +218,17 @@ simpleQuery <- function(query=NULL, file=NULL,
         res.table <- res.table[, fields]
     }
   
+    # Removing blank columns:
+    res.table <- res.table[, colSums(is.na(res.table)) != nrow(res.table)] 
     # Removing blank rows:
-    res.table <- res.table[, colSums(is.na(res.table)) <= 1] 
+    res.table <- res.table[rowSums(is.na(res.table)) != ncol(res.table), ]
     
-    # Adding additional columns: 
-    user.agent <- "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0"
-    body$output <- "html"
-    request.data <- POST(url=url, body=body, encode="multipart",  timeout(timeout), user_agent(user.agent))
-    html.content <- content(request.data, useInternalNodes=TRUE, encoding="ISO-8859-1",as="text")
-    tmp.tables <- readHTMLTable(html.content)
-  
-    html.table <- NULL
-    for(i in 4:length(tmp.tables)) {
-        tmp.table <- tmp.tables[[i]]
-        if(is.null(tmp.table))
-        {
-            next
-        }
-        
-        n.col <- dim(tmp.table)[2]
-        n.row <- dim(tmp.table)[1]
-        
-        if(n.col <= 6) 
-        {
-            next
-        } 
+    #res.table$chr <- gsub(pattern = "Array", replacement = "", x = res.table$chr)
     
-        if(n.col < 23) {
-            while(n.col < 23) {
-                tmp.col <- data.frame(replicate(n.row, ""), stringsAsFactors = FALSE)
-                colnames(tmp.col) <- paste("V",n.col+1, sep="")
-                tmp.table <- cbind(tmp.table, tmp.col)
-                n.col <- dim(tmp.table)[2]
-            }
-        }
-    
-        if(is.null(html.table)) {
-            html.table <- tmp.table
-        } else {   
-            #print(head(tmp.table))
-            colnames(html.table) <- colnames(tmp.table)
-            #print("*****")
-            #print(head(html.table))
-            #print(dim(html.table))
-            #print("=====")
-            #print(head(tmp.table))
-            #print(dim(tmp.table))
-            html.table <- rbind(html.table, tmp.table)
-        }
+    data.merged <- addColumns(url, body, timeout, res.table)
+    if(is.null(data.merged)) {
+        return(res.table)
     }
-  
-    if(!is.null(html.table)) {
-        tmp.table <- data.frame(html.table[, c(5,13:14)], stringsAsFactors = FALSE)
-        tmp.table <- tmp.table[!duplicated(tmp.table), ]
-        if("variant" %in% colnames(tmp.table)) {
-            data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="variant")
-        } else {
-            data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="V5")
-        }
-        
-        data.merged1 <- cbind(data.merged[["chr"]],
-                          data.merged[["pos_hg38"]],
-                          data.merged[["r2"]],
-                          data.merged[["D'"]],
-                          data.merged[["is_query_snp"]],
-                          data.merged[["rsID"]],
-                          data.merged[["ref"]],
-                          data.merged[["alt"]],
-                          data.merged[["AFR"]],
-                          data.merged[["AMR"]],
-                          data.merged[["ASN"]],
-                          data.merged[["EUR"]],
-                          data.merged[["GERP_cons"]],
-                          data.merged[["SiPhy_cons"]],
-                          data.merged[["Chromatin_States"]],
-                          data.merged[["Chromatin_States_Imputed"]],
-                          data.merged[["Chromatin_Marks"]],
-                          data.merged[["DNAse"]],
-                          data.merged[["Proteins"]],
-                          data.merged[["eQTL"]],
-                          data.merged[["gwas"]],
-                          data.merged[["grasp"]],
-                          data.merged[["Motifs"]],
-                          data.merged[["GENCODE_id"]],
-                          data.merged[["GENCODE_name"]],
-                          data.merged[["GENCODE_direction"]],
-                          data.merged[["GENCODE_distance"]],
-                          data.merged[["RefSeq_id"]],
-                          data.merged[["RefSeq_name"]],
-                          data.merged[["RefSeq_direction"]],
-                          data.merged[["RefSeq_distance"]],
-                          data.merged[["dbSNP_functional_annotation"]],
-                          data.merged[["query_snp_rsid"]])
-        data.merged <- data.frame(data.merged1, data.merged[,34:35], stringsAsFactors = FALSE)
-        #data.merged <- cbind(data.merged1, data.merged[,34:35])
-    
-        colnames(data.merged) <- c("chr", "pos_hg38", "r2", "D'", "is_query_snp", 
-                               "rsID", "ref", "alt", "AFR", "AMR", 
-                               "ASN", "EUR", "GERP_cons", "SiPhy_cons", 
-                               "Chromatin_States",
-                               "Chromatin_States_Imputed", "Chromatin_Marks", 
-                               "DNAse", "Proteins", "eQTL",
-                               "gwas", "grasp", "Motifs", "GENCODE_id", 
-                               "GENCODE_name",
-                               "GENCODE_direction", "GENCODE_distance", "RefSeq_id", 
-                               "RefSeq_name", "RefSeq_direction",
-                               "RefSeq_distance", "dbSNP_functional_annotation", 
-                               "query_snp_rsid", "Promoter_histone_marks", 
-                               "Enhancer_histone_marks")
-    
-    }
-    
-    # Make important columns to be numeric
-    data.merged[["chr"]] <- as.num(data.merged[["chr"]])
-    data.merged[["r2"]] <- as.num(data.merged[["r2"]])
-    data.merged[["D'"]] <- as.num(data.merged[["D'"]])
-    data.merged[["is_query_snp"]] <- as.num(data.merged[["is_query_snp"]])
-    data.merged[["AFR"]] <- as.num(data.merged[["AFR"]])
-    data.merged[["AMR"]] <- as.num(data.merged[["AMR"]])
-    data.merged[["ASN"]] <- as.num(data.merged[["ASN"]])
-    data.merged[["EUR"]] <- as.num(data.merged[["EUR"]])
-    
     
     return(data.merged)
 }
@@ -362,4 +255,145 @@ getHaploregData <- function(url, body, timeout) {
       }
     )
     return(r)
+}
+
+
+addColumns <- function(url, body, timeout, res.table) {
+    # Adding additional columns: 
+    user.agent <- "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0"
+    body$output <- "html"
+  
+    #request.data <- POST(url=url, body=body, encode="multipart",  timeout(timeout), user_agent(user.agent))
+    request.data <- tryCatch(
+    {
+        POST(url=url, body=body, encode="multipart",  timeout(timeout), user_agent(user.agent))
+    },
+    error=function(e) {
+        if(url.exists(url)) {
+            message(paste("URL does not seem to exist:", url))
+        }
+        message("Here's the original error message:")
+        message(e$message)
+        # Choose a return value in case of error
+        return(NULL)
+    },
+    warning=function(e) {
+        message(e$message)
+            # Choose a return value in case of warning
+            return(NULL)
+        }
+    )
+  
+    if(is.null(request.data)) {
+        return(request.data)
+    }
+    
+    html.content <- content(request.data, useInternalNodes=TRUE, encoding="ISO-8859-1",as="text")
+    tmp.tables <- readHTMLTable(html.content)
+  
+    html.table <- NULL
+    for(i in 4:length(tmp.tables)) {
+        tmp.table <- tmp.tables[[i]]
+        if(is.null(tmp.table))
+        {
+            next
+        }
+    
+        n.col <- dim(tmp.table)[2]
+        n.row <- dim(tmp.table)[1]
+    
+        if(n.col <= 6) 
+        {
+            next
+        } 
+    
+        if(n.col < 23) {
+            while(n.col < 23) {
+                tmp.col <- data.frame(replicate(n.row, ""), stringsAsFactors = FALSE)
+                colnames(tmp.col) <- paste("V",n.col+1, sep="")
+                tmp.table <- cbind(tmp.table, tmp.col)
+                n.col <- dim(tmp.table)[2]
+            }
+        }
+    
+        if(is.null(html.table)) {
+          html.table <- tmp.table
+        } else {   
+            colnames(html.table) <- colnames(tmp.table)
+            html.table <- rbind(html.table, tmp.table)
+        }
+    }
+  
+    if(!is.null(html.table)) {
+        tmp.table <- data.frame(html.table[, c(5,13:14)], stringsAsFactors = FALSE)
+        tmp.table <- tmp.table[!duplicated(tmp.table), ]
+        if("variant" %in% colnames(tmp.table)) {
+            data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="variant")
+        } else {
+            data.merged <- merge(res.table, tmp.table, by.x="rsID", by.y="V5")
+        }
+    
+        data.merged1 <- cbind(data.merged[["chr"]],
+                              data.merged[["pos_hg38"]],
+                              data.merged[["r2"]],
+                              data.merged[["D'"]],
+                              data.merged[["is_query_snp"]],
+                              data.merged[["rsID"]],
+                              data.merged[["ref"]],
+                              data.merged[["alt"]],
+                              data.merged[["AFR"]],
+                              data.merged[["AMR"]],
+                              data.merged[["ASN"]],
+                              data.merged[["EUR"]],
+                              data.merged[["GERP_cons"]],
+                              data.merged[["SiPhy_cons"]],
+                              data.merged[["Chromatin_States"]],
+                              data.merged[["Chromatin_States_Imputed"]],
+                              data.merged[["Chromatin_Marks"]],
+                              data.merged[["DNAse"]],
+                              data.merged[["Proteins"]],
+                              data.merged[["eQTL"]],
+                              data.merged[["gwas"]],
+                              data.merged[["grasp"]],
+                              data.merged[["Motifs"]],
+                              data.merged[["GENCODE_id"]],
+                              data.merged[["GENCODE_name"]],
+                              data.merged[["GENCODE_direction"]],
+                              data.merged[["GENCODE_distance"]],
+                              data.merged[["RefSeq_id"]],
+                              data.merged[["RefSeq_name"]],
+                              data.merged[["RefSeq_direction"]],
+                              data.merged[["RefSeq_distance"]],
+                              data.merged[["dbSNP_functional_annotation"]],
+                              data.merged[["query_snp_rsid"]])
+        data.merged <- data.frame(data.merged1, data.merged[,34:35], stringsAsFactors = FALSE)
+        #data.merged <- cbind(data.merged1, data.merged[,34:35])
+    
+        colnames(data.merged) <- c("chr", "pos_hg38", "r2", "D'", "is_query_snp", 
+                                   "rsID", "ref", "alt", "AFR", "AMR", 
+                                   "ASN", "EUR", "GERP_cons", "SiPhy_cons", 
+                                   "Chromatin_States",
+                                   "Chromatin_States_Imputed", "Chromatin_Marks", 
+                                   "DNAse", "Proteins", "eQTL",
+                                   "gwas", "grasp", "Motifs", "GENCODE_id", 
+                                   "GENCODE_name",
+                                   "GENCODE_direction", "GENCODE_distance", "RefSeq_id", 
+                                   "RefSeq_name", "RefSeq_direction",
+                                   "RefSeq_distance", "dbSNP_functional_annotation", 
+                                   "query_snp_rsid", "Promoter_histone_marks", 
+                                   "Enhancer_histone_marks")
+    
+    }
+  
+    # Make important columns to be numeric
+    #data.merged[["chr"]] <- as.num(data.merged[["chr"]])
+    data.merged[["r2"]] <- as.num(data.merged[["r2"]])
+    data.merged[["D'"]] <- as.num(data.merged[["D'"]])
+    data.merged[["is_query_snp"]] <- as.num(data.merged[["is_query_snp"]])
+    data.merged[["AFR"]] <- as.num(data.merged[["AFR"]])
+    data.merged[["AMR"]] <- as.num(data.merged[["AMR"]])
+    data.merged[["ASN"]] <- as.num(data.merged[["ASN"]])
+    data.merged[["EUR"]] <- as.num(data.merged[["EUR"]])
+    
+    return(data.merged)
 }
